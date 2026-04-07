@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Downloads - Hunny Digital Shop</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Favicon & App Icons -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <style>
+        .downloads-section {
+            padding: 60px 0;
+            min-height: calc(100vh - 200px);
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+        .downloads-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .downloads-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .downloads-header h1 {
+            color: var(--dark-pink);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        .downloads-header p {
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            padding: 12px 25px;
+            background: white;
+            border: 2px solid var(--border-color);
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .tab-btn:hover {
+            background: var(--soft-pink);
+        }
+        .tab-btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: #667eea;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .order-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--border-color);
+            margin-bottom: 15px;
+        }
+        .order-id {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: var(--dark-pink);
+        }
+        .order-status {
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        .status-pending { background: #FFF3CD; color: #856404; }
+        .status-verified { background: #D1ECF1; color: #0C5460; }
+        .status-delivered { background: #D4EDDA; color: #155724; }
+        .status-failed { background: #F8D7DA; color: #721C24; }
+        .order-items {
+            margin: 15px 0;
+        }
+        .digital-item {
+            background: var(--soft-pink);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+        }
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .item-name {
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: var(--text-dark);
+        }
+        .download-section {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+        .download-btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: transform 0.3s ease;
+            margin: 5px 0;
+        }
+        .download-btn:hover {
+            transform: translateY(-2px);
+        }
+        .access-code {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 1.1rem;
+            text-align: center;
+            margin: 10px 0;
+            border: 2px dashed var(--border-color);
+        }
+        .download-info {
+            background: #d1ecf1;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            color: #0c5460;
+        }
+        .empty-downloads {
+            text-align: center;
+            padding: 60px 20px;
+            background: white;
+            border-radius: 15px;
+        }
+        .empty-downloads h2 {
+            color: var(--text-dark);
+            margin-bottom: 15px;
+        }
+        .btn-shop {
+            display: inline-block;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 600;
+            margin-top: 20px;
+            transition: transform 0.3s ease;
+        }
+        .btn-shop:hover {
+            transform: translateY(-2px);
+        }
+        @media (max-width: 768px) {
+            .order-header {
+                flex-direction: column;
+                gap: 10px;
+                align-items: flex-start;
+            }
+        }
+    </style>
+    <!-- Favicon & App Icons -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/jpeg" href="/assets/logo.jpeg" sizes="32x32">
+    <link rel="icon" type="image/jpeg" href="/assets/logo.jpeg" sizes="16x16">
+    <link rel="icon" type="image/png" href="/assets/logo.jpeg">
+    <link rel="shortcut icon" type="image/jpeg" href="/assets/logo.jpeg">
+    <link rel="apple-touch-icon" href="/assets/logo.jpeg">
+    <link rel="apple-touch-icon-precomposed" href="/assets/logo.jpeg">
+    <meta name="msapplication-TileImage" content="/assets/logo.jpeg">
+    <meta name="msapplication-TileColor" content="#FF69B4">
+    <meta name="theme-color" content="#FF69B4">
+
+    </head>
+<body>
+    <header class="header">
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo">
+                    <img src="assets/logo.jpeg" alt="Hunny Collection PK Logo" class="logo-image">
+                    <span class="logo-text">🌸 Hunny Collection PK</span>
+                </a>
+                <div class="hamburger" onclick="toggleMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="shop.html">Fashion Shop</a></li>
+                    <li><a href="digital-shop.html">💻 Digital Shop</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="account.html">👤 Account</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="downloads-section">
+        <div class="downloads-container">
+            <div class="downloads-header">
+                <h1>📥 My Downloads</h1>
+                <p>Access your purchased digital products</p>
+            </div>
+
+            <div class="tabs">
+                <button class="tab-btn active" onclick="switchTab('all')">📦 All Orders</button>
+                <button class="tab-btn" onclick="switchTab('pending')">⏳ Pending</button>
+                <button class="tab-btn" onclick="switchTab('delivered')">✅ Delivered</button>
+            </div>
+
+            <div id="all" class="tab-content active">
+                <div id="all-orders">
+                    <div class="loading">Loading your orders...</div>
+                </div>
+            </div>
+
+            <div id="pending" class="tab-content">
+                <div id="pending-orders">
+                    <div class="loading">Loading pending orders...</div>
+                </div>
+            </div>
+
+            <div id="delivered" class="tab-content">
+                <div id="delivered-orders">
+                    <div class="loading">Loading delivered orders...</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>🌸 Hunny Collection PK</h4>
+                    <p>Your premium destination for digital products.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="digital-shop.html">Digital Shop</a></li>
+                        <li><a href="my-downloads.html">My Downloads</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Support</h4>
+                    <ul>
+                        <li>📱 +92 301 8858303</li>
+                        <li>📧 MrCopper804@gmail.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Hunny Collection PK. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script type="module" src="firebase-config.js"></script>
+    <script type="module">
+        import { auth, db } from './firebase-config.js';
+        import { collection, query, where, getDocs, orderBy } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+        import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+
+        let allOrders = [];
+
+        onAuthStateChanged(auth, async (user) => {
+            if (!user) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            await loadOrders(user.uid);
+        });
+
+        async function loadOrders(userId) {
+            try {
+                const q = query(
+                    collection(db, 'digital-orders'),
+                    where('userId', '==', userId)
+                );
+
+                const querySnapshot = await getDocs(q);
+
+                if (querySnapshot.empty) {
+                    showEmptyState();
+                    return;
+                }
+
+                allOrders = [];
+                querySnapshot.forEach(doc => {
+                    allOrders.push({ id: doc.id, ...doc.data() });
+                });
+
+                // Sort by date (newest first)
+                allOrders.sort((a, b) => {
+                    const dateA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
+                    const dateB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
+                    return dateB - dateA;
+                });
+
+                renderOrders('all', allOrders);
+                renderOrders('pending', allOrders.filter(o => o.deliveryStatus === 'pending' || o.paymentStatus === 'pending'));
+                renderOrders('delivered', allOrders.filter(o => o.deliveryStatus === 'delivered'));
+            } catch (error) {
+                console.error('Error loading orders:', error);
+                document.getElementById('all-orders').innerHTML = '<p>Error loading orders. Please try again.</p>';
+            }
+        }
+
+        function showEmptyState() {
+            const html = `
+                <div class="empty-downloads">
+                    <h2>🛒 No Orders Yet</h2>
+                    <p style="color: var(--text-light); margin: 20px 0;">
+                        You haven't purchased any digital products yet. Start shopping to see your orders here!
+                    </p>
+                    <a href="digital-shop.html" class="btn-shop">🛍️ Browse Digital Shop</a>
+                </div>
+            `;
+            
+            document.getElementById('all-orders').innerHTML = html;
+            document.getElementById('pending-orders').innerHTML = html;
+            document.getElementById('delivered-orders').innerHTML = html;
+        }
+
+        function renderOrders(tab, orders) {
+            const container = document.getElementById(`${tab}-orders`);
+            
+            if (orders.length === 0) {
+                if (tab === 'pending') {
+                    container.innerHTML = '<p style="text-align: center; padding: 40px; color: var(--text-light);">No pending orders</p>';
+                } else if (tab === 'delivered') {
+                    container.innerHTML = '<p style="text-align: center; padding: 40px; color: var(--text-light);">No delivered orders yet</p>';
+                }
+                return;
+            }
+
+            container.innerHTML = orders.map(order => {
+                const statusClass = `status-${order.deliveryStatus || 'pending'}`;
+                const orderDate = order.createdAt ? new Date(order.createdAt).toLocaleDateString() : 'Recent';
+                
+                const itemsHtml = order.items.map((item, index) => {
+                    const isDelivered = order.deliveryStatus === 'delivered';
+                    const downloadLink = item.downloadLink || '#';
+                    const accessCode = item.accessCode || null;
+                    const downloadCount = order.downloadCount?.[index] || 0;
+                    const downloadLimit = item.downloadLimit || 5;
+
+                    return `
+                        <div class="digital-item">
+                            <div class="item-header">
+                                <div class="item-name">📦 ${item.name}</div>
+                                <div class="order-status ${statusClass}">${(order.deliveryStatus || 'Pending').toUpperCase()}</div>
+                            </div>
+                            
+                            ${isDelivered ? `
+                                <div class="download-section">
+                                    ${downloadLink && downloadLink !== '#' ? `
+                                        <a href="${downloadLink}" target="_blank" class="download-btn">
+                                            ⬇️ Download Product
+                                        </a>
+                                        <p style="margin-top: 10px; color: var(--text-light); font-size: 0.9rem;">
+                                            Downloads used: ${downloadCount} / ${downloadLimit}
+                                        </p>
+                                    ` : `
+                                        <p style="color: var(--text-light);">Download link will be available here</p>
+                                    `}
+                                    
+                                    ${accessCode ? `
+                                        <div style="margin-top: 15px;">
+                                            <strong>🔑 Access Code / License Key:</strong>
+                                            <div class="access-code">${accessCode}</div>
+                                            <p style="color: var(--text-light); font-size: 0.9rem; margin-top: 5px;">
+                                                💡 Save this code safely. You'll need it to activate your product.
+                                            </p>
+                                        </div>
+                                    ` : ''}
+                                    
+                                    <div class="download-info">
+                                        <strong>📧 Delivery Email:</strong> ${order.customerEmail || 'N/A'}<br>
+                                        ${order.deliveredAt ? `<strong>✅ Delivered On:</strong> ${new Date(order.deliveredAt).toLocaleDateString()}` : ''}
+                                    </div>
+                                </div>
+                            ` : `
+                                <div class="download-info">
+                                    <strong>⏳ Status:</strong> ${order.paymentStatus === 'pending' ? 'Payment verification pending' : 'Payment verified, preparing delivery'}<br>
+                                    <strong>📧 Delivery will be sent to:</strong> ${order.customerEmail || 'N/A'}<br>
+                                    <strong>💡 Note:</strong> You will receive an email once your order is processed
+                                </div>
+                            `}
+                        </div>
+                    `;
+                }).join('');
+
+                return `
+                    <div class="order-card">
+                        <div class="order-header">
+                            <div>
+                                <div class="order-id">Order #${order.id.slice(0, 8).toUpperCase()}</div>
+                                <div style="color: var(--text-light); font-size: 0.9rem;">${orderDate}</div>
+                            </div>
+                            <div>
+                                <span class="order-status ${statusClass}">${(order.deliveryStatus || 'Pending').toUpperCase()}</span>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-bottom: 15px;">
+                            <strong>Customer:</strong> ${order.customerName || 'N/A'}<br>
+                            <strong>Email:</strong> ${order.customerEmail || 'N/A'}<br>
+                            <strong>Payment Method:</strong> ${order.paymentMethod || 'N/A'}<br>
+                            ${order.transactionId ? `<strong>Transaction ID:</strong> ${order.transactionId}` : ''}
+                        </div>
+                        
+                        <div class="order-items">
+                            ${itemsHtml}
+                        </div>
+                        
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 15px; border-top: 2px solid var(--border-color);">
+                            <div>
+                                <strong>Total Amount:</strong>
+                                <div style="font-size: 1.3rem; font-weight: bold; color: #667eea;">Rs. ${(order.total || 0).toLocaleString()}</div>
+                            </div>
+                            ${order.paymentStatus === 'pending' ? `
+                                <button onclick="contactSupport('${order.id}')" class="btn-sm" style="background: #ffc107; color: #000; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer;">
+                                    💬 Contact Support
+                                </button>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        window.switchTab = function(tab) {
+            // Remove active from all tabs
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Remove active from all content
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Add active to selected
+            event.target.classList.add('active');
+            document.getElementById(tab).classList.add('active');
+        };
+
+        window.contactSupport = function(orderId) {
+            const message = `Hi! I need help with my digital order #${orderId.slice(0, 8).toUpperCase()}`;
+            window.open(`https://wa.me/923018858303?text=${encodeURIComponent(message)}`, '_blank');
+        };
+    </script>
+
+    <script>
+        function toggleMenu() {
+            const navMenu = document.querySelector('.nav-menu');
+            const hamburger = document.querySelector('.hamburger');
+            navMenu.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        }
+
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.querySelector('.nav-menu').classList.remove('active');
+                document.querySelector('.hamburger').classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>

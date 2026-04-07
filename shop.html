@@ -1,0 +1,987 @@
+<!-- Last SEO Update: 20/03/2026, 1:09:14 pm -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop All Products - Hunny Collection PK | Dresses, Kurtis, Jewelry & More</title>
+
+    <!-- SEO Meta Tags (Frontend-Based - Managed via SEO Dashboard) -->
+    <meta name="description" content="Browse our complete collection of premium female fashion. Dresses, Kurtis, Jewelry, Bags, Shoes with Cash on Delivery. Fast shipping across Pakistan.">
+    <meta name="keywords" content="shop dresses, kurtis online, jewelry pakistan, bags for women, shoes online, fashion store, cash on delivery">
+    <meta name="author" content="Hunny Collection PK">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://umair34836-sys.github.io/Hunny-Collection-PK-v2/shop.html">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://umair34836-sys.github.io/Hunny-Collection-PK-v2/shop.html">
+    <meta property="og:title" content="Shop All Products - Hunny Collection PK | Latest Fashion Collection 2026">
+    <meta property="og:description" content="Browse our complete collection of premium female fashion. Latest dresses, kurtis, jewelry, bags & shoes. COD available ✓ Fast delivery across Pakistan ✓ New arrivals daily.">
+    <meta property="og:image" content="https://i.ibb.co/TqcTWWmY/shop.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://umair34836-sys.github.io/Hunny-Collection-PK-v2/shop.html">
+    <meta property="twitter:title" content="Shop All Products - Hunny Collection PK | Latest Fashion Collection 2026">
+    <meta property="twitter:description" content="Browse our complete collection of premium female fashion. Latest dresses, kurtis, jewelry, bags & shoes. COD available ✓ Fast delivery across Pakistan ✓ New arrivals daily.">
+    <meta property="twitter:image" content="https://i.ibb.co/TqcTWWmY/shop.jpg">
+
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .shop-header {
+            padding: 80px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .filters {
+            padding: 40px 0;
+            background: var(--white);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 70px;
+            z-index: 100;
+        }
+
+        /* Disable sticky filters on mobile */
+        @media (max-width: 767px) {
+            .filters {
+                position: static;
+                padding: 25px 0;
+            }
+        }
+
+        .filters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+        }
+
+        .filter-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 700;
+            color: var(--text-dark);
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .filter-group select {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            font-size: 1rem;
+            background: var(--white);
+            transition: all var(--transition-fast);
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .filter-group select:focus {
+            outline: none;
+            border-color: var(--primary-pink);
+            box-shadow: 0 0 0 3px rgba(255, 105, 180, 0.1);
+        }
+
+        .filter-group select:hover {
+            border-color: var(--primary-pink);
+        }
+
+        /* Mobile Optimized Product Cards */
+        .product-card {
+            position: relative;
+            overflow: visible !important;
+        }
+
+        /* Discount badge for mobile */
+        .shop-discount-badge {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: linear-gradient(135deg, #FF6B6B 0%, #FF4757 100%);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-weight: bold;
+            font-size: 0.75rem;
+            box-shadow: 0 2px 8px rgba(255, 107, 107, 0.4);
+            z-index: 100;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* Mobile price display */
+        .mobile-price-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 6px;
+            flex-wrap: wrap;
+        }
+
+        .mobile-selling-price {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #FF69B4;
+        }
+
+        .mobile-original-price {
+            font-size: 0.85rem;
+            color: #999;
+            text-decoration: line-through;
+        }
+
+        .mobile-discount-savings {
+            background: linear-gradient(135deg, #fff3f3 0%, #ffe4e1 100%);
+            color: #FF6B6B;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.7rem;
+            margin-top: 4px;
+            display: inline-block;
+            border: 1px dashed #FFB6C1;
+        }
+
+        /* ========== LOADING SKELETONS ========== */
+        .skeleton-card {
+            background: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            animation: skeleton-pulse 1.5s ease-in-out infinite;
+        }
+
+        .skeleton-image {
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: skeleton-shimmer 1.5s ease-in-out infinite;
+        }
+
+        .skeleton-text {
+            height: 16px;
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: skeleton-shimmer 1.5s ease-in-out infinite;
+            border-radius: 4px;
+            margin: 10px 15px;
+        }
+
+        .skeleton-text-short { width: 60%; }
+        .skeleton-text-medium { width: 80%; }
+
+        @keyframes skeleton-shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        @keyframes skeleton-pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        /* ========== LOAD MORE BUTTON ========== */
+        .load-more-container {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .load-more-btn {
+            background: linear-gradient(135deg, var(--dark-pink) 0%, var(--primary-pink) 100%);
+            color: white;
+            border: none;
+            padding: 15px 50px;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 105, 180, 0.3);
+        }
+
+        .load-more-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 105, 180, 0.5);
+        }
+
+        .load-more-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .load-more-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top: 3px solid white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .products-count-info {
+            text-align: center;
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        /* Mobile responsive */
+        @media (max-width: 768px) {
+            .product-card {
+                margin-bottom: 15px;
+            }
+
+            .product-image {
+                height: 250px !important;
+            }
+
+            .mobile-selling-price {
+                font-size: 1rem;
+            }
+
+            .mobile-original-price {
+                font-size: 0.8rem;
+            }
+
+            .shop-discount-badge {
+                font-size: 0.7rem;
+                padding: 3px 8px;
+                top: 6px;
+                right: 6px;
+            }
+
+            .skeleton-image {
+                height: 250px;
+            }
+
+            .load-more-btn {
+                padding: 12px 40px;
+                font-size: 1rem;
+                width: 90%;
+            }
+        }
+    </style>
+    <!-- SEO Meta Tags (Generated by SEO Dashboard - 20/03/2026) -->
+    <title>Shop All Products - Hunny Collection PK | Latest Fashion Collection 2026 - Shop Dresses</title>
+    <meta name="description" content="Browse our complete collection of premium female fashion. Latest dresses, kurtis, jewelry, bags & shoes. COD available ✓ Fast delivery across Pakistan ✓ New arrivals daily.">
+    <meta name="keywords" content="shop dresses, kurtis online, jewelry pakistan, bags for women, shoes online, fashion store pakistan, cash on delivery, latest collection 2026, women fashion, pakistani clothing,shop dresses">
+    <meta name="author" content="Hunny Collection PK">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://umair34836-sys.github.io/Hunny-Collection-PK-v2/shop.html">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://umair34836-sys.github.io/Hunny-Collection-PK-v2/shop.html">
+    <meta property="og:title" content="Shop All Products - Hunny Collection PK | Latest Fashion Collection 2026 - Shop Dresses">
+    <meta property="og:description" content="Browse our complete collection of premium female fashion. Latest dresses, kurtis, jewelry, bags & shoes. COD available ✓ Fast delivery across Pakistan ✓ New arrivals daily.">
+    <meta property="og:image" content="https://i.ibb.co/TqcTWWmY/shop.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="Shop All Products - Hunny Collection PK | Latest Fashion Collection 2026 - Shop Dresses">
+    <meta property="twitter:description" content="Browse our complete collection of premium female fashion. Latest dresses, kurtis, jewelry, bags & shoes. COD available ✓ Fast delivery across Pakistan ✓ New arrivals daily.">
+    <meta property="twitter:image" content="https://i.ibb.co/TqcTWWmY/shop.jpg">
+    <!-- Favicon & App Icons -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/jpeg" href="/assets/logo.jpeg" sizes="32x32">
+    <link rel="icon" type="image/jpeg" href="/assets/logo.jpeg" sizes="16x16">
+    <link rel="icon" type="image/png" href="/assets/logo.jpeg">
+    <link rel="shortcut icon" type="image/jpeg" href="/assets/logo.jpeg">
+    <link rel="apple-touch-icon" href="/assets/logo.jpeg">
+    <link rel="apple-touch-icon-precomposed" href="/assets/logo.jpeg">
+    <meta name="msapplication-TileImage" content="/assets/logo.jpeg">
+    <meta name="msapplication-TileColor" content="#FF69B4">
+    <meta name="theme-color" content="#FF69B4">
+
+    <!-- Preconnect to Firebase for faster loading -->
+    <link rel="preconnect" href="https://firestore.googleapis.com">
+    <link rel="preconnect" href="https://firebase.googleapis.com">
+    <link rel="preconnect" href="https://firebasestorage.googleapis.com">
+
+    </head>
+<body>
+    <header class="header">
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo">
+                    <img src="assets/logo.jpeg" alt="Hunny Collection PK Logo" class="logo-image">
+                    <span class="logo-text">🌸 Hunny Collection PK</span>
+                </a>
+                <div class="hamburger" onclick="toggleMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="shop.html">Shop</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="cart.html">🛒 Cart <span id="cart-count">0</span></a></li>
+                    <li><a href="account.html" id="auth-link">Login</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section - Store Name Focus -->
+    <section class="page-hero" style="background-image: url('assets/banner1.jpeg'); background-size: cover; background-position: center; position: relative;">
+        <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.45);"></div>
+        <div class="container" style="position: relative; z-index: 1;">
+            <div class="page-hero-content">
+                <div class="page-hero-logo-wrapper">
+                    <img src="assets/logo.jpeg" alt="Shop" class="page-hero-logo">
+                </div>
+                <span class="page-hero-badge">🛍️ Fashion Shop</span>
+                <h1 class="page-hero-title">Shop All Products</h1>
+                <p class="page-hero-tagline">Browse our complete collection</p>
+            </div>
+        </div>
+    </section>
+
+    <style>
+        .page-hero {
+            padding: 60px 0;
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-hero-content {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .page-hero-logo-wrapper {
+            margin-bottom: 20px;
+            animation: fadeInDown 0.8s ease backwards;
+        }
+
+        .page-hero-logo {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+            border-radius: 50%;
+            border: 4px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+            transition: transform 0.3s ease;
+        }
+
+        .page-hero-logo:hover {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .page-hero-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.95);
+            color: var(--dark-pink);
+            padding: 10px 25px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+            animation: fadeInDown 0.8s ease 0.2s backwards;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        .page-hero-title {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            color: var(--dark-pink);
+            font-weight: 800;
+            line-height: 1.1;
+            text-shadow: 2px 4px 8px rgba(255, 255, 255, 0.8);
+            animation: fadeInUp 0.8s ease 0.4s backwards;
+        }
+
+        .page-hero-tagline {
+            font-size: 1.3rem;
+            color: var(--text-dark);
+            font-weight: 500;
+            text-shadow: 1px 2px 4px rgba(255, 255, 255, 0.6);
+            animation: fadeInUp 0.8s ease 0.6s backwards;
+        }
+
+        @media (max-width: 767px) {
+            .page-hero {
+                min-height: 50vh;
+                padding: 40px 0;
+            }
+
+            .page-hero-logo {
+                width: 80px;
+                height: 80px;
+            }
+
+            .page-hero-title {
+                font-size: 2.5rem;
+            }
+
+            .page-hero-tagline {
+                font-size: 1.1rem;
+            }
+        }
+
+        @media (max-width: 479px) {
+            .page-hero {
+                min-height: 45vh;
+                padding: 35px 0;
+            }
+
+            .page-hero-logo {
+                width: 70px;
+                height: 70px;
+            }
+
+            .page-hero-title {
+                font-size: 2rem;
+            }
+
+            .page-hero-tagline {
+                font-size: 0.95rem;
+            }
+        }
+    </style>
+
+    <section class="filters">
+        <div class="container">
+            <div class="filters-grid">
+                <div class="filter-group">
+                    <label>Category</label>
+                    <select id="category-filter">
+                        <option value="all">All Categories</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Price Range</label>
+                    <select id="price-filter">
+                        <option value="all">All Prices</option>
+                        <option value="0-1000">Under Rs. 1,000</option>
+                        <option value="1000-3000">Rs. 1,000 - Rs. 3,000</option>
+                        <option value="3000-5000">Rs. 3,000 - Rs. 5,000</option>
+                        <option value="5000+">Above Rs. 5,000</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Sort By</label>
+                    <select id="sort-filter">
+                        <option value="newest">Newest First</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="products">
+        <div class="container">
+            <!-- Products Count Info -->
+            <div id="products-count-info" class="products-count-info" style="display: none;"></div>
+
+            <!-- Products Grid -->
+            <div class="products-grid" id="products-container">
+                <!-- Loading Skeletons (shown initially) -->
+                <div class="skeleton-card">
+                    <div class="skeleton-image"></div>
+                    <div class="skeleton-text"></div>
+                    <div class="skeleton-text skeleton-text-short"></div>
+                </div>
+                <div class="skeleton-card">
+                    <div class="skeleton-image"></div>
+                    <div class="skeleton-text"></div>
+                    <div class="skeleton-text skeleton-text-short"></div>
+                </div>
+                <div class="skeleton-card">
+                    <div class="skeleton-image"></div>
+                    <div class="skeleton-text"></div>
+                    <div class="skeleton-text skeleton-text-short"></div>
+                </div>
+                <div class="skeleton-card">
+                    <div class="skeleton-image"></div>
+                    <div class="skeleton-text"></div>
+                    <div class="skeleton-text skeleton-text-short"></div>
+                </div>
+                <div class="skeleton-card">
+                    <div class="skeleton-image"></div>
+                    <div class="skeleton-text"></div>
+                    <div class="skeleton-text skeleton-text-short"></div>
+                </div>
+                <div class="skeleton-card">
+                    <div class="skeleton-image"></div>
+                    <div class="skeleton-text"></div>
+                    <div class="skeleton-text skeleton-text-short"></div>
+                </div>
+            </div>
+
+            <!-- Load More Button -->
+            <div id="load-more-container" class="load-more-container" style="display: none;">
+                <button id="load-more-btn" class="load-more-btn" onclick="loadMoreProducts()">
+                    Load More Products
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>🌸 Hunny Collection PK</h4>
+                    <p>Your premium destination for female fashion.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="shop.html">Shop</a></li>
+                        <li><a href="account.html">Account</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact Us</h4>
+                    <ul>
+                        <li>📱 +92 301 8858303</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Hunny Collection PK. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script type="module" src="firebase-config.js"></script>
+    <script type="module" src="app.js"></script>
+    <script type="module" src="site-settings.js"></script>
+    <script>
+        // Simple inline script for cart count
+        function updateCart() {
+            var cart = JSON.parse(localStorage.getItem('cart') || '[]');
+            var count = 0;
+            for (var i = 0; i < cart.length; i++) {
+                count += cart[i].quantity || 1;
+            }
+            document.getElementById('cart-count').textContent = count;
+        }
+        updateCart();
+    </script>
+    <script type="module">
+        import { db } from './firebase-config.js';
+        import { collection, getDocs, query, orderBy, limit, startAfter } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+        // ========== PAGINATION STATE ==========
+        const PRODUCTS_PER_PAGE = 8;
+        var allProductsForFilter = [];  // All products for client-side filtering
+        var displayedProducts = [];      // Products currently shown on screen
+        var lastVisible = null;          // Firestore cursor for pagination
+        var isLoading = false;
+        var hasMoreProducts = true;
+        var allProductsLoaded = false;   // Flag: have we fetched ALL products once?
+
+        // ========== SHOW LOADING SKELETONS ==========
+        function showSkeletons(count) {
+            var container = document.getElementById('products-container');
+            if (!container) return;
+            var html = '';
+            for (var i = 0; i < count; i++) {
+                html += '<div class="skeleton-card">';
+                html += '<div class="skeleton-image"></div>';
+                html += '<div class="skeleton-text"></div>';
+                html += '<div class="skeleton-text skeleton-text-short"></div>';
+                html += '</div>';
+            }
+            container.innerHTML = html;
+        }
+
+        // ========== APPEND SKELETONS (for load more) ==========
+        function appendSkeletons(count) {
+            var container = document.getElementById('products-container');
+            if (!container) return;
+            for (var i = 0; i < count; i++) {
+                var div = document.createElement('div');
+                div.className = 'skeleton-card';
+                div.innerHTML = '<div class="skeleton-image"></div><div class="skeleton-text"></div><div class="skeleton-text skeleton-text-short"></div>';
+                container.appendChild(div);
+            }
+        }
+
+        // ========== REMOVE SKELETONS ==========
+        function removeSkeletons() {
+            var container = document.getElementById('products-container');
+            if (!container) return;
+            var skeletons = container.querySelectorAll('.skeleton-card');
+            for (var i = 0; i < skeletons.length; i++) {
+                skeletons[i].remove();
+            }
+        }
+
+        // ========== LOAD FIRST PAGE ==========
+        async function loadFirstPage() {
+            if (isLoading) return;
+            isLoading = true;
+            hasMoreProducts = true;
+            lastVisible = null;
+            displayedProducts = [];
+
+            var container = document.getElementById('products-container');
+            var loadMoreContainer = document.getElementById('load-more-container');
+            var countInfo = document.getElementById('products-count-info');
+
+            showSkeletons(6);
+            loadMoreContainer.style.display = 'none';
+            countInfo.style.display = 'none';
+
+            try {
+                var q = query(collection(db, 'products'), orderBy('createdAt', 'desc'), limit(PRODUCTS_PER_PAGE));
+                var querySnapshot = await getDocs(q);
+
+                // Remove skeletons and render
+                removeSkeletons();
+
+                if (querySnapshot.empty) {
+                    container.innerHTML = '<p class="loading">No products found.</p>';
+                    isLoading = false;
+                    return;
+                }
+
+                // Save cursor for next page
+                lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
+
+                // If we got fewer than PRODUCTS_PER_PAGE, there are no more
+                if (querySnapshot.docs.length < PRODUCTS_PER_PAGE) {
+                    hasMoreProducts = false;
+                }
+
+                // Process products
+                var products = [];
+                querySnapshot.forEach(function(doc) {
+                    var product = { id: doc.id };
+                    var data = doc.data();
+                    for (var key in data) {
+                        product[key] = data[key];
+                    }
+                    products.push(product);
+                });
+
+                displayedProducts = products;
+                renderProducts(displayedProducts);
+
+                // Show load more button if there are more
+                if (hasMoreProducts) {
+                    loadMoreContainer.style.display = 'block';
+                }
+
+                // Show count info
+                countInfo.textContent = 'Showing ' + displayedProducts.length + ' products';
+                countInfo.style.display = 'block';
+
+                // Extract categories for filter
+                extractCategories(products);
+
+                isLoading = false;
+            } catch (error) {
+                console.error('Error loading products:', error);
+                removeSkeletons();
+                // On slow internet, keep showing skeletons + retry button
+                container.innerHTML = '<div style="text-align:center;padding:40px;"><p class="loading">Still loading products, please wait...</p><button onclick="window.location.reload()" class="btn-primary" style="margin-top:15px;">Refresh Page</button></div>';
+                isLoading = false;
+            }
+        }
+
+        // ========== LOAD MORE PRODUCTS ==========
+        window.loadMoreProducts = async function() {
+            if (isLoading || !hasMoreProducts || !lastVisible) return;
+            isLoading = true;
+
+            var btn = document.getElementById('load-more-btn');
+            var container = document.getElementById('products-container');
+            var countInfo = document.getElementById('products-count-info');
+
+            // Show loading state on button
+            btn.disabled = true;
+            btn.innerHTML = '<span class="load-more-spinner"></span> Loading...';
+
+            // Append skeletons while loading
+            appendSkeletons(3);
+
+            try {
+                var q = query(collection(db, 'products'), orderBy('createdAt', 'desc'), startAfter(lastVisible), limit(PRODUCTS_PER_PAGE));
+                var querySnapshot = await getDocs(q);
+
+                // Remove appended skeletons
+                removeSkeletons();
+
+                if (querySnapshot.empty) {
+                    hasMoreProducts = false;
+                    document.getElementById('load-more-container').style.display = 'none';
+                    isLoading = false;
+                    return;
+                }
+
+                lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
+
+                if (querySnapshot.docs.length < PRODUCTS_PER_PAGE) {
+                    hasMoreProducts = false;
+                }
+
+                // Process new products
+                var newProducts = [];
+                querySnapshot.forEach(function(doc) {
+                    var product = { id: doc.id };
+                    var data = doc.data();
+                    for (var key in data) {
+                        product[key] = data[key];
+                    }
+                    newProducts.push(product);
+                });
+
+                // Append to displayed products
+                displayedProducts = displayedProducts.concat(newProducts);
+                renderProducts(displayedProducts);
+
+                // Update count info
+                countInfo.textContent = 'Showing ' + displayedProducts.length + ' products';
+
+                // Hide load more if no more products
+                if (!hasMoreProducts) {
+                    document.getElementById('load-more-container').style.display = 'none';
+                    countInfo.textContent = 'All ' + displayedProducts.length + ' products loaded';
+                }
+
+                // Re-enable button
+                btn.disabled = false;
+                btn.innerHTML = 'Load More Products';
+
+                isLoading = false;
+            } catch (error) {
+                console.error('Error loading more products:', error);
+                removeSkeletons();
+                renderProducts(displayedProducts);
+                btn.disabled = false;
+                btn.innerHTML = 'Load More Products (Retry)';
+                isLoading = false;
+            }
+        };
+
+        // ========== RENDER PRODUCTS ==========
+        function renderProducts(products) {
+            var container = document.getElementById('products-container');
+            if (!container) return;
+
+            if (products.length === 0) {
+                container.innerHTML = '<p class="loading">No products found.</p>';
+                return;
+            }
+
+            var html = '';
+            for (var i = 0; i < products.length; i++) {
+                var product = products[i];
+                var imageUrl = product.images && product.images.length > 0
+                    ? product.images[0]
+                    : 'https://via.placeholder.com/300x300/FFB6C1/333?text=No+Image';
+
+                // Calculate prices with discount
+                var sellingPrice = product.sellingPrice || product.price || 0;
+                var originalPrice = product.originalPrice || 0;
+                var discountPercent = 0;
+                if (originalPrice > sellingPrice && sellingPrice > 0) {
+                    discountPercent = Math.round(((originalPrice - sellingPrice) / originalPrice) * 100);
+                }
+                var savings = originalPrice - sellingPrice;
+
+                html += '<a href="product.html?id=' + product.id + '" class="product-card">';
+
+                // Image with discount badge
+                html += '<div style="position: relative;">';
+                html += '<img src="' + imageUrl + '" alt="' + product.name + '" class="product-image" loading="lazy">';
+
+                // Discount badge
+                if (discountPercent > 0) {
+                    html += '<span class="shop-discount-badge">🔥 ' + discountPercent + '% OFF</span>';
+                }
+                html += '</div>';
+
+                // Product info
+                html += '<div class="product-info">';
+                html += '<div class="product-category">' + product.category + '</div>';
+                html += '<div class="product-title">' + product.name + '</div>';
+
+                // Price display with discount
+                html += '<div class="mobile-price-group">';
+                html += '<span class="mobile-selling-price">Rs. ' + sellingPrice.toLocaleString() + '</span>';
+                if (originalPrice > sellingPrice) {
+                    html += '<span class="mobile-original-price">Rs. ' + originalPrice.toLocaleString() + '</span>';
+                    html += '<span class="mobile-discount-savings">Save Rs. ' + savings.toLocaleString() + '</span>';
+                }
+                html += '</div>';
+
+                html += '</div></a>';
+            }
+
+            container.innerHTML = html;
+        }
+
+        // ========== EXTRACT CATEGORIES ==========
+        function extractCategories(products) {
+            var categoryFilter = document.getElementById('category-filter');
+            var categories = [];
+
+            for (var i = 0; i < products.length; i++) {
+                if (products[i].category && categories.indexOf(products[i].category) === -1) {
+                    categories.push(products[i].category);
+                }
+            }
+
+            var optionsHtml = '<option value="all">All Categories</option>';
+            for (var i = 0; i < categories.length; i++) {
+                optionsHtml += '<option value="' + categories[i] + '">' + categories[i] + '</option>';
+            }
+            categoryFilter.innerHTML = optionsHtml;
+        }
+
+        // ========== LOAD ALL PRODUCTS FOR FILTERING (called only when filter changes) ==========
+        async function loadAllProductsForFilter() {
+            if (allProductsLoaded) return;  // Already loaded
+            allProductsLoaded = true;
+
+            try {
+                var q = query(collection(db, 'products'), orderBy('createdAt', 'desc'));
+                var querySnapshot = await getDocs(q);
+                allProductsForFilter = [];
+
+                querySnapshot.forEach(function(doc) {
+                    var product = { id: doc.id };
+                    var data = doc.data();
+                    for (var key in data) {
+                        product[key] = data[key];
+                    }
+                    allProductsForFilter.push(product);
+                });
+            } catch (error) {
+                console.error('Error loading all products for filter:', error);
+            }
+        }
+
+        // ========== FILTER PRODUCTS (client-side on already loaded + load more if needed) ==========
+        async function filterProducts() {
+            var category = document.getElementById('category-filter').value;
+            var price = document.getElementById('price-filter').value;
+            var sort = document.getElementById('sort-filter').value;
+
+            // Ensure we have all products for filtering
+            await loadAllProductsForFilter();
+
+            var filtered = allProductsForFilter.slice();
+
+            // Category filter
+            if (category !== 'all') {
+                var newFiltered = [];
+                for (var i = 0; i < filtered.length; i++) {
+                    if (filtered[i].category === category) {
+                        newFiltered.push(filtered[i]);
+                    }
+                }
+                filtered = newFiltered;
+            }
+
+            // Price filter (using sellingPrice)
+            if (price !== 'all') {
+                var parts = price.split('-');
+                var min = Number(parts[0]);
+                var max = parts[1] ? Number(parts[1]) : null;
+
+                var newFiltered = [];
+                for (var i = 0; i < filtered.length; i++) {
+                    var sellingPrice = filtered[i].sellingPrice || filtered[i].price || 0;
+                    if (max) {
+                        if (sellingPrice >= min && sellingPrice <= max) {
+                            newFiltered.push(filtered[i]);
+                        }
+                    } else {
+                        if (sellingPrice >= min) {
+                            newFiltered.push(filtered[i]);
+                        }
+                    }
+                }
+                filtered = newFiltered;
+            }
+
+            // Sort (using sellingPrice)
+            if (sort === 'price-low') {
+                filtered.sort(function(a, b) { return (a.sellingPrice || a.price || 0) - (b.sellingPrice || b.price || 0); });
+            } else if (sort === 'price-high') {
+                filtered.sort(function(a, b) { return (b.sellingPrice || b.price || 0) - (a.sellingPrice || a.price || 0); });
+            } else {
+                filtered.sort(function(a, b) {
+                    var dateA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
+                    var dateB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
+                    return dateB - dateA;
+                });
+            }
+
+            // Reset pagination and show filtered results
+            displayedProducts = filtered;
+            renderProducts(filtered);
+
+            // Update UI
+            var countInfo = document.getElementById('products-count-info');
+            var loadMoreContainer = document.getElementById('load-more-container');
+            countInfo.textContent = filtered.length + ' products found';
+            countInfo.style.display = 'block';
+            loadMoreContainer.style.display = 'none';
+        }
+
+        // ========== EVENT LISTENERS ==========
+        document.getElementById('category-filter').addEventListener('change', filterProducts);
+        document.getElementById('price-filter').addEventListener('change', filterProducts);
+        document.getElementById('sort-filter').addEventListener('change', filterProducts);
+
+        // ========== INITIAL LOAD ==========
+        loadFirstPage();
+    </script>
+
+    <!-- Floating WhatsApp Button -->
+    <link rel="stylesheet" href="whatsapp-float.css">
+    <script src="whatsapp-float.js"></script>
+
+    <!-- Mobile Menu Toggle -->
+    <script>
+        function toggleMenu() {
+            const navMenu = document.querySelector('.nav-menu');
+            const hamburger = document.querySelector('.hamburger');
+            navMenu.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        }
+
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.querySelector('.nav-menu').classList.remove('active');
+                document.querySelector('.hamburger').classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>

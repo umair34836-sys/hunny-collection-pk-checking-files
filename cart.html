@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart - Hunny Collection PK</title>
+    
+    <!-- SEO Meta Tags (Frontend-Based - Managed via SEO Dashboard) -->
+    <meta name="description" content="Review your shopping cart and proceed to checkout. Cash on Delivery available. Fast shipping across Pakistan.">
+    <meta name="keywords" content="shopping cart, checkout, online shopping, pakistan">
+    <meta name="author" content="Hunny Collection PK">
+    <meta name="robots" content="noindex, follow">
+    <link rel="canonical" href="https://umair34836-sys.github.io/Hunny-Collection-PK-v2/cart.html">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://umair34836-sys.github.io/Hunny-Collection-PK-v2/cart.html">
+    <meta property="og:title" content="Shopping Cart - Hunny Collection PK | Review Your Order">
+    <meta property="og:description" content="Review your shopping cart and proceed to checkout at Hunny Collection PK. Secure checkout ✓ Cash on Delivery ✓ Fast shipping across Pakistan.">
+    <meta property="og:image" content="https://i.ibb.co/QvQWdDD3/cart.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://umair34836-sys.github.io/Hunny-Collection-PK-v2/cart.html">
+    <meta property="twitter:title" content="Shopping Cart - Hunny Collection PK | Review Your Order">
+    <meta property="twitter:description" content="Review your shopping cart and proceed to checkout at Hunny Collection PK. Secure checkout ✓ Cash on Delivery ✓ Fast shipping across Pakistan.">
+    <meta property="twitter:image" content="https://i.ibb.co/QvQWdDD3/cart.jpg">
+    
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .cart-section { 
+            padding: 80px 0;
+            background: linear-gradient(to bottom, #FFF5F8, #FFFFFF);
+        }
+        .cart-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 40px;
+            align-items: start;
+        }
+        .cart-item {
+            display: grid;
+            grid-template-columns: 120px 1fr auto;
+            gap: 25px;
+            background: var(--white);
+            padding: 25px;
+            border-radius: 16px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow-soft);
+            transition: all var(--transition-fast);
+            border: 2px solid transparent;
+        }
+        .cart-item:hover {
+            box-shadow: var(--shadow-medium);
+            border-color: var(--primary-pink);
+            transform: translateY(-3px);
+        }
+        .cart-item-image {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 12px;
+            box-shadow: var(--shadow-soft);
+        }
+        .cart-item-details h4 { 
+            margin-bottom: 8px; 
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+        .cart-item-category { 
+            color: var(--text-light); 
+            font-size: 0.9rem;
+            margin-bottom: 12px;
+        }
+        .cart-item-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .btn-sm {
+            padding: 8px 16px;
+            border: 2px solid var(--border-color);
+            background: var(--white);
+            border-radius: 10px;
+            cursor: pointer;
+            min-height: 40px;
+            min-width: 40px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            transition: all var(--transition-fast);
+        }
+        .btn-sm:hover { 
+            background: var(--gradient-primary); 
+            color: var(--white); 
+            border-color: transparent;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 105, 180, 0.3);
+        }
+        .btn-danger { 
+            background: #dc3545; 
+            color: var(--white); 
+            border: none;
+        }
+        .btn-danger:hover {
+            background: #c82333;
+            transform: translateY(-2px);
+        }
+        .cart-summary {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: var(--shadow-medium);
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+            border: 2px solid var(--border-color);
+        }
+        .cart-summary h3 {
+            margin-bottom: 25px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--dark-pink);
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--border-color);
+        }
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 18px;
+            font-size: 1.05rem;
+        }
+        .summary-total {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            border-top: 3px solid var(--border-color);
+            padding-top: 20px;
+            margin-top: 20px;
+        }
+        .empty-cart {
+            text-align: center;
+            padding: 80px 20px;
+        }
+        .empty-cart-icon {
+            font-size: 5rem;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+        
+        /* Enhanced Mobile Optimization */
+        @media (max-width: 768px) {
+            .cart-section {
+                padding: 30px 0;
+            }
+            
+            .cart-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .cart-item {
+                grid-template-columns: 1fr;
+                padding: 15px;
+                gap: 15px;
+            }
+            
+            .cart-item-image {
+                width: 100%;
+                height: 200px;
+                border-radius: 10px;
+            }
+            
+            .cart-item-details {
+                width: 100%;
+            }
+            
+            .cart-item-details h4 {
+                font-size: 1rem;
+            }
+            
+            .cart-item-actions {
+                grid-column: 1 / -1;
+                justify-content: space-between;
+                flex-wrap: wrap;
+                width: 100%;
+            }
+            
+            .cart-item-actions button {
+                flex: 1;
+                min-width: 80px;
+                font-size: 0.85rem;
+                padding: 8px 10px;
+            }
+            
+            .cart-summary {
+                padding: 20px;
+                order: -1;
+            }
+            
+            .summary-total {
+                font-size: 1.3rem;
+            }
+            
+            .empty-cart {
+                padding: 40px 20px;
+            }
+        }
+        
+        /* Extra Small Devices */
+        @media (max-width: 480px) {
+            .cart-item-actions {
+                flex-direction: column;
+            }
+            
+            .cart-item-actions button {
+                width: 100%;
+            }
+            
+            .cart-item-image {
+                height: 180px;
+            }
+        }
+    </style>
+    <!-- Favicon & App Icons -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/jpeg" href="/assets/logo.jpeg" sizes="32x32">
+    <link rel="icon" type="image/jpeg" href="/assets/logo.jpeg" sizes="16x16">
+    <link rel="icon" type="image/png" href="/assets/logo.jpeg">
+    <link rel="shortcut icon" type="image/jpeg" href="/assets/logo.jpeg">
+    <link rel="apple-touch-icon" href="/assets/logo.jpeg">
+    <link rel="apple-touch-icon-precomposed" href="/assets/logo.jpeg">
+    <meta name="msapplication-TileImage" content="/assets/logo.jpeg">
+    <meta name="msapplication-TileColor" content="#FF69B4">
+    <meta name="theme-color" content="#FF69B4">
+
+    </head>
+<body>
+    <header class="header">
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo">
+                    <img src="assets/logo.jpeg" alt="Hunny Collection PK Logo" class="logo-image">
+                    <span class="logo-text">🌸 Hunny Collection PK</span>
+                </a>
+                <div class="hamburger" onclick="toggleMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="shop.html">Shop</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="cart.html">🛒 Cart <span id="cart-count">0</span></a></li>
+                    <li><a href="login.html" id="auth-link">Login</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section - Store Name Focus -->
+    <section class="page-hero" style="background-image: url('assets/banner4.jpeg'); background-size: cover; background-position: center; position: relative;">
+        <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.45);"></div>
+        <div class="container" style="position: relative; z-index: 1;">
+            <div class="page-hero-content">
+                <div class="page-hero-logo-wrapper">
+                    <img src="assets/logo.jpeg" alt="Cart" class="page-hero-logo">
+                </div>
+                <span class="page-hero-badge">🛒 Shopping Cart</span>
+                <h1 class="page-hero-title">Shopping Cart</h1>
+                <p class="page-hero-tagline">Review your items</p>
+            </div>
+        </div>
+    </section>
+    
+    <section class="cart-section">
+        <div class="container">
+                <div id="cart-items">
+                    <div class="loading">Loading cart...</div>
+                </div>
+                
+                <div class="cart-summary">
+                    <h3 style="margin-bottom: 20px;">Order Summary</h3>
+                    <div class="summary-row">
+                        <span>Subtotal</span>
+                        <span>Rs. <span id="cart-total">0</span></span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Shipping</span>
+                        <span style="color: green;">FREE</span>
+                    </div>
+                    <div class="summary-row summary-total">
+                        <span>Total</span>
+                        <span>Rs. <span id="cart-total-final">0</span></span>
+                    </div>
+                    <a href="checkout.html" id="checkout-btn" class="btn-primary" style="display: block; text-align: center; margin-top: 20px; opacity: 0.5; pointer-events: none;">
+                        Proceed to Checkout
+                    </a>
+                    <a href="shop.html" class="btn-secondary" style="display: block; text-align: center; margin-top: 10px;">
+                        Continue Shopping
+                    </a>
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+
+    <!-- Video Ad Container - Top -->
+    <div id="video-ad-container-top"></div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>🌸 Hunny Collection PK</h4>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact Us</h4>
+                    <ul>
+                        <li>📱 +92 301 8858303</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Hunny Collection PK. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Video Ad Container - Bottom -->
+    <div id="video-ad-container-bottom"></div>
+
+    <script type="module" src="firebase-config.js"></script>
+    <script type="module" src="app.js"></script>
+    <script type="module" src="site-settings.js"></script>
+    <script type="module">
+        import { updateCartCount, renderCartPage, getCartItems } from './app.js';
+
+        renderCartPage();
+        updateCartCount();
+
+        // Enable/disable checkout button
+        const cart = getCartItems();
+        const checkoutBtn = document.getElementById('checkout-btn');
+        if (checkoutBtn) {
+            if (cart.length > 0) {
+                checkoutBtn.style.opacity = '1';
+                checkoutBtn.style.pointerEvents = 'auto';
+            }
+        }
+    </script>
+
+    <!-- Mobile Menu Toggle -->
+    <script>
+        function toggleMenu() {
+            const navMenu = document.querySelector('.nav-menu');
+            const hamburger = document.querySelector('.hamburger');
+            navMenu.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        }
+
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.querySelector('.nav-menu').classList.remove('active');
+                document.querySelector('.hamburger').classList.remove('active');
+            });
+        });
+    </script>
+
+    <script type="module" src="video-ad.js"></script>
+</body>
+</html>

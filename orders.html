@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Orders - Hunny Collection PK</title>
+    
+    <!-- SEO Meta Tags (Frontend-Based - Managed via SEO Dashboard) -->
+    <meta name="description" content="View and track your orders from Hunny Collection PK.">
+    <meta name="keywords" content="my orders, order history, track delivery, pakistan">
+    <meta name="author" content="Hunny Collection PK">
+    <meta name="robots" content="noindex, follow">
+    <link rel="canonical" href="https://umair34836-sys.github.io/Hunny-Collection-PK-v2/orders.html">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://umair34836-sys.github.io/Hunny-Collection-PK-v2/orders.html">
+    <meta property="og:title" content="My Orders - Hunny Collection PK">
+    <meta property="og:description" content="View and track your orders from Hunny Collection PK.">
+    <meta property="og:image" content="https://via.placeholder.com/1200x630/FFB6C1/333?text=My+Orders">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://umair34836-sys.github.io/Hunny-Collection-PK-v2/orders.html">
+    <meta property="twitter:title" content="My Orders - Hunny Collection PK">
+    <meta property="twitter:description" content="View and track your orders from Hunny Collection PK.">
+    <meta property="twitter:image" content="https://via.placeholder.com/1200x630/FFB6C1/333?text=My+Orders">
+    
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .orders-section {
+            padding: 60px 0;
+            min-height: calc(100vh - 200px);
+        }
+        .orders-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .order-card {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(255, 182, 193, 0.2);
+        }
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--border-color);
+            margin-bottom: 15px;
+        }
+        .order-id {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: var(--dark-pink);
+        }
+        .order-status {
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        .status-pending { background: #FFF3CD; color: #856404; }
+        .status-confirmed { background: #D1ECF1; color: #0C5460; }
+        .status-shipped { background: #CCE5FF; color: #004085; }
+        .status-delivered { background: #D4EDDA; color: #155724; }
+        .status-cancelled { background: #F8D7DA; color: #721C24; }
+        
+        .order-items {
+            margin: 15px 0;
+        }
+        .order-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .order-item-image {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-right: 15px;
+        }
+        .order-item-details {
+            flex: 1;
+        }
+        .order-item-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        .order-item-price {
+            color: var(--dark-pink);
+            font-weight: bold;
+        }
+        .order-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 15px;
+            border-top: 2px solid var(--border-color);
+            margin-top: 15px;
+        }
+        .order-total {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--dark-pink);
+        }
+        .order-info {
+            background: var(--soft-pink);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        .order-info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        .info-item strong {
+            display: block;
+            color: var(--text-dark);
+            margin-bottom: 5px;
+        }
+        .empty-orders {
+            text-align: center;
+            padding: 60px 20px;
+        }
+        .btn-track {
+            padding: 8px 20px;
+            border-radius: 20px;
+            border: none;
+            background: var(--dark-pink);
+            color: var(--white);
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        .btn-track:hover {
+            background: #FF1493;
+        }
+        @media (max-width: 768px) {
+            .order-header, .order-footer {
+                flex-direction: column;
+                gap: 10px;
+                align-items: flex-start;
+            }
+        }
+    </style>
+    <!-- Favicon & App Icons -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/jpeg" href="/assets/logo.jpeg" sizes="32x32">
+    <link rel="icon" type="image/jpeg" href="/assets/logo.jpeg" sizes="16x16">
+    <link rel="icon" type="image/png" href="/assets/logo.jpeg">
+    <link rel="shortcut icon" type="image/jpeg" href="/assets/logo.jpeg">
+    <link rel="apple-touch-icon" href="/assets/logo.jpeg">
+    <link rel="apple-touch-icon-precomposed" href="/assets/logo.jpeg">
+    <meta name="msapplication-TileImage" content="/assets/logo.jpeg">
+    <meta name="msapplication-TileColor" content="#FF69B4">
+    <meta name="theme-color" content="#FF69B4">
+
+    </head>
+<body>
+    <header class="header">
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo">
+                    <img src="assets/logo.jpeg" alt="Hunny Collection PK Logo" class="logo-image">
+                    <span class="logo-text">🌸 Hunny Collection PK</span>
+                </a>
+                <div class="hamburger" onclick="toggleMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="shop.html">Shop</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="cart.html">🛒 Cart <span id="cart-count">0</span></a></li>
+                    <li><a href="account.html">👤 Account</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section - Store Name Focus -->
+    <section class="page-hero" style="background-image: url('assets/banner1.jpeg'); background-size: cover; background-position: center; position: relative;">
+        <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.45);"></div>
+        <div class="container" style="position: relative; z-index: 1;">
+            <div class="page-hero-content">
+                <div class="page-hero-logo-wrapper">
+                    <img src="assets/logo.jpeg" alt="Orders" class="page-hero-logo">
+                </div>
+                <span class="page-hero-badge">📦 My Orders</span>
+                <h1 class="page-hero-title">My Orders</h1>
+                <p class="page-hero-tagline">Track your orders</p>
+            </div>
+        </div>
+    </section>
+            <h1 style="color: var(--dark-pink); margin-bottom: 10px;">My Orders</h1>
+            <p style="color: var(--text-light); margin-bottom: 30px;">Track your orders and view order history</p>
+            
+            <div id="orders-container">
+                <div class="loading">Loading orders...</div>
+            </div>
+        </div>
+        </div>
+    </section>
+
+    <!-- Video Ad Container - Top -->
+    <div id="video-ad-container-top"></div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>🌸 Hunny Collection PK</h4>
+                    <p>Your premium destination for female fashion.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="shop.html">Shop</a></li>
+                        <li><a href="account.html">Account</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact Us</h4>
+                    <ul>
+                        <li>📱 +92 301 8858303</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Hunny Collection PK. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Video Ad Container - Bottom -->
+    <div id="video-ad-container-bottom"></div>
+
+    <script type="module" src="firebase-config.js"></script>
+    <script type="module" src="app.js"></script>
+    <script type="module" src="site-settings.js"></script>
+    <script type="module">
+        import { auth, db } from './firebase-config.js';
+        import { collection, query, where, getDocs, orderBy } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+        import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+        import { updateCartCount } from './app.js';
+
+        onAuthStateChanged(auth, async (user) => {
+            if (!user) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            await loadOrders(user.uid);
+            updateCartCount();
+        });
+
+        async function loadOrders(userId) {
+            const container = document.getElementById('orders-container');
+
+            try {
+                // Query without orderBy to avoid index requirement
+                const q = query(
+                    collection(db, 'orders'),
+                    where('userId', '==', userId)
+                );
+
+                const querySnapshot = await getDocs(q);
+                
+                if (querySnapshot.empty) {
+                    container.innerHTML = `
+                        <div class="empty-orders">
+                            <h2>No orders yet</h2>
+                            <p class="loading">Start shopping to see your orders here!</p>
+                            <a href="shop.html" class="btn-primary" style="display: inline-block; margin-top: 20px;">Start Shopping</a>
+                        </div>
+                    `;
+                    return;
+                }
+
+                // Get all orders and sort client-side
+                let orders = [];
+                querySnapshot.forEach((doc) => {
+                    orders.push({ id: doc.id, ...doc.data() });
+                });
+
+                // Sort by createdAt (newest first)
+                orders.sort((a, b) => {
+                    const dateA = a.createdAt ? (a.createdAt.seconds || 0) : 0;
+                    const dateB = b.createdAt ? (b.createdAt.seconds || 0) : 0;
+                    return dateB - dateA;
+                });
+
+                let html = '';
+                orders.forEach(order => {
+                    html += createOrderCard(order);
+                });
+
+                container.innerHTML = html;
+            } catch (error) {
+                console.error('Error loading orders:', error);
+                container.innerHTML = '<p class="loading">Error loading orders. Please make sure you are logged in.</p>';
+            }
+        }
+
+        function createOrderCard(order) {
+            const statusClass = 'status-' + (order.status || 'pending').toLowerCase();
+            const orderDate = order.createdAt ? 
+                new Date(order.createdAt.seconds * 1000).toLocaleDateString() : 
+                'Recent';
+
+            let itemsHtml = '';
+            if (order.items && order.items.length > 0) {
+                order.items.forEach(item => {
+                    const imageUrl = item.images && item.images.length > 0 
+                        ? item.images[0] 
+                        : 'https://via.placeholder.com/60x60/FFB6C1/333?text=Item';
+                    
+                    itemsHtml += `
+                        <div class="order-item">
+                            <img src="${imageUrl}" alt="${item.name}" class="order-item-image">
+                            <div class="order-item-details">
+                                <div class="order-item-name">${item.name}</div>
+                                <div style="color: var(--text-light); font-size: 0.9rem;">
+                                    Qty: ${item.quantity || 1}
+                                    ${item.variant?.size ? ' | Size: ' + item.variant.size : ''}
+                                </div>
+                                <div class="order-item-price">Rs. ${(item.price || 0).toLocaleString()}</div>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+
+            return `
+                <div class="order-card">
+                    <div class="order-header">
+                        <div>
+                            <div class="order-id">Order #${order.id.slice(0, 8).toUpperCase()}</div>
+                            <div style="color: var(--text-light); font-size: 0.9rem;">${orderDate}</div>
+                        </div>
+                        <span class="order-status ${statusClass}">${(order.status || 'Pending').toUpperCase()}</span>
+                    </div>
+
+                    <div class="order-info">
+                        <div class="order-info-grid">
+                            <div class="info-item">
+                                <strong>Customer</strong>
+                                ${order.customerName || 'N/A'}
+                            </div>
+                            <div class="info-item">
+                                <strong>Contact</strong>
+                                ${order.contact || 'N/A'}
+                            </div>
+                            <div class="info-item">
+                                <strong>Delivery Address</strong>
+                                ${order.address?.fullAddress ? order.address.fullAddress + ', ' + order.address.city : 'N/A'}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="order-items">
+                        ${itemsHtml}
+                    </div>
+
+                    <div class="order-footer">
+                        <div>
+                            <div style="color: var(--text-light);">Total Amount</div>
+                            <div class="order-total">Rs. ${(order.total || 0).toLocaleString()}</div>
+                        </div>
+                        <div>
+                            <div style="color: var(--text-light); margin-bottom: 5px;">Payment Method</div>
+                            <div style="font-weight: 600;">${order.paymentMethod || 'COD'}</div>
+                        </div>
+                        ${order.status === 'pending' ? `
+                            <button class="btn-track" onclick="contactSupport('${order.id}')">Need Help?</button>
+                        ` : ''}
+                    </div>
+                </div>
+            `;
+        }
+
+        window.contactSupport = function(orderId) {
+            const message = 'Hi! I need help with my order #' + orderId.slice(0, 8).toUpperCase();
+            window.open('https://wa.me/923018858303?text=' + encodeURIComponent(message), '_blank');
+        };
+    </script>
+
+    <!-- Floating WhatsApp Button -->
+    <link rel="stylesheet" href="whatsapp-float.css">
+    <script src="whatsapp-float.js"></script>
+
+    <script type="module" src="video-ad.js"></script>
+
+    <!-- Mobile Menu Toggle -->
+    <script>
+        function toggleMenu() {
+            const navMenu = document.querySelector('.nav-menu');
+            const hamburger = document.querySelector('.hamburger');
+            navMenu.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        }
+
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.querySelector('.nav-menu').classList.remove('active');
+                document.querySelector('.hamburger').classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>

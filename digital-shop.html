@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Shop - Hunny Collection PK | Courses, Accounts, Software</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .digital-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+        }
+        .digital-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        .digital-header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        .digital-filters {
+            background: white;
+            padding: 30px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .filters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        .filter-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+        .filter-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+        .digital-products {
+            padding: 60px 0;
+        }
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+        .digital-product-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+        .digital-product-card:hover {
+            transform: translateY(-5px);
+        }
+        .product-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .product-info {
+            padding: 20px;
+        }
+        .digital-badge {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+        .product-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+        }
+        .product-category {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+        .instant-delivery {
+            background: #d4edda;
+            color: #155724;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .features {
+            padding: 40px 0;
+            background: var(--soft-pink);
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        .feature-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+        @media (max-width: 768px) {
+            .digital-header h1 {
+                font-size: 2rem;
+            }
+            .filters-grid {
+                grid-template-columns: 1fr;
+            }
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+                gap: 15px;
+            }
+            .product-image {
+                height: 150px;
+            }
+            .product-info {
+                padding: 12px;
+            }
+            .product-title {
+                font-size: 0.9rem;
+            }
+            .digital-product-discount-badge {
+                font-size: 0.65rem;
+                padding: 3px 8px;
+                top: 6px;
+                right: 6px;
+            }
+            .digital-price-group {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 4px;
+            }
+            .digital-selling-price {
+                font-size: 1rem;
+            }
+            .digital-original-price {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+    <!-- Favicon & App Icons -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/jpeg" href="/assets/logo.jpeg" sizes="32x32">
+    <link rel="icon" type="image/jpeg" href="/assets/logo.jpeg" sizes="16x16">
+    <link rel="icon" type="image/png" href="/assets/logo.jpeg">
+    <link rel="shortcut icon" type="image/jpeg" href="/assets/logo.jpeg">
+    <link rel="apple-touch-icon" href="/assets/logo.jpeg">
+    <link rel="apple-touch-icon-precomposed" href="/assets/logo.jpeg">
+    <meta name="msapplication-TileImage" content="/assets/logo.jpeg">
+    <meta name="msapplication-TileColor" content="#FF69B4">
+    <meta name="theme-color" content="#FF69B4">
+
+    </head>
+<body>
+    <header class="header">
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo">
+                    <img src="assets/logo.jpeg" alt="Hunny Collection PK Logo" class="logo-image">
+                    <span class="logo-text">🌸 Hunny Collection PK</span>
+                </a>
+                <div class="hamburger" onclick="toggleMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="shop.html">Fashion Shop</a></li>
+                    <li><a href="digital-shop.html" class="active">💻 Digital Shop</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="cart.html">🛒 Cart <span id="cart-count">0</span></a></li>
+                    <li><a href="account.html" id="auth-link">Login</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="digital-header" style="background-image: url('assets/banner1.jpeg'); background-size: cover; background-position: center; position: relative;">
+        <div class="container" style="position: relative; z-index: 1;">
+            <h1 style="color: var(--dark-pink); font-size: 3.5rem; margin-bottom: 15px; font-weight: 800;">💻 Digital Shop</h1>
+            <p style="color: var(--text-dark); font-size: 1.4rem; font-weight: 500;">Premium Digital Products - Courses, Accounts, Software & More!</p>
+        </div>
+    </section>
+
+    <section class="digital-filters">
+        <div class="container">
+            <div class="filters-grid">
+                <div class="filter-group">
+                    <label>Category</label>
+                    <select id="category-filter">
+                        <option value="all">All Categories</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Price Range</label>
+                    <select id="price-filter">
+                        <option value="all">All Prices</option>
+                        <option value="0-500">Under Rs. 500</option>
+                        <option value="500-1000">Rs. 500 - Rs. 1,000</option>
+                        <option value="1000-3000">Rs. 1,000 - Rs. 3,000</option>
+                        <option value="3000+">Above Rs. 3,000</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Sort By</label>
+                    <select id="sort-filter">
+                        <option value="newest">Newest First</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="digital-products">
+        <div class="container">
+            <div class="products-grid" id="products-container">
+                <div class="loading">Loading digital products...</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: 40px; color: var(--dark-pink);">Why Buy Digital Products?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Instant Delivery</h3>
+                    <p>Get your products immediately after payment verification</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Secure Payment</h3>
+                    <p>Pay safely via Easypaisa, JazzCash, or SadaPay</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📧</div>
+                    <h3>Email Delivery</h3>
+                    <p>Products delivered directly to your email</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💬</div>
+                    <h3>24/7 Support</h3>
+                    <p>Get help whenever you need it</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>🌸 Hunny Collection PK</h4>
+                    <p>Your premium destination for fashion and digital products.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="shop.html">Fashion Shop</a></li>
+                        <li><a href="digital-shop.html">Digital Shop</a></li>
+                        <li><a href="my-downloads.html">My Downloads</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Payment Methods</h4>
+                    <ul>
+                        <li>📲 Easypaisa</li>
+                        <li>📲 JazzCash</li>
+                        <li>💳 SadaPay</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Hunny Collection PK. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script type="module" src="firebase-config.js"></script>
+    <script type="module">
+        import { db } from './firebase-config.js';
+        import { collection, getDocs, query, orderBy } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+        let allProducts = [];
+        let categories = [];
+
+        // Load digital products
+        async function loadDigitalProducts() {
+            try {
+                const q = query(collection(db, 'digital-products'), orderBy('createdAt', 'desc'));
+                const snapshot = await getDocs(q);
+                
+                allProducts = [];
+                categories = new Set();
+                
+                snapshot.forEach(doc => {
+                    const product = { id: doc.id, ...doc.data() };
+                    allProducts.push(product);
+                    if (product.category) {
+                        categories.add(product.category);
+                    }
+                });
+
+                updateCategoryFilter();
+                renderProducts(allProducts);
+            } catch (error) {
+                console.error('Error loading products:', error);
+                document.getElementById('products-container').innerHTML = '<p>Error loading products. Please try again.</p>';
+            }
+        }
+
+        // Update category filter
+        function updateCategoryFilter() {
+            const select = document.getElementById('category-filter');
+            let html = '<option value="all">All Categories</option>';
+            
+            categories.forEach(cat => {
+                html += `<option value="${cat}">${cat}</option>`;
+            });
+            
+            select.innerHTML = html;
+        }
+
+        // Render products
+        function renderProducts(products) {
+            const container = document.getElementById('products-container');
+
+            if (products.length === 0) {
+                container.innerHTML = '<p style="text-align: center; padding: 60px 20px; color: var(--text-light);">No digital products available yet.</p>';
+                return;
+            }
+
+            container.innerHTML = products.map(product => {
+                const imageUrl = product.images && product.images.length > 0
+                    ? product.images[0]
+                    : 'https://via.placeholder.com/300x200/667eea/ffffff?text=Digital+Product';
+                
+                // Calculate prices with discount
+                const sellingPrice = product.sellingPrice || product.price || 0;
+                const originalPrice = product.originalPrice || 0;
+                const discountPercent = originalPrice > sellingPrice ? Math.round(((originalPrice - sellingPrice) / originalPrice) * 100) : 0;
+
+                return `
+                    <div class="digital-product-card" onclick="window.location.href='digital-product.html?id=${product.id}'">
+                        <img src="${imageUrl}" alt="${product.name}" class="product-image">
+                        ${discountPercent > 0 ? `<span class="discount-badge digital-product-discount-badge" style="position: absolute; top: 10px; right: 10px; background: linear-gradient(135deg, #FF6B6B 0%, #FF4757 100%); color: white; padding: 6px 12px; border-radius: 20px; font-weight: bold; font-size: 0.85rem; box-shadow: 0 2px 8px rgba(255, 107, 107, 0.4); z-index: 10;">🔥 ${discountPercent}% OFF</span>` : ''}
+                        <div class="product-info">
+                            <span class="digital-badge">💻 DIGITAL</span>
+                            <div class="product-title">${product.name}</div>
+                            <div class="product-category">${product.category || 'Digital Product'}</div>
+                            <div class="digital-price-group" style="display: flex; align-items: center; gap: 10px; margin-top: 8px; flex-wrap: wrap;">
+                                <span class="digital-selling-price" style="font-size: 1.2rem; font-weight: bold; color: #FF69B4;">Rs. ${sellingPrice.toLocaleString()}</span>
+                                ${originalPrice > sellingPrice ? `<span class="digital-original-price" style="font-size: 0.95rem; color: #999; text-decoration: line-through; font-weight: 500;">Rs. ${originalPrice.toLocaleString()}</span>` : ''}
+                            </div>
+                            ${product.deliveryMethod ? `
+                                <div class="instant-delivery">
+                                    <span>⚡</span>
+                                    <span>${product.deliveryMethod} Delivery</span>
+                                </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Filter products
+        function filterProducts() {
+            const category = document.getElementById('category-filter').value;
+            const price = document.getElementById('price-filter').value;
+            const sort = document.getElementById('sort-filter').value;
+
+            let filtered = allProducts.slice();
+
+            // Category filter
+            if (category !== 'all') {
+                filtered = filtered.filter(p => p.category === category);
+            }
+
+            // Price filter (using sellingPrice)
+            if (price !== 'all') {
+                const parts = price.split('-');
+                const min = Number(parts[0]);
+                const max = parts[1] ? Number(parts[1]) : null;
+
+                filtered = filtered.filter(p => {
+                    const sellingPrice = p.sellingPrice || p.price || 0;
+                    if (max) {
+                        return sellingPrice >= min && sellingPrice <= max;
+                    } else {
+                        return sellingPrice >= min;
+                    }
+                });
+            }
+
+            // Sort (using sellingPrice)
+            if (sort === 'price-low') {
+                filtered.sort((a, b) => (a.sellingPrice || a.price || 0) - (b.sellingPrice || b.price || 0));
+            } else if (sort === 'price-high') {
+                filtered.sort((a, b) => (b.sellingPrice || b.price || 0) - (a.sellingPrice || a.price || 0));
+            } else {
+                filtered.sort((a, b) => {
+                    const dateA = a.createdAt ? (a.createdAt.seconds || 0) : 0;
+                    const dateB = b.createdAt ? (b.createdAt.seconds || 0) : 0;
+                    return dateB - dateA;
+                });
+            }
+
+            renderProducts(filtered);
+        }
+
+        // Event listeners
+        document.getElementById('category-filter').addEventListener('change', filterProducts);
+        document.getElementById('price-filter').addEventListener('change', filterProducts);
+        document.getElementById('sort-filter').addEventListener('change', filterProducts);
+
+        // Load products
+        loadDigitalProducts();
+    </script>
+
+    <script>
+        function toggleMenu() {
+            const navMenu = document.querySelector('.nav-menu');
+            const hamburger = document.querySelector('.hamburger');
+            navMenu.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        }
+
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.querySelector('.nav-menu').classList.remove('active');
+                document.querySelector('.hamburger').classList.remove('active');
+            });
+        });
+
+        // Update cart count
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('digitalCart') || '[]');
+            const count = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+            const cartCountEl = document.getElementById('cart-count');
+            if (cartCountEl) {
+                cartCountEl.textContent = count;
+            }
+        }
+        updateCartCount();
+    </script>
+</body>
+</html>

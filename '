@@ -1,0 +1,16 @@
+At line:1 char:205
++ ... tent = $content -replace '<meta name="theme-color" content="["]+", '$
++                                                                         ~
+Unexpected token '$' in expression or statement.
+At line:1 char:131
++ ... _.FullName -Raw; if ($content -notmatch 'admin-mobile.css') { $conten ...
++                                                                 ~
+Missing closing '}' in statement block or type definition.
+At line:1 char:45
++ Get-ChildItem admin-*.html | ForEach-Object { $content = Get-Content  ...
++                                             ~
+Missing closing '}' in statement block or type definition.
+    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordEx 
+   ception
+    + FullyQualifiedErrorId : UnexpectedToken
+ 

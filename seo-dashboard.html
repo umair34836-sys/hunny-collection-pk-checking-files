@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEO Dashboard - Hunny Collection PK</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Favicon -->
+    
+    <!-- Favicon & App Icons -->
+    
+    
+    
+    
+    
+    
+    
+    
+    <style>
+        .seo-dashboard {
+            padding: 40px 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .dashboard-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .dashboard-header h1 {
+            color: var(--dark-pink);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        .dashboard-header p {
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+        
+        /* Status Cards */
+        .status-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .status-card {
+            background: var(--white);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(255, 182, 193, 0.2);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        .status-card:hover {
+            transform: translateY(-5px);
+        }
+        .status-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+        .status-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--dark-pink);
+            margin-bottom: 10px;
+        }
+        .status-label {
+            color: var(--text-light);
+            font-size: 1rem;
+        }
+        .status-excellent { border-left: 5px solid #28a745; }
+        .status-good { border-left: 5px solid #17a2b8; }
+        .status-warning { border-left: 5px solid #ffc107; }
+        .status-critical { border-left: 5px solid #dc3545; }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        @media (max-width: 968px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Dashboard Card */
+        .dashboard-card {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(255, 182, 193, 0.2);
+        }
+        .dashboard-card h3 {
+            color: var(--dark-pink);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Page List */
+        .page-list {
+            display: grid;
+            gap: 15px;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        .page-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background: var(--soft-pink);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+        .page-item:hover {
+            background: #FFE5F0;
+            transform: translateX(5px);
+        }
+        .page-info {
+            flex: 1;
+        }
+        .page-name {
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 5px;
+        }
+        .page-status {
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+        .page-score {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-right: 15px;
+        }
+        .score-excellent { color: #28a745; }
+        .score-good { color: #17a2b8; }
+        .score-warning { color: #ffc107; }
+        .score-critical { color: #dc3545; }
+        .btn-view {
+            padding: 8px 15px;
+            background: var(--dark-pink);
+            color: var(--white);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .btn-view:hover {
+            background: #FF1493;
+            transform: scale(1.05);
+        }
+
+        /* SEO Editor */
+        .seo-editor {
+            margin-top: 20px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: inherit;
+        }
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        .form-group small {
+            display: block;
+            margin-top: 5px;
+            color: var(--text-light);
+            font-size: 0.85rem;
+        }
+        .char-count {
+            text-align: right;
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-top: 5px;
+        }
+        .char-count.warning { color: #ffc107; }
+        .char-count.danger { color: #dc3545; }
+        .char-count.success { color: #28a745; }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-primary {
+            background: var(--dark-pink);
+            color: var(--white);
+        }
+        .btn-primary:hover {
+            background: #FF1493;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 105, 180, 0.4);
+        }
+        .btn-success {
+            background: #28a745;
+            color: var(--white);
+        }
+        .btn-success:hover {
+            background: #218838;
+            transform: translateY(-2px);
+        }
+        .btn-info {
+            background: #17a2b8;
+            color: var(--white);
+        }
+        .btn-info:hover {
+            background: #138496;
+            transform: translateY(-2px);
+        }
+        .btn-warning {
+            background: #ffc107;
+            color: #333;
+        }
+        .btn-warning:hover {
+            background: #e0a800;
+            transform: translateY(-2px);
+        }
+
+        /* Logs Section */
+        .logs-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .log-item {
+            padding: 12px;
+            border-left: 3px solid var(--dark-pink);
+            background: var(--soft-pink);
+            margin-bottom: 10px;
+            border-radius: 0 8px 8px 0;
+        }
+        .log-time {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-bottom: 5px;
+        }
+        .log-action {
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        /* Errors & Warnings */
+        .error-list, .warning-list {
+            margin-top: 15px;
+        }
+        .error-item, .warning-item {
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+        .error-item {
+            background: #f8d7da;
+            color: #721c24;
+            border-left: 4px solid #dc3545;
+        }
+        .warning-item {
+            background: #fff3cd;
+            color: #856404;
+            border-left: 4px solid #ffc107;
+        }
+
+        /* Preview Section */
+        .seo-preview {
+            background: var(--soft-pink);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        .preview-item {
+            margin-bottom: 15px;
+        }
+        .preview-label {
+            font-weight: 600;
+            color: var(--dark-pink);
+            margin-bottom: 5px;
+        }
+        .preview-value {
+            background: var(--white);
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal.active {
+            display: flex;
+        }
+        .modal-content {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 800px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--border-color);
+        }
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-light);
+        }
+        .close-modal:hover {
+            color: var(--dark-pink);
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: var(--border-color);
+            border-radius: 5px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-pink), var(--dark-pink));
+            transition: width 0.3s ease;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .status-cards {
+                grid-template-columns: 1fr;
+            }
+            .action-buttons {
+                flex-direction: column;
+            }
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+    <!-- Favicon & App Icons -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/jpeg" href="/assets/logo.jpeg" sizes="32x32">
+    <link rel="icon" type="image/jpeg" href="/assets/logo.jpeg" sizes="16x16">
+    <link rel="icon" type="image/png" href="/assets/logo.jpeg">
+    <link rel="shortcut icon" type="image/jpeg" href="/assets/logo.jpeg">
+    <link rel="apple-touch-icon" href="/assets/logo.jpeg">
+    <link rel="apple-touch-icon-precomposed" href="/assets/logo.jpeg">
+    <meta name="msapplication-TileImage" content="/assets/logo.jpeg">
+    <meta name="msapplication-TileColor" content="#FF69B4">
+    <meta name="theme-color" content="#FF69B4">
+
+    </head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo">
+                    <img src="assets/logo.jpeg" alt="Hunny Collection PK Logo" class="logo-image">
+                    <span class="logo-text">🌸 Hunny Collection PK</span>
+                </a>
+                <ul class="nav-menu">
+                    <li><a href="admin.html">Admin Panel</a></li>
+                    <li><a href="index.html">Back to Store</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- SEO Dashboard -->
+    <main class="seo-dashboard">
+        <div class="dashboard-header">
+            <h1>🔍 SEO Dashboard</h1>
+            <p>Manage your website SEO without coding - 100% Frontend Based</p>
+        </div>
+
+        <!-- Status Cards -->
+        <div class="status-cards">
+            <div class="status-card status-excellent">
+                <div class="status-icon">✅</div>
+                <div class="status-value" id="seo-score">-</div>
+                <div class="status-label">Overall SEO Score</div>
+            </div>
+            <div class="status-card status-good">
+                <div class="status-icon">📄</div>
+                <div class="status-value" id="working-pages">-</div>
+                <div class="status-label">Working Pages</div>
+            </div>
+            <div class="status-card status-warning">
+                <div class="status-icon">⚠️</div>
+                <div class="status-value" id="pages-with-issues">-</div>
+                <div class="status-label">Pages with Issues</div>
+            </div>
+            <div class="status-card status-critical">
+                <div class="status-icon">📊</div>
+                <div class="status-value" id="seo-health">-</div>
+                <div class="status-label">Health Status</div>
+            </div>
+        </div>
+
+        <!-- Dashboard Grid -->
+        <div class="dashboard-grid">
+            <!-- Left Column - Page List -->
+            <div class="dashboard-card">
+                <h3>📄 All Pages SEO Status</h3>
+                <div class="page-list" id="page-list">
+                    <div class="loading">Loading pages...</div>
+                </div>
+            </div>
+
+            <!-- Right Column - Quick Actions -->
+            <div class="dashboard-card">
+                <h3>⚡ Quick Actions</h3>
+                <div style="display: flex; flex-direction: column; gap: 15px;">
+                    <button class="btn btn-primary" onclick="checkAllSEO()">
+                        🔍 Check All SEO
+                    </button>
+                    <button class="btn btn-success" onclick="downloadAllHTML()">
+                        📥 Download All HTML
+                    </button>
+                    <button class="btn btn-info" onclick="exportSEOBackup()">
+                        💾 Export SEO Backup
+                    </button>
+                    <button class="btn btn-warning" onclick="clearLogs()">
+                        🗑️ Clear Logs
+                    </button>
+                </div>
+
+                <div class="seo-preview" style="margin-top: 30px;">
+                    <h4 style="color: var(--dark-pink); margin-bottom: 15px;">ℹ️ How to Use:</h4>
+                    <ol style="line-height: 2.2; color: var(--text-dark);">
+                        <li>Select a page from the list to edit SEO</li>
+                        <li>Update Title, Description, Keywords</li>
+                        <li>Check character counts (green = good)</li>
+                        <li>Click "Download HTML" to get updated file</li>
+                        <li>Upload downloaded file to GitHub</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <!-- SEO Editor Card -->
+        <div class="dashboard-card">
+            <h3>✏️ SEO Editor</h3>
+            
+            <!-- Page Selector -->
+            <div class="form-group">
+                <label>Select Page to Edit</label>
+                <select id="page-selector" onchange="loadPageSEO()">
+                    <option value="">-- Choose a Page --</option>
+                </select>
+            </div>
+
+            <!-- Editor Form -->
+            <div id="seo-editor-form" style="display: none;">
+                <div class="form-group">
+                    <label>Page Title</label>
+                    <input type="text" id="seo-title" oninput="updateCharCount('title', 30, 60)">
+                    <div class="char-count" id="title-count"></div>
+                    <small>Main title shown in search results (optimal: 30-60 characters)</small>
+                </div>
+
+                <div class="form-group">
+                    <label>Meta Description</label>
+                    <textarea id="seo-description" oninput="updateCharCount('description', 50, 160)"></textarea>
+                    <div class="char-count" id="description-count"></div>
+                    <small>Brief description for search engines (optimal: 50-160 characters)</small>
+                </div>
+
+                <div class="form-group">
+                    <label>Meta Keywords</label>
+                    <input type="text" id="seo-keywords">
+                    <small>Comma-separated keywords (focus on 5-10 main keywords)</small>
+                </div>
+
+                <div class="form-group">
+                    <label>OG Image URL (for social media sharing)</label>
+                    <input type="url" id="seo-og-image">
+                    <small>Image shown when shared on Facebook/Twitter (1200x630px recommended)</small>
+                </div>
+
+                <div class="form-group">
+                    <label>Canonical URL</label>
+                    <input type="url" id="seo-canonical">
+                    <small>Official URL of this page (prevents duplicate content)</small>
+                </div>
+
+                <div class="form-group">
+                    <label>Robots Directive</label>
+                    <select id="seo-robots">
+                        <option value="index, follow">index, follow (Allow search engines)</option>
+                        <option value="noindex, follow">noindex, follow (Don't index, follow links)</option>
+                        <option value="index, nofollow">index, nofollow (Index, don't follow links)</option>
+                        <option value="noindex, nofollow">noindex, nofollow (Block completely)</option>
+                    </select>
+                    <small>Control how search engines index this page</small>
+                </div>
+
+                <!-- Preview -->
+                <div class="seo-preview">
+                    <h4 style="color: var(--dark-pink); margin-bottom: 15px;">📋 SEO Preview</h4>
+                    <div class="preview-item">
+                        <div class="preview-label">Google Search Preview:</div>
+                        <div class="preview-value">
+                            <div style="color: #1a0dab; font-size: 1.2rem; margin-bottom: 5px;" id="preview-title">-</div>
+                            <div style="color: #006621; font-size: 0.9rem; margin-bottom: 5px;" id="preview-url">-</div>
+                            <div style="color: #545454; font-size: 0.9rem;" id="preview-description">-</div>
+                        </div>
+                    </div>
+                    <div class="preview-item">
+                        <div class="preview-label">Recommendations:</div>
+                        <div id="preview-recommendations" style="margin-top: 10px;"></div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="action-buttons">
+                    <button class="btn btn-primary" onclick="downloadCurrentHTML()">
+                        📥 Download HTML
+                    </button>
+                    <button class="btn btn-success" onclick="validateCurrentSEO()">
+                        ✅ Check SEO
+                    </button>
+                    <button class="btn btn-info" onclick="showSEOGuide()">
+                        📖 SEO Guide
+                    </button>
+                </div>
+            </div>
+
+            <!-- Errors & Warnings -->
+            <div id="seo-errors" style="display: none; margin-top: 30px;">
+                <h4 style="color: #dc3545; margin-bottom: 15px;">❌ Errors</h4>
+                <div class="error-list" id="error-list"></div>
+            </div>
+
+            <div id="seo-warnings" style="display: none; margin-top: 20px;">
+                <h4 style="color: #ffc107; margin-bottom: 15px;">⚠️ Warnings</h4>
+                <div class="warning-list" id="warning-list"></div>
+            </div>
+        </div>
+
+        <!-- Update Logs -->
+        <div class="dashboard-card" style="margin-top: 30px;">
+            <h3>📋 Update Logs</h3>
+            <div class="logs-list" id="logs-list">
+                <div class="loading">Loading logs...</div>
+            </div>
+        </div>
+    </main>
+
+    <!-- SEO Guide Modal -->
+    <div id="seo-guide-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>📖 SEO Best Practices Guide</h3>
+                <button class="close-modal" onclick="closeSEOGuide()">&times;</button>
+            </div>
+            <div style="line-height: 2;">
+                <h4 style="color: var(--dark-pink);">🎯 Page Title</h4>
+                <ul>
+                    <li>Keep it between 30-60 characters</li>
+                    <li>Include main keyword at the beginning</li>
+                    <li>Add brand name "Hunny Collection PK"</li>
+                    <li>Make it unique for each page</li>
+                </ul>
+
+                <h4 style="color: var(--dark-pink); margin-top: 20px;">📝 Meta Description</h4>
+                <ul>
+                    <li>Keep it between 50-160 characters</li>
+                    <li>Include primary and secondary keywords</li>
+                    <li>Write compelling copy that encourages clicks</li>
+                    <li>Include call-to-action when possible</li>
+                </ul>
+
+                <h4 style="color: var(--dark-pink); margin-top: 20px;">🏷️ Meta Keywords</h4>
+                <ul>
+                    <li>Focus on 5-10 main keywords</li>
+                    <li>Use comma-separated values</li>
+                    <li>Include location-based keywords (Pakistan, Lahore, etc.)</li>
+                    <li>Don't keyword stuff</li>
+                </ul>
+
+                <h4 style="color: var(--dark-pink); margin-top: 20px;">🖼️ OG Image</h4>
+                <ul>
+                    <li>Use 1200x630px images for best results</li>
+                    <li>Include brand colors and logo</li>
+                    <li>Use JPG or PNG format</li>
+                    <li>Host on reliable CDN or GitHub</li>
+                </ul>
+
+                <h4 style="color: var(--dark-pink); margin-top: 20px;">🔗 After Downloading</h4>
+                <ol>
+                    <li>Go to your GitHub repository</li>
+                    <li>Upload the downloaded HTML file</li>
+                    <li>Commit changes with message like "Update SEO for [Page Name]"</li>
+                    <li>Wait 1-2 minutes for GitHub Pages to update</li>
+                    <li>Verify changes on live site</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { SEO_DATA, PAGE_NAMES } from './seo-config.js';
+        import { validatePageSEO, validateAllSEO, getSEOStatusSummary, checkSEOWorking } from './seo-validator.js';
+        import { downloadPageHTML, downloadAllHTML, downloadSEOConfig, previewSEOChanges, getSEOLogs, clearSEOLogs } from './html-generator.js';
+
+        let currentPage = null;
+
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            initializePageSelector();
+            loadDashboardStats();
+            loadLogs();
+        });
+
+        // Initialize page selector
+        function initializePageSelector() {
+            const selector = document.getElementById('page-selector');
+            const pageList = document.getElementById('page-list');
+            
+            // Populate selector
+            for (const [pageKey, pageName] of Object.entries(PAGE_NAMES)) {
+                const option = document.createElement('option');
+                option.value = pageKey;
+                option.textContent = pageName;
+                selector.appendChild(option);
+            }
+
+            // Populate page list
+            loadPageList(pageList);
+        }
+
+        // Load page list with status
+        function loadPageList(container) {
+            const validation = validateAllSEO();
+            let html = '';
+
+            for (const [pageKey, pageName] of Object.entries(PAGE_NAMES)) {
+                const pageValidation = validatePageSEO(pageKey);
+                const scoreClass = pageValidation.score >= 80 ? 'score-excellent' :
+                                   pageValidation.score >= 60 ? 'score-good' :
+                                   pageValidation.score >= 40 ? 'score-warning' : 'score-critical';
+                const statusIcon = pageValidation.valid ? '✅' : '⚠️';
+
+                html += `
+                    <div class="page-item">
+                        <div class="page-info">
+                            <div class="page-name">${pageName}</div>
+                            <div class="page-status">${statusIcon} ${pageValidation.valid ? 'Working' : 'Issues Found'}</div>
+                        </div>
+                        <div class="page-score ${scoreClass}">${pageValidation.score}</div>
+                        <button class="btn-view" onclick="window.loadPageSEOFor('${pageKey}')">Edit</button>
+                    </div>
+                `;
+            }
+
+            container.innerHTML = html;
+        }
+
+        // Load dashboard stats
+        function loadDashboardStats() {
+            const summary = getSEOStatusSummary();
+            
+            document.getElementById('seo-score').textContent = summary.score + '/100';
+            document.getElementById('working-pages').textContent = summary.workingPages;
+            document.getElementById('pages-with-issues').textContent = summary.issuesPages;
+            document.getElementById('seo-health').textContent = summary.overall.split(' ')[0];
+        }
+
+        // Load page SEO data
+        window.loadPageSEO = function() {
+            const pageKey = document.getElementById('page-selector').value;
+            
+            if (!pageKey) {
+                document.getElementById('seo-editor-form').style.display = 'none';
+                document.getElementById('seo-errors').style.display = 'none';
+                document.getElementById('seo-warnings').style.display = 'none';
+                currentPage = null;
+                return;
+            }
+
+            currentPage = pageKey;
+            const seoData = SEO_DATA[pageKey];
+
+            // Populate form
+            document.getElementById('seo-title').value = seoData.title;
+            document.getElementById('seo-description').value = seoData.description;
+            document.getElementById('seo-keywords').value = seoData.keywords;
+            document.getElementById('seo-og-image').value = seoData.ogImage;
+            document.getElementById('seo-canonical').value = seoData.canonical;
+            document.getElementById('seo-robots').value = seoData.robots;
+
+            // Show form
+            document.getElementById('seo-editor-form').style.display = 'block';
+
+            // Update character counts
+            updateCharCount('title', 30, 60);
+            updateCharCount('description', 50, 160);
+
+            // Update preview
+            updatePreview();
+
+            // Hide errors/warnings
+            document.getElementById('seo-errors').style.display = 'none';
+            document.getElementById('seo-warnings').style.display = 'none';
+        };
+
+        // Load page SEO from page list
+        window.loadPageSEOFor = function(pageKey) {
+            document.getElementById('page-selector').value = pageKey;
+            window.loadPageSEO();
+            // Scroll to editor
+            document.getElementById('seo-editor-form').scrollIntoView({ behavior: 'smooth' });
+        };
+
+        // Update character count
+        window.updateCharCount = function(field, min, max) {
+            const value = document.getElementById(`seo-${field}`).value;
+            const countEl = document.getElementById(`${field}-count`);
+            const count = value.length;
+
+            countEl.textContent = `${count} characters (optimal: ${min}-${max})`;
+            
+            if (count < min) {
+                countEl.className = 'char-count danger';
+            } else if (count > max) {
+                countEl.className = 'char-count danger';
+            } else {
+                countEl.className = 'char-count success';
+            }
+
+            updatePreview();
+        };
+
+        // Update preview
+        function updatePreview() {
+            const title = document.getElementById('seo-title').value || 'Page Title';
+            const description = document.getElementById('seo-description').value || 'Page description will appear here...';
+            const pageKey = document.getElementById('page-selector').value || 'index';
+
+            document.getElementById('preview-title').textContent = title;
+            document.getElementById('preview-url').textContent = SEO_DATA[pageKey]?.canonical || 'https://example.com/page.html';
+            document.getElementById('preview-description').textContent = description.length > 150 ? description.substring(0, 150) + '...' : description;
+
+            // Update recommendations
+            const preview = previewSEOChanges(pageKey);
+            if (preview) {
+                document.getElementById('preview-recommendations').innerHTML = preview.recommendations
+                    .map(r => `<div style="margin-bottom: 5px;">${r}</div>`)
+                    .join('');
+            }
+        }
+
+        // Download current HTML
+        window.downloadCurrentHTML = async function() {
+            if (!currentPage) {
+                alert('Please select a page first');
+                return;
+            }
+
+            // Update SEO data from form
+            SEO_DATA[currentPage].title = document.getElementById('seo-title').value;
+            SEO_DATA[currentPage].description = document.getElementById('seo-description').value;
+            SEO_DATA[currentPage].keywords = document.getElementById('seo-keywords').value;
+            SEO_DATA[currentPage].ogImage = document.getElementById('seo-og-image').value;
+            SEO_DATA[currentPage].canonical = document.getElementById('seo-canonical').value;
+            SEO_DATA[currentPage].robots = document.getElementById('seo-robots').value;
+
+            const result = await downloadPageHTML(currentPage);
+            
+            if (result.success) {
+                alert(result.message);
+                loadLogs();
+                loadDashboardStats();
+            } else {
+                alert('Error: ' + result.message);
+            }
+        };
+
+        // Validate current SEO
+        window.validateCurrentSEO = function() {
+            if (!currentPage) {
+                alert('Please select a page first');
+                return;
+            }
+
+            const validation = validatePageSEO(currentPage);
+
+            // Show errors
+            const errorContainer = document.getElementById('seo-errors');
+            const errorList = document.getElementById('error-list');
+            
+            if (validation.errors.length > 0) {
+                errorList.innerHTML = validation.errors.map(e => 
+                    `<div class="error-item">❌ ${e}</div>`
+                ).join('');
+                errorContainer.style.display = 'block';
+            } else {
+                errorContainer.style.display = 'none';
+            }
+
+            // Show warnings
+            const warningContainer = document.getElementById('seo-warnings');
+            const warningList = document.getElementById('warning-list');
+            
+            if (validation.warnings.length > 0) {
+                warningList.innerHTML = validation.warnings.map(w => 
+                    `<div class="warning-item">⚠️ ${w}</div>`
+                ).join('');
+                warningContainer.style.display = 'block';
+            } else {
+                warningContainer.style.display = 'none';
+            }
+
+            if (validation.valid && validation.warnings.length === 0) {
+                alert('✅ SEO is perfect for this page!');
+            }
+        };
+
+        // Check all SEO
+        window.checkAllSEO = function() {
+            const validation = validateAllSEO();
+            alert(`SEO Check Complete!\n\nWorking Pages: ${validation.workingPages}\nPages with Issues: ${validation.pagesWithIssues}\nOverall Score: ${validation.totalScore}/100`);
+            loadDashboardStats();
+            loadPageList(document.getElementById('page-list'));
+        };
+
+        // Download all HTML
+        window.downloadAllHTML = async function() {
+            if (!confirm('This will download all HTML files. Continue?')) return;
+
+            const results = await downloadAllHTML();
+            const successCount = results.filter(r => r.success).length;
+            alert(`Downloaded ${successCount}/${results.length} files successfully!`);
+        };
+
+        // Export SEO backup
+        window.exportSEOBackup = function() {
+            downloadSEOConfig();
+            alert('SEO configuration downloaded as seo-backup.json');
+        };
+
+        // Clear logs
+        window.clearLogs = function() {
+            if (confirm('Are you sure you want to clear all logs?')) {
+                clearSEOLogs();
+                loadLogs();
+            }
+        };
+
+        // Load logs
+        function loadLogs() {
+            const logs = getSEOLogs();
+            const container = document.getElementById('logs-list');
+
+            if (logs.length === 0) {
+                container.innerHTML = '<div style="color: var(--text-light); text-align: center; padding: 20px;">No logs yet</div>';
+                return;
+            }
+
+            container.innerHTML = logs.map(log => `
+                <div class="log-item">
+                    <div class="log-time">🕐 ${log.timestampLocal}</div>
+                    <div class="log-action">${log.pageName} - ${log.action}</div>
+                </div>
+            `).join('');
+        }
+
+        // SEO Guide
+        window.showSEOGuide = function() {
+            document.getElementById('seo-guide-modal').classList.add('active');
+        };
+
+        window.closeSEOGuide = function() {
+            document.getElementById('seo-guide-modal').classList.remove('active');
+        };
+
+        // Close modal on outside click
+        window.onclick = function(event) {
+            const modal = document.getElementById('seo-guide-modal');
+            if (event.target === modal) {
+                modal.classList.remove('active');
+            }
+        };
+    </script>
+</body>
+</html>

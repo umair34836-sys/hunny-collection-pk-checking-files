@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profit Calculator - Admin Panel | Hunny Collection PK</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 25px 30px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .header h1 {
+            color: #667eea;
+            font-size: 1.8rem;
+        }
+
+        .header p {
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .back-btn {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .back-btn:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+        }
+
+        .controls {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .controls-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            align-items: end;
+        }
+
+        .control-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .control-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .control-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .stats-bar {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-item label {
+            display: block;
+            color: #666;
+            font-size: 0.85rem;
+            margin-bottom: 5px;
+        }
+
+        .stat-item .value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .table-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 1200px;
+        }
+
+        thead {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        th {
+            padding: 15px 12px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+            font-size: 0.9rem;
+        }
+
+        tbody tr:hover {
+            background: #f5f7fa;
+        }
+
+        tbody tr:nth-child(even) {
+            background: #fafafa;
+        }
+
+        tbody tr:nth-child(even):hover {
+            background: #f0f2f5;
+        }
+
+        .product-cell {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .product-cell img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 6px;
+        }
+
+        .product-name {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .price {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .profit-positive {
+            color: #28a745;
+            font-weight: 700;
+        }
+
+        .profit-negative {
+            color: #dc3545;
+            font-weight: 700;
+        }
+
+        .percent-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.85rem;
+        }
+
+        .percent-positive {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .percent-negative {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+        }
+
+        .no-products {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+        }
+
+        .edit-input {
+            width: 100px;
+            padding: 6px 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .update-btn {
+            background: #667eea;
+            color: white;
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+        }
+
+        .update-btn:hover {
+            background: #5568d3;
+        }
+
+        @media (max-width: 1024px) {
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .controls-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-bar {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .stats-bar {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div>
+                <h1>💰 Profit Calculator - All Products</h1>
+                <p>Calculate profit for all products with investor share breakdown</p>
+            </div>
+            <a href="admin.html" class="back-btn">← Back to Admin Panel</a>
+        </div>
+
+        <div class="controls">
+            <div class="controls-grid">
+                <div class="control-group">
+                    <label for="searchProduct">🔍 Search Product</label>
+                    <input type="text" id="searchProduct" placeholder="Search by product name..." oninput="filterProducts()">
+                </div>
+                <div class="control-group">
+                    <label for="globalDeliveryCharge">📦 Delivery Charges (Rs.)</label>
+                    <input type="number" id="globalDeliveryCharge" value="150" min="0" step="10" oninput="recalculateAll()">
+                </div>
+                <div class="control-group">
+                    <label for="globalInvestorPercent">👤 Investor Share (%)</label>
+                    <input type="number" id="globalInvestorPercent" value="7" min="0" max="100" step="0.5" oninput="recalculateAll()">
+                </div>
+            </div>
+        </div>
+
+        <div class="stats-bar" id="stats-bar">
+            <div class="stat-item">
+                <label>Total Products</label>
+                <div class="value" id="stat-total">0</div>
+            </div>
+            <div class="stat-item">
+                <label>Avg Profit per Product</label>
+                <div class="value" id="stat-avg-profit">Rs. 0</div>
+            </div>
+            <div class="stat-item">
+                <label>Avg Profit Margin</label>
+                <div class="value" id="stat-avg-percent">0%</div>
+            </div>
+            <div class="stat-item">
+                <label>Total Investor Share</label>
+                <div class="value" id="stat-investor">Rs. 0</div>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Category</th>
+                            <th>Actual Price (Rs.)</th>
+                            <th>Selling Price (Rs.)</th>
+                            <th>Delivery Charges (Rs.)</th>
+                            <th>Investor Profit (Rs.)</th>
+                            <th>Net Revenue (Rs.)</th>
+                            <th>Final Profit (Rs.)</th>
+                            <th>Profit %</th>
+                        </tr>
+                    </thead>
+                    <tbody id="products-table-body">
+                        <tr>
+                            <td colspan="9" class="loading">Loading products...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { auth, db } from './firebase-config.js';
+        import { collection, getDocs } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+        import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+
+        let allProducts = [];
+
+        onAuthStateChanged(auth, async (user) => {
+            if (!user) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            await loadProducts();
+        });
+
+        async function loadProducts() {
+            try {
+                const querySnapshot = await getDocs(collection(db, 'products'));
+
+                if (querySnapshot.empty) {
+                    document.getElementById('products-table-body').innerHTML = `
+                        <tr>
+                            <td colspan="9" class="no-products">
+                                <h2>No products found</h2>
+                                <p>Add products to see profit calculations here.</p>
+                            </td>
+                        </tr>
+                    `;
+                    updateStats([]);
+                    return;
+                }
+
+                allProducts = [];
+                querySnapshot.forEach((doc) => {
+                    allProducts.push({ id: doc.id, ...doc.data() });
+                });
+
+                renderProducts(allProducts);
+                updateStats(allProducts);
+            } catch (error) {
+                console.error('Error loading products:', error);
+                document.getElementById('products-table-body').innerHTML = `
+                    <tr>
+                        <td colspan="9" class="no-products">Error loading products.</td>
+                    </tr>
+                `;
+            }
+        }
+
+        window.filterProducts = function() {
+            const searchTerm = document.getElementById('searchProduct').value.toLowerCase();
+
+            if (!searchTerm) {
+                renderProducts(allProducts);
+                updateStats(allProducts);
+                return;
+            }
+
+            const filtered = allProducts.filter(product => 
+                (product.name || '').toLowerCase().includes(searchTerm) ||
+                (product.category || '').toLowerCase().includes(searchTerm)
+            );
+
+            renderProducts(filtered);
+            updateStats(filtered);
+        };
+
+        window.recalculateAll = function() {
+            filterProducts();
+        };
+
+        function renderProducts(products) {
+            const tbody = document.getElementById('products-table-body');
+
+            if (products.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="9" class="no-products">No products match your search.</td>
+                    </tr>
+                `;
+                return;
+            }
+
+            const deliveryCharge = parseFloat(document.getElementById('globalDeliveryCharge').value) || 0;
+            const investorPercent = parseFloat(document.getElementById('globalInvestorPercent').value) || 0;
+
+            let html = '';
+            products.forEach(product => {
+                const actualPrice = product.actualPrice || product.costPrice || 0;
+                const sellingPrice = product.sellingPrice || product.price || 0;
+
+                const investorProfit = (sellingPrice * investorPercent) / 100;
+                const netRevenue = sellingPrice - investorProfit;
+                const finalProfit = netRevenue - actualPrice - deliveryCharge;
+                const profitPercent = actualPrice > 0 ? ((finalProfit / actualPrice) * 100) : 0;
+
+                const profitClass = finalProfit >= 0 ? 'profit-positive' : 'profit-negative';
+                const percentClass = profitPercent >= 0 ? 'percent-positive percent-badge' : 'percent-negative percent-badge';
+
+                const imageUrl = product.images && product.images.length > 0 
+                    ? product.images[0] 
+                    : 'https://via.placeholder.com/50x50/FFB6C1/333?text=P';
+
+                html += `
+                    <tr>
+                        <td>
+                            <div class="product-cell">
+                                <img src="${imageUrl}" alt="${product.name}">
+                                <span class="product-name">${product.name || 'Unnamed'}</span>
+                            </div>
+                        </td>
+                        <td>${product.category || 'N/A'}</td>
+                        <td class="price">Rs. ${actualPrice.toLocaleString()}</td>
+                        <td class="price">Rs. ${sellingPrice.toLocaleString()}</td>
+                        <td class="price">Rs. ${deliveryCharge.toLocaleString()}</td>
+                        <td class="profit-positive">Rs. ${investorProfit.toFixed(2)}</td>
+                        <td class="price">Rs. ${netRevenue.toFixed(2)}</td>
+                        <td class="${profitClass}">Rs. ${finalProfit.toFixed(2)}</td>
+                        <td><span class="${percentClass}">${profitPercent.toFixed(2)}%</span></td>
+                    </tr>
+                `;
+            });
+
+            tbody.innerHTML = html;
+        }
+
+        function updateStats(products) {
+            if (products.length === 0) {
+                document.getElementById('stat-total').textContent = '0';
+                document.getElementById('stat-avg-profit').textContent = 'Rs. 0';
+                document.getElementById('stat-avg-percent').textContent = '0%';
+                document.getElementById('stat-investor').textContent = 'Rs. 0';
+                return;
+            }
+
+            const deliveryCharge = parseFloat(document.getElementById('globalDeliveryCharge').value) || 0;
+            const investorPercent = parseFloat(document.getElementById('globalInvestorPercent').value) || 0;
+
+            let totalProfit = 0;
+            let totalProfitPercent = 0;
+            let totalInvestorShare = 0;
+
+            products.forEach(product => {
+                const actualPrice = product.actualPrice || product.costPrice || 0;
+                const sellingPrice = product.sellingPrice || product.price || 0;
+
+                const investorProfit = (sellingPrice * investorPercent) / 100;
+                const netRevenue = sellingPrice - investorProfit;
+                const finalProfit = netRevenue - actualPrice - deliveryCharge;
+                const profitPercent = actualPrice > 0 ? ((finalProfit / actualPrice) * 100) : 0;
+
+                totalProfit += finalProfit;
+                totalProfitPercent += profitPercent;
+                totalInvestorShare += investorProfit;
+            });
+
+            const avgProfit = totalProfit / products.length;
+            const avgPercent = totalProfitPercent / products.length;
+
+            document.getElementById('stat-total').textContent = products.length;
+            document.getElementById('stat-avg-profit').textContent = 'Rs. ' + avgProfit.toFixed(2);
+            document.getElementById('stat-avg-percent').textContent = avgPercent.toFixed(2) + '%';
+            document.getElementById('stat-investor').textContent = 'Rs. ' + totalInvestorShare.toFixed(2);
+        }
+    </script>
+</body>
+</html>

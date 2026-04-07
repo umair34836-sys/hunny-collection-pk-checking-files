@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Video Ads Management - Hunny Collection PK</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Favicon & App Icons -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/jpeg" href="/assets/logo.jpeg" sizes="32x32">
+    <link rel="icon" type="image/jpeg" href="/assets/logo.jpeg" sizes="16x16">
+    <link rel="icon" type="image/png" href="/assets/logo.jpeg">
+    <link rel="shortcut icon" type="image/jpeg" href="/assets/logo.jpeg">
+    <link rel="apple-touch-icon" href="/assets/logo.jpeg">
+    <link rel="apple-touch-icon-precomposed" href="/assets/logo.jpeg">
+    <meta name="msapplication-TileImage" content="/assets/logo.jpeg">
+    <meta name="msapplication-TileColor" content="#FF69B4">
+    <meta name="theme-color" content="#FF69B4">
+    <link rel="stylesheet" href="admin-mobile.css">
+    <style>
+        .admin-layout {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            min-height: calc(100vh - 60px);
+        }
+        .admin-sidebar {
+            background: linear-gradient(180deg, var(--dark-pink) 0%, var(--primary-pink) 100%);
+            padding: 20px;
+        }
+        .admin-sidebar h3 {
+            color: var(--white);
+            margin-bottom: 30px;
+        }
+        .admin-sidebar a {
+            display: block;
+            color: var(--white);
+            text-decoration: none;
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        .admin-sidebar a:hover,
+        .admin-sidebar a.active {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        .admin-content {
+            padding: 40px;
+            background: var(--soft-pink);
+        }
+        .admin-card {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(255, 182, 193, 0.2);
+            margin-bottom: 20px;
+        }
+        .btn-sm {
+            padding: 8px 15px;
+            font-size: 0.9rem;
+            margin: 2px;
+        }
+        .table-responsive { overflow-x: auto; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+        th {
+            background: var(--soft-pink);
+            font-weight: 600;
+        }
+        .badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        /* Mobile Menu Toggle Button */
+        .admin-menu-toggle {
+            display: none;
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 1001;
+            background: var(--dark-pink);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        .admin-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+        }
+
+        .admin-overlay.active {
+            display: block;
+        }
+
+        /* Mobile Responsive Design */
+        @media (max-width: 1024px) {
+            .admin-content {
+                padding: 30px 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .admin-menu-toggle {
+                display: block !important;
+            }
+
+            .admin-sidebar {
+                position: fixed;
+                top: 0;
+                left: -280px;
+                width: 280px;
+                height: 100vh;
+                z-index: 1000;
+                transition: left 0.3s ease;
+                overflow-y: auto;
+                padding-top: 70px;
+            }
+
+            .admin-sidebar.active {
+                left: 0;
+            }
+
+            .admin-overlay.active { display: block; }
+
+            .admin-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .admin-content {
+                padding: 80px 15px 20px;
+            }
+
+            .header {
+                padding: 10px 15px;
+            }
+
+            .navbar {
+                flex-wrap: wrap;
+            }
+
+            .nav-menu {
+                display: none;
+            }
+
+            .admin-card {
+                padding: 15px;
+                margin-bottom: 15px;
+            }
+
+            .table-responsive {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            table {
+                min-width: 600px;
+            }
+
+            th, td {
+                padding: 8px 6px;
+                font-size: 0.85rem;
+            }
+
+            .btn-sm {
+                padding: 10px 15px;
+                min-height: 44px;
+                margin: 3px;
+                display: inline-block;
+            }
+
+            h2 {
+                font-size: 1.3rem !important;
+                margin-bottom: 20px !important;
+            }
+
+            div[style*="display: flex"] {
+                flex-wrap: wrap !important;
+                gap: 8px !important;
+            }
+
+            .form-group input,
+            .form-group textarea,
+            .form-group select {
+                padding: 12px;
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            table {
+                min-width: 550px;
+            }
+
+            th, td {
+                padding: 6px 4px;
+                font-size: 0.8rem;
+            }
+
+            .btn-sm {
+                padding: 5px 8px;
+                font-size: 0.75rem;
+            }
+
+            .btn-primary {
+                padding: 10px 15px;
+                font-size: 0.9rem;
+            }
+
+            h2 {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Mobile Menu Toggle Button -->
+    <button class="admin-menu-toggle" onclick="toggleMobileSidebar()">☰</button>
+
+    <!-- Overlay for mobile -->
+    <div class="admin-overlay" onclick="closeMobileSidebar()"></div>
+
+    <header class="header">
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo">🌸 Hunny Collection PK</a>
+                <ul class="nav-menu">
+                    <li><a href="admin.html">Admin</a></li>
+                    <li><a href="index.html">Back to Store</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="admin-layout">
+        <aside class="admin-sidebar">
+            <h3>🌸 Admin Panel</h3>
+            <a href="admin.html">Dashboard</a>
+            <a href="admin.html#products">Products</a>
+            <a href="admin.html#orders">Orders</a>
+            <a href="admin-orders-history.html">📊 Orders History</a>
+            <a href="admin-reviews.html">⭐ Reviews</a>
+            <a href="admin-categories.html">Categories</a>
+            <a href="admin.html#digital-products">💻 Digital Products</a>
+            <a href="admin.html#digital-categories">📂 Digital Categories</a>
+            <a href="admin-digital-orders.html">📥 Digital Orders</a>
+            <a href="admin-video-ads.html" class="active">📺 Video Ads</a>
+            <a href="profit-calculator.html">💰 Profit Calculator</a>
+            <a href="settings.html">⚙️ Site Settings</a>
+            <a href="#" onclick="logout()">Logout</a>
+        </aside>
+
+        <main class="admin-content">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; flex-wrap: wrap; gap: 15px;">
+                <h2 style="color: var(--dark-pink);">📺 Video Ads Management</h2>
+                <a href="settings.html" class="btn-primary" style="text-decoration: none; display: inline-block;">⚙️ Configure Ads in Settings</a>
+            </div>
+
+            <div class="admin-card">
+                <h3>Page-wise Advertisement Configuration</h3>
+                <p style="color: var(--text-light); margin-bottom: 20px;">
+                    Configure different video/image ads for each page of your website.
+                    Each page can have its own ad settings including media type, file, position, and more.
+                    <br>
+                    Go to <a href="settings.html" style="color: var(--dark-pink); font-weight: 600;">⚙️ Site Settings</a> to set up ads for each page.
+                </p>
+
+                <div class="table-responsive">
+                    <table id="video-ads-table">
+                        <thead>
+                            <tr>
+                                <th>Page</th>
+                                <th>Status</th>
+                                <th>Media Type</th>
+                                <th>File Name</th>
+                                <th>Position</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+
+                <div style="margin-top: 30px; padding: 20px; background: var(--soft-pink); border-radius: 10px;">
+                    <h4 style="color: var(--dark-pink); margin-bottom: 15px;">📋 Instructions for Setting Up Ads:</h4>
+                    <ol style="line-height: 2; margin-left: 20px;">
+                        <li>Click the <strong>Configure</strong> button next to any page, or go to <a href="settings.html" style="color: var(--dark-pink); font-weight: 600;">Site Settings</a></li>
+                        <li>Navigate to the <strong>Video Ad</strong> section</li>
+                        <li>Select the page you want to configure from the dropdown</li>
+                        <li>Toggle <strong>Enabled</strong> to activate the ad</li>
+                        <li>Upload your media file (video or image) to the <strong>assets</strong> folder</li>
+                        <li>Enter the <strong>file name</strong> (e.g., promo.mp4 or banner.jpg)</li>
+                        <li>Choose the <strong>position</strong> (Top or Bottom of the page)</li>
+                        <li>Optionally add a <strong>click URL</strong> for users to visit when they click the ad</li>
+                        <li>Click <strong>Save</strong> to apply changes</li>
+                    </ol>
+                </div>
+
+                <div style="margin-top: 20px; padding: 20px; background: #E8F5E9; border-radius: 10px; border-left: 4px solid #4CAF50;">
+                    <h4 style="color: #2E7D32; margin-bottom: 15px;">💡 Quick Tips:</h4>
+                    <ul style="line-height: 2;">
+                        <li>Each page can have a <strong>different video or image</strong> ad</li>
+                        <li>Upload your media files to the <strong>assets</strong> folder</li>
+                        <li>Use <strong>MP4</strong> for videos and <strong>JPG/PNG</strong> for images</li>
+                        <li>Keep video files under <strong>5MB</strong> for faster loading</li>
+                        <li>Use <strong>autoplay muted</strong> for better user experience</li>
+                        <li>Add a <strong>click URL</strong> to drive traffic to promotions or offers</li>
+                        <li>Ads are stored in <strong>localStorage</strong> per page</li>
+                    </ul>
+                </div>
+
+                <div style="margin-top: 20px; padding: 20px; background: #FFF3E0; border-radius: 10px; border-left: 4px solid #FF9800;">
+                    <h4 style="color: #E65100; margin-bottom: 15px;">⚠️ Important Notes:</h4>
+                    <ul style="line-height: 2;">
+                        <li>Video ads are configured <strong>per page</strong> - each page has independent settings</li>
+                        <li>Settings are stored in the browser's <strong>localStorage</strong></li>
+                        <li>Clearing browser data will <strong>remove ad configurations</strong></li>
+                        <li>Make sure media files exist in the <strong>assets folder</strong> or ads won't display</li>
+                        <li>Test ads on each page after configuration to ensure they work properly</li>
+                    </ul>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script type="module">
+        import { checkAdminAuth, logout, showSection, toggleMobileSidebar, closeMobileSidebar, setupSidebarCloseHandlers } from './admin-common.js';
+        import { getVideoAdSettings, PAGE_LIST } from './video-ad.js';
+
+        // Check admin auth
+        const isAuth = await checkAdminAuth();
+
+        if (!isAuth) {
+            throw new Error('Not authenticated');
+        }
+
+        setupSidebarCloseHandlers();
+
+        // Load video ads table
+        function loadVideoAdsTable() {
+            const tbody = document.querySelector('#video-ads-table tbody');
+            if (!tbody) return;
+
+            let html = '';
+            PAGE_LIST.forEach(page => {
+                const settings = getVideoAdSettings(page.value);
+                const statusBadge = settings.enabled
+                    ? '<span class="badge" style="background: #D4EDDA; color: #155724;">✅ Enabled</span>'
+                    : '<span class="badge" style="background: #F8D7DA; color: #721C24;">❌ Disabled</span>';
+
+                const mediaIcon = settings.mediaType === 'image' ? '🖼️' : '🎬';
+                const positionText = settings.position === 'bottom' ? '⬇️ Bottom' : '⬆️ Top';
+                const fileName = settings.mediaFileName || '-';
+
+                html += `
+                    <tr>
+                        <td><strong>${page.label}</strong></td>
+                        <td>${statusBadge}</td>
+                        <td>${mediaIcon} ${settings.mediaType || 'video'}</td>
+                        <td>${fileName}</td>
+                        <td>${positionText}</td>
+                        <td>
+                            <a href="settings.html" class="btn-sm" style="background: var(--primary-pink); color: white; text-decoration: none; border-radius: 5px; display: inline-block;">✏️ Configure</a>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            tbody.innerHTML = html;
+        }
+
+        // Load table on page load
+        loadVideoAdsTable();
+
+        // Make functions available globally
+        window.logout = logout;
+        window.toggleMobileSidebar = toggleMobileSidebar;
+        window.closeMobileSidebar = closeMobileSidebar;
+    </script>
+</body>
+</html>

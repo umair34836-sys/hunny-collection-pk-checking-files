@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Categories Management - Hunny Collection PK</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Favicon & App Icons -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/jpeg" href="/assets/logo.jpeg" sizes="32x32">
+    <link rel="icon" type="image/jpeg" href="/assets/logo.jpeg" sizes="16x16">
+    <link rel="icon" type="image/png" href="/assets/logo.jpeg">
+    <link rel="shortcut icon" type="image/jpeg" href="/assets/logo.jpeg">
+    <link rel="apple-touch-icon" href="/assets/logo.jpeg">
+    <link rel="apple-touch-icon-precomposed" href="/assets/logo.jpeg">
+    <meta name="msapplication-TileImage" content="/assets/logo.jpeg">
+    <meta name="msapplication-TileColor" content="#FF69B4">
+    <meta name="theme-color" content="#FF69B4">
+    <link rel="stylesheet" href="admin-mobile.css">
+    <style>
+        .admin-layout {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            min-height: calc(100vh - 60px);
+        }
+        .admin-sidebar {
+            background: linear-gradient(180deg, var(--dark-pink) 0%, var(--primary-pink) 100%);
+            padding: 20px;
+        }
+        .admin-sidebar h3 {
+            color: var(--white);
+            margin-bottom: 30px;
+        }
+        .admin-sidebar a {
+            display: block;
+            color: var(--white);
+            text-decoration: none;
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        .admin-sidebar a:hover,
+        .admin-sidebar a.active {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        .admin-content {
+            padding: 40px;
+            background: var(--soft-pink);
+        }
+        .admin-card {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(255, 182, 193, 0.2);
+            margin-bottom: 20px;
+        }
+        .btn-sm {
+            padding: 8px 15px;
+            font-size: 0.9rem;
+            margin: 2px;
+        }
+        .table-responsive { overflow-x: auto; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+        th {
+            background: var(--soft-pink);
+            font-weight: 600;
+        }
+        .badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        .badge-active { background: #D4EDDA; color: #155724; }
+        .badge-inactive { background: #F8D7DA; color: #721C24; }
+
+        .admin-menu-toggle {
+            display: none;
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 1001;
+            background: var(--dark-pink);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        .admin-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+        }
+
+        .admin-overlay.active {
+            display: block;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal.active { display: flex; }
+        .modal-content {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 500px;
+            width: 90%;
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        .form-group { margin-bottom: 20px; }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 1024px) {
+            .admin-content {
+                padding: 30px 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .admin-menu-toggle {
+                display: block !important;
+            }
+
+            .admin-sidebar {
+                position: fixed;
+                top: 0;
+                left: -280px;
+                width: 280px;
+                height: 100vh;
+                z-index: 1000;
+                transition: left 0.3s ease;
+                overflow-y: auto;
+                padding-top: 70px;
+            }
+
+            .admin-sidebar.active {
+                left: 0;
+            }
+
+            .admin-overlay.active { display: block; }
+
+            .admin-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .admin-content {
+                padding: 80px 15px 20px;
+            }
+
+            .header {
+                padding: 10px 15px;
+            }
+
+            .nav-menu {
+                display: none;
+            }
+
+            .admin-card {
+                padding: 15px;
+            }
+
+            .table-responsive {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            table {
+                min-width: 500px;
+            }
+
+            th, td {
+                padding: 8px 6px;
+                font-size: 0.85rem;
+            }
+
+            .btn-sm {
+                padding: 10px 15px;
+                min-height: 44px;
+                margin: 3px;
+            }
+
+            h2 {
+                font-size: 1.3rem !important;
+                margin-bottom: 20px !important;
+            }
+
+            .modal-content {
+                width: 95% !important;
+                padding: 20px;
+                max-height: 85vh;
+            }
+
+            .form-group input,
+            .form-group select {
+                padding: 12px;
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .admin-card {
+                padding: 12px;
+            }
+
+            .btn-primary {
+                padding: 10px 15px;
+                font-size: 0.9rem;
+            }
+
+            table {
+                min-width: 450px;
+            }
+
+            th, td {
+                padding: 6px 4px;
+                font-size: 0.8rem;
+            }
+
+            h2 {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Mobile Menu Toggle Button -->
+    <button class="admin-menu-toggle" onclick="toggleMobileSidebar()">☰</button>
+
+    <!-- Overlay for mobile -->
+    <div class="admin-overlay" onclick="closeMobileSidebar()"></div>
+
+    <header class="header">
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo">🌸 Hunny Collection PK</a>
+                <ul class="nav-menu">
+                    <li><a href="admin.html">Admin</a></li>
+                    <li><a href="index.html">Back to Store</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="admin-layout">
+        <aside class="admin-sidebar">
+            <h3>🌸 Admin Panel</h3>
+            <a href="admin.html" onclick="showSection('dashboard')">Dashboard</a>
+            <a href="admin-products.html">Products</a>
+            <a href="admin-orders.html">Orders</a>
+            <a href="admin-orders-history.html">📊 Orders History</a>
+            <a href="admin-reviews.html">⭐ Reviews</a>
+            <a href="admin-categories.html" class="active">Categories</a>
+            <a href="admin.html#digital-products">💻 Digital Products</a>
+            <a href="admin.html#digital-categories">📂 Digital Categories</a>
+            <a href="#" onclick="logout()">Logout</a>
+        </aside>
+
+        <main class="admin-content">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; flex-wrap: wrap; gap: 15px;">
+                <h2 style="color: var(--dark-pink);">📂 Categories Management</h2>
+                <button class="btn-primary" onclick="openAddCategoryModal()">+ Add Category</button>
+            </div>
+
+            <div class="admin-card">
+                <div id="categories-loading" style="text-align: center; padding: 40px; color: var(--text-light);">Loading categories...</div>
+                <div class="table-responsive" id="categories-table-container" style="display: none;">
+                    <table id="categories-table">
+                        <thead>
+                            <tr>
+                                <th>Category Name</th>
+                                <th>Slug</th>
+                                <th>Product Count</th>
+                                <th>Created</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="categories-table-body">
+                        </tbody>
+                    </table>
+                </div>
+                <div id="categories-empty" style="text-align: center; padding: 40px; color: var(--text-light); display: none;">
+                    <p style="font-size: 1.2rem; margin-bottom: 20px;">No categories found</p>
+                    <button class="btn-primary" onclick="openAddCategoryModal()">+ Add Your First Category</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Add Category Modal -->
+    <div id="add-category-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add New Category</h3>
+                <button class="close-modal" onclick="closeAddCategoryModal()">&times;</button>
+            </div>
+            <div id="category-error" style="background: #f8d7da; color: #721c24; padding: 12px; border-radius: 8px; margin-bottom: 20px; display: none;"></div>
+            <form id="add-category-form" onsubmit="handleAddCategory(event)">
+                <div class="form-group">
+                    <label for="category-name">Category Name</label>
+                    <input type="text" id="category-name" placeholder="e.g., Dresses, Shoes, Accessories" required>
+                </div>
+                <div style="display: flex; gap: 10px;">
+                    <button type="submit" class="btn-primary" style="flex: 1;">Add Category</button>
+                    <button type="button" class="btn-sm" onclick="closeAddCategoryModal()" style="background: #6c757d; color: white;">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script type="module">
+        import { checkAdminAuth, logout, showSection, toggleMobileSidebar, closeMobileSidebar, setupSidebarCloseHandlers, formatCurrency, formatDate, confirmAction } from './admin-common.js';
+        import { getAllCategories, createCategory, deleteCategory, getAllProducts } from './admin-api.js';
+
+        // Make functions available globally for inline onclick handlers
+        window.logout = logout;
+        window.showSection = showSection;
+        window.toggleMobileSidebar = toggleMobileSidebar;
+        window.closeMobileSidebar = closeMobileSidebar;
+
+        let categories = [];
+        let products = [];
+
+        // Load categories and products on page load
+        async function loadData() {
+            try {
+                const loadingEl = document.getElementById('categories-loading');
+                const tableContainer = document.getElementById('categories-table-container');
+                const emptyEl = document.getElementById('categories-empty');
+
+                loadingEl.style.display = 'block';
+                tableContainer.style.display = 'none';
+                emptyEl.style.display = 'none';
+
+                [categories, products] = await Promise.all([
+                    getAllCategories(),
+                    getAllProducts()
+                ]);
+
+                loadingEl.style.display = 'none';
+
+                if (categories.length === 0) {
+                    emptyEl.style.display = 'block';
+                } else {
+                    tableContainer.style.display = 'block';
+                    renderCategoriesTable();
+                }
+            } catch (error) {
+                console.error('Error loading data:', error);
+                document.getElementById('categories-loading').innerHTML = 
+                    `<div style="color: #dc3545;">Error loading categories: ${error.message}</div>`;
+            }
+        }
+
+        // Render categories table
+        function renderCategoriesTable() {
+            const tbody = document.getElementById('categories-table-body');
+            
+            tbody.innerHTML = categories.map(category => {
+                const productCount = products.filter(p => p.category === category.name || p.category === category.slug).length;
+                const createdDate = formatDate(category.createdAt);
+
+                return `
+                    <tr>
+                        <td><strong>${escapeHtml(category.name)}</strong></td>
+                        <td><code style="background: #f8f9fa; padding: 4px 8px; border-radius: 4px; font-size: 0.85rem;">${escapeHtml(category.slug || 'N/A')}</code></td>
+                        <td><span class="badge badge-active">${productCount} product${productCount !== 1 ? 's' : ''}</span></td>
+                        <td>${createdDate}</td>
+                        <td>
+                            <button class="btn-sm" onclick="handleDeleteCategory('${category.id}', '${escapeHtml(category.name)}')" 
+                                    style="background: #dc3545; color: white;">
+                                🗑️ Delete
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // Escape HTML to prevent XSS
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Open add category modal
+        window.openAddCategoryModal = function() {
+            document.getElementById('add-category-modal').classList.add('active');
+            document.getElementById('category-name').value = '';
+            document.getElementById('category-error').style.display = 'none';
+            document.getElementById('category-name').focus();
+        };
+
+        // Close add category modal
+        window.closeAddCategoryModal = function() {
+            document.getElementById('add-category-modal').classList.remove('active');
+        };
+
+        // Handle add category
+        window.handleAddCategory = async function(event) {
+            event.preventDefault();
+            
+            const nameInput = document.getElementById('category-name');
+            const errorEl = document.getElementById('category-error');
+            const name = nameInput.value.trim();
+
+            if (!name) {
+                errorEl.textContent = 'Category name is required';
+                errorEl.style.display = 'block';
+                return;
+            }
+
+            // Check for duplicate
+            const duplicate = categories.find(c => c.name.toLowerCase() === name.toLowerCase());
+            if (duplicate) {
+                errorEl.textContent = 'Category already exists';
+                errorEl.style.display = 'block';
+                return;
+            }
+
+            try {
+                errorEl.style.display = 'none';
+                await createCategory(name);
+                closeAddCategoryModal();
+                await loadData();
+                alert('Category added successfully!');
+            } catch (error) {
+                console.error('Error adding category:', error);
+                errorEl.textContent = 'Error adding category: ' + error.message;
+                errorEl.style.display = 'block';
+            }
+        };
+
+        // Handle delete category
+        window.handleDeleteCategory = async function(categoryId, categoryName) {
+            // Check if category has products
+            const productCount = products.filter(p => p.category === categoryName).length;
+            
+            let confirmMessage = `Are you sure you want to delete "${categoryName}"?`;
+            if (productCount > 0) {
+                confirmMessage = `⚠️ WARNING: "${categoryName}" has ${productCount} product(s). Deleting this category will NOT delete the products, but they will have no category assigned.\n\nAre you sure you want to continue?`;
+            }
+
+            if (!confirmAction(confirmMessage)) {
+                return;
+            }
+
+            try {
+                await deleteCategory(categoryId);
+                await loadData();
+                alert('Category deleted successfully!');
+            } catch (error) {
+                console.error('Error deleting category:', error);
+                alert('Error deleting category: ' + error.message);
+            }
+        };
+
+        // Close modal when clicking outside
+        document.getElementById('add-category-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeAddCategoryModal();
+            }
+        });
+
+        // Initialize on page load
+        const isAuth = await checkAdminAuth();
+        if (isAuth) {
+            setupSidebarCloseHandlers();
+            await loadData();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,1604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Products Management - Hunny Collection PK</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Favicon & App Icons -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/jpeg" href="/assets/logo.jpeg" sizes="32x32">
+    <link rel="icon" type="image/jpeg" href="/assets/logo.jpeg" sizes="16x16">
+    <link rel="icon" type="image/png" href="/assets/logo.jpeg">
+    <link rel="shortcut icon" type="image/jpeg" href="/assets/logo.jpeg">
+    <link rel="apple-touch-icon" href="/assets/logo.jpeg">
+    <link rel="apple-touch-icon-precomposed" href="/assets/logo.jpeg">
+    <meta name="msapplication-TileImage" content="/assets/logo.jpeg">
+    <meta name="msapplication-TileColor" content="#FF69B4">
+    <meta name="theme-color" content="#FF69B4">
+    <link rel="stylesheet" href="admin-mobile.css">
+    <style>
+        .admin-layout {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            min-height: calc(100vh - 60px);
+        }
+        .admin-sidebar {
+            background: linear-gradient(180deg, var(--dark-pink) 0%, var(--primary-pink) 100%);
+            padding: 20px;
+        }
+        .admin-sidebar h3 {
+            color: var(--white);
+            margin-bottom: 30px;
+        }
+        .admin-sidebar a {
+            display: block;
+            color: var(--white);
+            text-decoration: none;
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        .admin-sidebar a:hover,
+        .admin-sidebar a.active {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        .admin-content {
+            padding: 40px;
+            background: var(--soft-pink);
+        }
+        .admin-card {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(255, 182, 193, 0.2);
+            margin-bottom: 20px;
+        }
+        .btn-sm {
+            padding: 8px 15px;
+            font-size: 0.9rem;
+            margin: 2px;
+        }
+        .table-responsive { overflow-x: auto; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+        th {
+            background: var(--soft-pink);
+            font-weight: 600;
+        }
+        .badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        .badge-pending { background: #FFF3CD; color: #856404; }
+        .badge-confirmed { background: #D1ECF1; color: #0C5460; }
+        .badge-shipped { background: #CCE5FF; color: #004085; }
+        .badge-delivered { background: #D4EDDA; color: #155724; }
+        .badge-cancelled { background: #F8D7DA; color: #721C24; }
+        .badge-success { background: #D4EDDA; color: #155724; }
+        .badge-danger { background: #F8D7DA; color: #721C24; }
+        .badge-warning { background: #FFF3CD; color: #856404; }
+        .badge-secondary { background: #E2E3E5; color: #383D41; }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal.active { display: flex; }
+        .modal-content {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        .form-group { margin-bottom: 20px; }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        /* Mobile Menu Toggle Button */
+        .admin-menu-toggle {
+            display: none;
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 1001;
+            background: var(--dark-pink);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        .admin-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+        }
+
+        .admin-overlay.active {
+            display: block;
+        }
+
+        /* Mobile Responsive Design */
+        @media (max-width: 1024px) {
+            .admin-content {
+                padding: 30px 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .admin-menu-toggle {
+                display: block !important;
+            }
+
+            .admin-sidebar {
+                position: fixed;
+                top: 0;
+                left: -280px;
+                width: 280px;
+                height: 100vh;
+                z-index: 1000;
+                transition: left 0.3s ease;
+                overflow-y: auto;
+                padding-top: 70px;
+            }
+
+            .admin-sidebar.active {
+                left: 0;
+            }
+
+            .admin-overlay.active { display: block; }
+
+            .admin-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .admin-content {
+                padding: 80px 15px 20px;
+            }
+
+            .header {
+                padding: 10px 15px;
+            }
+
+            .navbar {
+                flex-wrap: wrap;
+            }
+
+            .nav-menu {
+                display: none;
+            }
+
+            .table-responsive {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            table {
+                min-width: 600px;
+            }
+
+            th, td {
+                padding: 8px 6px;
+                font-size: 0.85rem;
+            }
+
+            .btn-sm {
+                padding: 10px 15px;
+                min-height: 44px;
+                margin: 3px;
+                display: inline-block;
+            }
+
+            .admin-card[style*="background: #f8f9fa"] {
+                padding: 15px !important;
+            }
+
+            #bulk-actions-bar {
+                padding: 10px !important;
+            }
+
+            .modal-content {
+                width: 95% !important;
+                padding: 20px;
+                max-height: 85vh;
+            }
+
+            .form-group input,
+            .form-group textarea,
+            .form-group select {
+                padding: 12px;
+                font-size: 16px;
+            }
+
+            h2 {
+                font-size: 1.3rem !important;
+                margin-bottom: 20px !important;
+            }
+
+            div[style*="display: flex"] {
+                flex-wrap: wrap !important;
+                gap: 8px !important;
+            }
+
+            .badge {
+                padding: 4px 8px;
+                font-size: 0.75rem;
+            }
+
+            table img {
+                width: 40px !important;
+                height: 40px !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stat-card {
+                padding: 12px;
+            }
+
+            .stat-number {
+                font-size: 1.5rem;
+            }
+
+            .btn-sm {
+                padding: 5px 8px;
+                font-size: 0.75rem;
+            }
+
+            .btn-primary {
+                padding: 10px 15px;
+                font-size: 0.9rem;
+            }
+
+            table {
+                min-width: 550px;
+            }
+
+            th, td {
+                padding: 6px 4px;
+                font-size: 0.8rem;
+            }
+
+            h2 {
+                font-size: 1.3rem;
+            }
+        }
+
+        /* Loading spinner */
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid var(--dark-pink);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Alert styles */
+        .alert {
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+        }
+    </style>
+</head>
+<body>
+    <!-- Mobile Menu Toggle Button -->
+    <button class="admin-menu-toggle" onclick="toggleMobileSidebar()">☰</button>
+
+    <!-- Overlay for mobile -->
+    <div class="admin-overlay" onclick="closeMobileSidebar()"></div>
+
+    <header class="header">
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo">🌸 Hunny Collection PK</a>
+                <ul class="nav-menu">
+                    <li><a href="admin.html">Admin</a></li>
+                    <li><a href="index.html">Back to Store</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="admin-layout">
+        <aside class="admin-sidebar">
+            <h3>🌸 Admin Panel</h3>
+            <a href="admin.html">Dashboard</a>
+            <a href="admin-products.html" class="active">Products</a>
+            <a href="admin.html#orders">Orders</a>
+            <a href="admin-orders-history.html">📊 Orders History</a>
+            <a href="admin.html#reviews">⭐ Reviews</a>
+            <a href="admin.html#categories">Categories</a>
+            <a href="admin.html#digital-products">💻 Digital Products</a>
+            <a href="admin.html#digital-categories">📂 Digital Categories</a>
+            <a href="admin.html#digital-orders">📥 Digital Orders</a>
+            <a href="admin.html#video-ads">📺 Video Ads</a>
+            <a href="profit-calculator.html">💰 Profit Calculator</a>
+            <a href="settings.html">⚙️ Site Settings</a>
+            <a href="#" onclick="logout()">Logout</a>
+        </aside>
+
+        <main class="admin-content">
+            <div id="section-products">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; flex-wrap: wrap; gap: 15px;">
+                    <h2 style="color: var(--dark-pink);">📦 Products Management</h2>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <button class="btn-sm" onclick="checkAllProductsAvailability()" style="background: #25d366; color: white;">
+                            🔄 Check Availability
+                        </button>
+                        <button class="btn-sm" onclick="exportProducts()" style="background: #007bff; color: white;">
+                            📊 Export
+                        </button>
+                        <button class="btn-primary" onclick="openProductModal()">+ Add Product</button>
+                    </div>
+                </div>
+
+                <!-- Product Filters & Search -->
+                <div class="admin-card" style="background: #f8f9fa; padding: 20px; border-radius: 12px; margin-bottom: 20px;">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; align-items: end;">
+                        <div>
+                            <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">🔍 Search Products</label>
+                            <input type="text" id="product-search" placeholder="Search by name, category..." oninput="filterProducts()" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px;">
+                        </div>
+                        <div>
+                            <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">📂 Category</label>
+                            <select id="product-category-filter" onchange="filterProducts()" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px;">
+                                <option value="all">All Categories</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">📊 Sort By</label>
+                            <select id="product-sort" onchange="filterProducts()" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px;">
+                                <option value="newest">Newest First</option>
+                                <option value="oldest">Oldest First</option>
+                                <option value="price-low">Price: Low to High</option>
+                                <option value="price-high">Price: High to Low</option>
+                                <option value="name">Name: A to Z</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bulk Actions -->
+                <div id="bulk-actions-bar" style="display: none; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 15px; border-radius: 8px; margin-bottom: 15px; color: white;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                        <span>📦 <strong id="selected-count">0</strong> products selected</span>
+                        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                            <button class="btn-sm" onclick="bulkDeleteSelected()" style="background: #dc3545; color: white;">🗑️ Delete Selected</button>
+                            <button class="btn-sm" onclick="clearSelection()" style="background: rgba(255,255,255,0.3); color: white;">❌ Clear</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="admin-card">
+                    <div id="loading-indicator" style="text-align: center; padding: 40px; display: none;">
+                        <div class="spinner"></div>
+                        <p style="color: #666;">Loading products...</p>
+                    </div>
+                    <div id="error-message" class="alert alert-error" style="display: none;"></div>
+                    <div class="table-responsive">
+                        <table id="products-table">
+                            <thead>
+                                <tr>
+                                    <th><input type="checkbox" id="select-all-products" onchange="toggleSelectAll()"></th>
+                                    <th>Image</th>
+                                    <th>Name</th>
+                                    <th>Category</th>
+                                    <th>Price</th>
+                                    <th>Markaz Status</th>
+                                    <th>Added By</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                    <div id="no-products" style="text-align: center; padding: 40px; color: #666; display: none;">
+                        <p style="font-size: 1.2rem; margin-bottom: 15px;">No products found</p>
+                        <button class="btn-primary" onclick="openProductModal()">+ Add Your First Product</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Product Modal -->
+    <div id="product-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="product-modal-title">Add Product</h3>
+                <button class="close-modal" onclick="closeProductModal()">&times;</button>
+            </div>
+            <form id="product-form">
+                <input type="hidden" id="product-id">
+                <div class="form-group">
+                    <label>Product Name *</label>
+                    <input type="text" id="product-name" required>
+                </div>
+
+                <!-- Pricing Section with Discount -->
+                <div class="form-group" style="background: linear-gradient(135deg, #fff3f3 0%, #fff 100%); padding: 20px; border-radius: 12px; border: 2px solid #FFB6C1;">
+                    <label style="color: var(--dark-pink); font-size: 1.1rem; margin-bottom: 15px; display: block;">💰 Pricing & Discount Settings</label>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                        <div>
+                            <label style="font-size: 0.9rem; color: #666;">
+                                🔒 Cost Price (Rs.)
+                                <span style="display: block; font-size: 0.75rem; color: #999; margin-top: 3px;">Your cost from Markaz (Hidden from customers)</span>
+                            </label>
+                            <input type="number" id="product-cost-price" placeholder="1800" min="0" style="border-color: #FF6B6B;">
+                        </div>
+                        <div>
+                            <label style="font-size: 0.9rem; color: var(--dark-pink);">
+                                💵 Selling Price (Rs.) *
+                                <span style="display: block; font-size: 0.75rem; color: #999; margin-top: 3px;">Your selling price (Shown to customers)</span>
+                            </label>
+                            <input type="number" id="product-selling-price" placeholder="2499" min="0" required style="border-color: var(--dark-pink);">
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom: 15px;">
+                        <label style="font-size: 0.9rem; color: #666;">
+                            🏷️ Original/Compare Price (Rs.)
+                            <span style="display: block; font-size: 0.75rem; color: #999; margin-top: 3px;">Higher fake price to show discount (Shown crossed to customers)</span>
+                        </label>
+                        <input type="number" id="product-original-price" placeholder="3500" min="0" style="border-color: #FFB6C1;">
+                    </div>
+
+                    <!-- Auto-calculated Info -->
+                    <div id="pricing-info" style="background: white; padding: 15px; border-radius: 8px; margin-top: 15px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                            <div style="display: flex; gap: 15px; align-items: center;">
+                                <span id="discount-badge" style="background: #FF6B6B; color: white; padding: 5px 12px; border-radius: 20px; font-weight: bold; font-size: 0.9rem; display: none;">🔥 0% OFF</span>
+                                <span id="profit-info" style="color: #28a745; font-weight: 600; display: none;">💰 Profit: Rs. 0</span>
+                            </div>
+                            <span id="pricing-hint" style="color: #999; font-size: 0.85rem;">Enter prices to see discount & profit</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Category *</label>
+                    <select id="product-category" required>
+                        <option value="">Select Category</option>
+                    </select>
+                    <input type="text" id="product-new-category" placeholder="Or create new category" style="margin-top: 10px;">
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea id="product-description" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Sizes (comma separated)</label>
+                    <input type="text" id="product-sizes" placeholder="S, M, L, XL">
+                </div>
+
+                <!-- Markaz Product Code -->
+                <div class="form-group" style="background: #fff3f3; padding: 15px; border-radius: 8px; border-left: 4px solid #FF6B6B;">
+                    <label>🏪 Markaz Product Code *</label>
+                    <input type="text" id="product-markaz-code" placeholder="e.g., MZ1459200006TEBGMR or MZ123456"
+                           pattern="[A-Za-z0-9]+" required
+                           title="Enter Markaz product code (any alphanumeric code)"
+                           style="text-transform: uppercase; font-family: monospace; letter-spacing: 1px;">
+                    <small style="color: #666; display: block; margin-top: 5px;">
+                        ⚠️ Required field - Enter Markaz product code (any format/length)
+                    </small>
+                </div>
+
+                <!-- Optional Main Image Section -->
+                <div class="form-group" style="background: #f0f8ff; padding: 15px; border-radius: 8px; border-left: 4px solid #4ECDC4;">
+                    <label>🖼️ Main Product Image (Optional)</label>
+                    <p style="font-size: 0.85rem; color: #666; margin-bottom: 10px;">
+                        Upload or paste a URL for the main display image (overrides the first image from gallery)
+                    </p>
+
+                    <!-- Main Image Preview -->
+                    <div id="main-image-preview-container" style="margin-bottom: 15px;">
+                        <div id="main-image-preview" style="display: none; position: relative; width: 200px; height: 200px; border-radius: 8px; overflow: hidden; border: 2px solid #4ECDC4;">
+                            <img id="main-image-preview-img" src="" alt="Main Image Preview" style="width: 100%; height: 100%; object-fit: cover;">
+                            <button type="button" onclick="removeMainImage()" style="position: absolute; top: 5px; right: 5px; background: rgba(255, 0, 0, 0.7); color: white; border: none; border-radius: 50%; width: 30px; height: 30px; cursor: pointer; font-size: 1rem;">✕</button>
+                        </div>
+                        <p id="no-main-image-msg" style="color: #999; font-size: 0.9rem;">No main image set (will use first image from gallery)</p>
+                    </div>
+
+                    <!-- Upload Button -->
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 10px;">
+                        <button type="button" class="btn-sm" onclick="document.getElementById('main-image-upload').click()" style="background: #4ECDC4; color: white;">
+                            📁 Upload Main Image
+                        </button>
+                        <button type="button" class="btn-sm" onclick="openUploadGuide()" style="background: #25d366; color: white;">
+                            📤 Upload to ImgBB (Free)
+                        </button>
+                    </div>
+                    <input type="file" id="main-image-upload" accept="image/*" style="display: none;" onchange="handleMainImageUpload(event)">
+
+                    <!-- Manual URL Input -->
+                    <div style="margin-top: 10px;">
+                        <label style="font-size: 0.9rem;">Or Add Main Image URL:</label>
+                        <div style="display: flex; gap: 10px; margin-top: 5px;">
+                            <input type="text" id="main-image-url" placeholder="Paste main image URL here" style="flex: 1;">
+                            <button type="button" class="btn-sm" onclick="addMainImageUrl()" style="background: #4ECDC4; color: white;">➕ Add URL</button>
+                        </div>
+                        <small style="color: #666; display: block; margin-top: 5px;">
+                            💡 Tip: This image will be shown as the primary product image
+                        </small>
+                    </div>
+                </div>
+
+                <!-- Image Upload Section -->
+                <div class="form-group">
+                    <label>Product Images *</label>
+                    <p style="font-size: 0.85rem; color: #666; margin-bottom: 10px;">
+                        Upload multiple images - First image will be main display image
+                    </p>
+
+                    <!-- Upload Buttons -->
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 15px;">
+                        <button type="button" class="btn-sm" onclick="document.getElementById('product-image-upload').click()" style="background: var(--primary-pink); color: white;">
+                            📁 Upload Multiple Images
+                        </button>
+                        <button type="button" class="btn-sm" onclick="openUploadGuide()" style="background: #25d366; color: white;">
+                            📤 Upload to ImgBB (Free)
+                        </button>
+                        <button type="button" class="btn-sm" onclick="window.open('https://cloudinary.com/', '_blank')" style="background: #FF6B6B; color: white;">
+                            ☁️ Cloudinary (25GB Free)
+                        </button>
+                        <button type="button" class="btn-sm" onclick="window.open('https://postimages.org/', '_blank')" style="background: #4ECDC4; color: white;">
+                            📌 PostImages (No Signup)
+                        </button>
+                    </div>
+                    <input type="file" id="product-image-upload" accept="image/*" multiple style="display: none;" onchange="handleFileSelect(event)">
+                    <div id="upload-status" style="font-size: 0.85rem; margin-top: 10px;"></div>
+
+                    <!-- Image Preview with Remove -->
+                    <div id="image-preview-container" style="margin-top: 15px;">
+                        <h4 style="color: var(--dark-pink); margin-bottom: 10px; font-size: 1rem;">Uploaded Images:</h4>
+                        <div id="image-preview" style="display: flex; gap: 10px; flex-wrap: wrap;"></div>
+                        <p id="no-images-msg" style="color: #999; font-size: 0.9rem;">No images uploaded yet</p>
+                    </div>
+
+                    <!-- Manual URL Input -->
+                    <div style="margin-top: 15px;">
+                        <label style="font-size: 0.9rem;">Or Add Image URLs:</label>
+                        <input type="text" id="product-image-urls" placeholder="Paste image URL and click Add" style="margin-top: 5px;">
+                        <button type="button" class="btn-sm" onclick="addImageUrl()" style="margin-top: 5px; background: var(--dark-pink); color: white;">➕ Add URL</button>
+                        <small style="color: #666; display: block; margin-top: 5px;">
+                            💡 Tip: Upload images to ImgBB and paste direct links here
+                        </small>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-primary" style="width: 100%;">Save Product</button>
+            </form>
+        </div>
+    </div>
+
+    <script type="module">
+        import { checkAdminAuth, logout, showSection, toggleMobileSidebar, closeMobileSidebar, setupSidebarCloseHandlers, formatCurrency, formatDate, getStatusBadge, showLoading, showError, confirmAction } from './admin-common.js';
+        import { getAllProducts, createProduct, updateProduct, deleteProduct, bulkDeleteProducts, getAllCategories, createCategory, getProduct } from './admin-api.js';
+        import { auth, db } from './firebase-config.js';
+        import { doc, updateDoc, addDoc, collection, deleteDoc } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+        let products = [];
+        let categories = [];
+        let uploadedImageUrls = [];
+        let mainImageFile = null;
+
+        // ========== AUTHENTICATION ==========
+        const isAuthorized = await checkAdminAuth();
+        if (isAuthorized) {
+            setupSidebarCloseHandlers();
+            await loadPageData();
+        }
+
+        // ========== LOAD DATA ==========
+        async function loadPageData() {
+            try {
+                document.getElementById('loading-indicator').style.display = 'block';
+                document.getElementById('error-message').style.display = 'none';
+
+                products = await getAllProducts();
+                categories = await getAllCategories();
+
+                document.getElementById('loading-indicator').style.display = 'none';
+
+                renderProducts();
+                populateCategoryFilter();
+                populateProductCategoryDropdown();
+            } catch (error) {
+                console.error('Error loading data:', error);
+                document.getElementById('loading-indicator').style.display = 'none';
+                document.getElementById('error-message').style.display = 'block';
+                document.getElementById('error-message').textContent = 'Error loading products: ' + error.message;
+            }
+        }
+
+        // ========== RENDER PRODUCTS ==========
+        function renderProducts(productsToRender = null) {
+            const tbody = document.querySelector('#products-table tbody');
+            if (!tbody) return;
+
+            const displayProducts = productsToRender || products;
+
+            // Show/hide no products message
+            document.getElementById('no-products').style.display = displayProducts.length === 0 ? 'block' : 'none';
+            document.querySelector('#products-table').style.display = displayProducts.length === 0 ? 'none' : 'table';
+
+            tbody.innerHTML = displayProducts.map(p => {
+                const hasMarkazCode = p.markazCode ? 'yes' : 'no';
+                const statusClass = p.markazAvailability === 'available' ? 'badge-success' :
+                                   p.markazAvailability === 'unavailable' ? 'badge-danger' : 'badge-secondary';
+                const statusIcon = p.markazAvailability === 'available' ? '✅' :
+                                   p.markazAvailability === 'unavailable' ? '❌' : '⏳';
+                const statusText = p.markazCode ? (p.markazAvailability || 'Not Checked') : 'No Code';
+                const codeDisplay = p.markazCode ? `<br><small style="font-family: monospace; font-size: 0.75rem; color: #666;">${p.markazCode}</small>` : '';
+
+                // Pricing info
+                const costPrice = p.costPrice || 0;
+                const sellingPrice = p.sellingPrice || p.price || 0;
+                const originalPrice = p.originalPrice || 0;
+                const profit = sellingPrice - costPrice;
+                const discountPercent = originalPrice > sellingPrice ? Math.round(((originalPrice - sellingPrice) / originalPrice) * 100) : 0;
+
+                // Admin who added this product
+                const addedBy = p.addedBy ? p.addedBy : (p.addedByUserId ? 'Unknown Admin' : 'Legacy Product');
+
+                return `
+                <tr>
+                    <td><input type="checkbox" class="product-checkbox" data-id="${p.id}" onchange="updateBulkActionsBar()"></td>
+                    <td><img src="${p.images?.[0] || 'https://via.placeholder.com/50'}" style="width:50px;height:50px;object-fit:cover;border-radius:5px;"></td>
+                    <td>
+                        <div style="font-weight: 600;">${p.name}</div>
+                        <div style="font-size: 0.75rem; color: #999;">ID: ${p.id.slice(0, 8)}</div>
+                    </td>
+                    <td>${p.category}</td>
+                    <td>
+                        <div style="font-size: 0.85rem;">
+                            <div style="color: var(--dark-pink); font-weight: bold;">Sell: Rs. ${sellingPrice.toLocaleString()}</div>
+                            <div style="color: #999; text-decoration: line-through; font-size: 0.75rem;">${originalPrice > 0 ? 'Rs. ' + originalPrice.toLocaleString() : ''}</div>
+                            <div style="color: #666; font-size: 0.75rem;">Cost: Rs. ${costPrice.toLocaleString()}</div>
+                            ${profit > 0 ? `<div style="color: #28a745; font-size: 0.75rem;">💰 Profit: Rs. ${profit.toLocaleString()}</div>` : ''}
+                            ${discountPercent > 0 ? `<div style="color: #FF6B6B; font-size: 0.75rem;">🔥 ${discountPercent}% OFF</div>` : ''}
+                        </div>
+                    </td>
+                    <td>
+                        <span class="badge ${statusClass}" style="cursor: pointer;" onclick="checkSingleProductAvailability('${p.id}')" title="Click to check">
+                            ${statusIcon} ${statusText}
+                        </span>
+                        ${codeDisplay}
+                        ${p.markazCode ? `
+                            <a href="javascript:void(0)" onclick="openMarkazAppOrWeb('${p.markazCode}')"
+                               class="badge ${p.markazAvailability === 'available' ? 'badge-success' : p.markazAvailability === 'unavailable' ? 'badge-danger' : 'badge-secondary'}"
+                               style="display: inline-block; margin-left: 5px; font-size: 0.75rem; text-decoration: none; cursor: pointer;"
+                               title="Search on Markaz">🔍 ${p.markazAvailability === 'available' ? '✅ Available' : p.markazAvailability === 'unavailable' ? '❌ Unavailable' : '🔍 Search'}</a>
+                        ` : ''}
+                    </td>
+                    <td><small style="color: #666; font-size: 0.7rem;">👤 ${addedBy}</small>
+                    ${p.lastEditedBy ? `<br><small style="color: #FF9800; font-size: 0.65rem;">✏️ ${p.lastEditedBy}</small>` : ''}</td>
+                    <td>
+                        <button class="btn-sm" onclick="editProduct('${p.id}')">✏️ Edit</button>
+                        <button class="btn-sm" onclick="shareProduct('${p.id}', '${(p.name || '').replace(/'/g, "\\'").replace(/"/g, '&quot;')}', '${p.images && p.images[0] ? p.images[0] : ''}', ${p.sellingPrice || p.price || 0}, ${p.originalPrice || 0})" style="background: #25d366; color: white;">📱 Share</button>
+                        <button class="btn-sm" onclick="deleteProduct('${p.id}')" style="background: #dc3545; color: white;">🗑️ Delete</button>
+                    </td>
+                </tr>
+            `}).join('');
+        }
+
+        // ========== FILTER & SORT ==========
+        window.filterProducts = function() {
+            const searchTerm = document.getElementById('product-search')?.value.toLowerCase() || '';
+            const categoryFilter = document.getElementById('product-category-filter')?.value || 'all';
+            const sortBy = document.getElementById('product-sort')?.value || 'newest';
+
+            let filtered = products.slice();
+
+            // Search filter
+            if (searchTerm) {
+                filtered = filtered.filter(p =>
+                    (p.name || '').toLowerCase().includes(searchTerm) ||
+                    (p.category || '').toLowerCase().includes(searchTerm) ||
+                    (p.description || '').toLowerCase().includes(searchTerm) ||
+                    (p.id || '').toLowerCase().includes(searchTerm)
+                );
+            }
+
+            // Category filter
+            if (categoryFilter !== 'all') {
+                filtered = filtered.filter(p => p.category === categoryFilter);
+            }
+
+            // Sort
+            if (sortBy === 'newest') {
+                filtered.sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
+            } else if (sortBy === 'oldest') {
+                filtered.sort((a, b) => new Date(a.createdAt || 0) - new Date(b.createdAt || 0));
+            } else if (sortBy === 'price-low') {
+                filtered.sort((a, b) => (a.sellingPrice || a.price || 0) - (b.sellingPrice || b.price || 0));
+            } else if (sortBy === 'price-high') {
+                filtered.sort((a, b) => (b.sellingPrice || b.price || 0) - (a.sellingPrice || a.price || 0));
+            } else if (sortBy === 'name') {
+                filtered.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
+            }
+
+            renderProducts(filtered);
+        };
+
+        // ========== BULK ACTIONS ==========
+        window.toggleSelectAll = function() {
+            const selectAll = document.getElementById('select-all-products');
+            const checkboxes = document.querySelectorAll('.product-checkbox');
+            checkboxes.forEach(cb => cb.checked = selectAll.checked);
+            updateBulkActionsBar();
+        };
+
+        window.updateBulkActionsBar = function() {
+            const selected = document.querySelectorAll('.product-checkbox:checked');
+            const bar = document.getElementById('bulk-actions-bar');
+            const count = document.getElementById('selected-count');
+
+            if (selected.length > 0) {
+                bar.style.display = 'block';
+                count.textContent = selected.length;
+            } else {
+                bar.style.display = 'none';
+            }
+        };
+
+        window.clearSelection = function() {
+            const checkboxes = document.querySelectorAll('.product-checkbox');
+            checkboxes.forEach(cb => cb.checked = false);
+            document.getElementById('select-all-products').checked = false;
+            updateBulkActionsBar();
+        };
+
+        window.bulkDeleteSelected = async function() {
+            const selected = document.querySelectorAll('.product-checkbox:checked');
+            if (selected.length === 0) return;
+
+            if (!confirm(`Are you sure you want to delete ${selected.length} product(s)? This cannot be undone.`)) return;
+
+            const productIds = Array.from(selected).map(cb => cb.dataset.id);
+            let deleted = 0;
+
+            for (const id of productIds) {
+                try {
+                    await deleteProduct(id);
+                    deleted++;
+                } catch (error) {
+                    console.error('Error deleting product:', error);
+                }
+            }
+
+            alert(`${deleted}/${productIds.length} products deleted successfully!`);
+            clearSelection();
+            await loadPageData();
+        };
+
+        // ========== EXPORT ==========
+        window.exportProducts = function() {
+            const headers = ['ID', 'Name', 'Category', 'Cost Price', 'Selling Price', 'Original Price', 'Profit', 'Markaz Code', 'Added By', 'Created At'];
+            const rows = products.map(p => [
+                p.id,
+                p.name,
+                p.category,
+                p.costPrice || 0,
+                p.sellingPrice || p.price || 0,
+                p.originalPrice || 0,
+                (p.sellingPrice || p.price || 0) - (p.costPrice || 0),
+                p.markazCode || '',
+                p.addedBy || 'Legacy',
+                p.createdAt || ''
+            ]);
+
+            let csv = headers.join(',') + '\n';
+            rows.forEach(row => {
+                csv += row.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(',') + '\n';
+            });
+
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `products-export-${new Date().toISOString().split('T')[0]}.csv`;
+            a.click();
+            window.URL.revokeObjectURL(url);
+        };
+
+        // ========== POPULATE DROPDOWNS ==========
+        function populateCategoryFilter() {
+            const select = document.getElementById('product-category-filter');
+            if (!select) return;
+
+            // Keep the first option
+            select.innerHTML = '<option value="all">All Categories</option>';
+
+            const uniqueCategories = [...new Set(products.map(p => p.category).filter(Boolean))];
+            uniqueCategories.forEach(cat => {
+                const option = document.createElement('option');
+                option.value = cat;
+                option.textContent = cat;
+                select.appendChild(option);
+            });
+        }
+
+        function populateProductCategoryDropdown() {
+            const select = document.getElementById('product-category');
+            if (!select) return;
+
+            select.innerHTML = '<option value="">Select Category</option>';
+            categories.forEach(c => {
+                const option = document.createElement('option');
+                option.value = c.name;
+                option.textContent = c.name;
+                select.appendChild(option);
+            });
+        }
+
+        // ========== PRODUCT MODAL ==========
+        window.openProductModal = () => {
+            document.getElementById('product-modal').classList.add('active');
+            document.getElementById('product-form').reset();
+            document.getElementById('product-id').value = '';
+            document.getElementById('product-modal-title').textContent = 'Add Product';
+            resetPricingInfo();
+
+            mainImageFile = null;
+            const previewDiv = document.getElementById('main-image-preview');
+            const noMsg = document.getElementById('no-main-image-msg');
+            if (previewDiv) previewDiv.style.display = 'none';
+            if (noMsg) noMsg.style.display = 'block';
+
+            uploadedImageUrls = [];
+            updateImagePreview();
+        };
+
+        window.closeProductModal = () => {
+            document.getElementById('product-modal').classList.remove('active');
+            uploadedImageUrls = [];
+            mainImageFile = null;
+            updateImagePreview();
+
+            const previewDiv = document.getElementById('main-image-preview');
+            const noMsg = document.getElementById('no-main-image-msg');
+            if (previewDiv) previewDiv.style.display = 'none';
+            if (noMsg) noMsg.style.display = 'block';
+        };
+
+        window.editProduct = async (id) => {
+            const product = await getProduct(id);
+            if (!product) return;
+
+            document.getElementById('product-id').value = id;
+            document.getElementById('product-name').value = product.name || '';
+            document.getElementById('product-cost-price').value = product.costPrice || '';
+            document.getElementById('product-selling-price').value = product.sellingPrice || product.price || '';
+            document.getElementById('product-original-price').value = product.originalPrice || '';
+            document.getElementById('product-category').value = product.category || '';
+            document.getElementById('product-description').value = product.description || '';
+            document.getElementById('product-sizes').value = product.variants?.join(', ') || '';
+            document.getElementById('product-markaz-code').value = product.markazCode || '';
+
+            // Load existing images
+            uploadedImageUrls = product.images || [];
+            updateImagePreview();
+
+            // Set main image if exists
+            if (uploadedImageUrls.length > 0) {
+                mainImageFile = uploadedImageUrls[0];
+                const previewDiv = document.getElementById('main-image-preview');
+                const previewImg = document.getElementById('main-image-preview-img');
+                const noMsg = document.getElementById('no-main-image-msg');
+
+                previewImg.src = mainImageFile;
+                previewDiv.style.display = 'block';
+                noMsg.style.display = 'none';
+            }
+
+            updatePricingInfo();
+
+            document.getElementById('product-modal-title').textContent = 'Edit Product';
+            document.getElementById('product-modal').classList.add('active');
+        };
+
+        window.deleteProduct = async (id) => {
+            if (!confirm('Delete this product?')) return;
+            try {
+                await deleteProduct(id);
+                await loadPageData();
+            } catch (error) {
+                console.error('Error deleting product:', error);
+                alert('Error deleting product: ' + error.message);
+            }
+        };
+
+        // ========== PRICING CALCULATION ==========
+        function updatePricingInfo() {
+            const costPrice = Number(document.getElementById('product-cost-price').value) || 0;
+            const sellingPrice = Number(document.getElementById('product-selling-price').value) || 0;
+            const originalPrice = Number(document.getElementById('product-original-price').value) || 0;
+
+            const discountBadge = document.getElementById('discount-badge');
+            const profitInfo = document.getElementById('profit-info');
+            const pricingHint = document.getElementById('pricing-hint');
+
+            if (originalPrice > sellingPrice && sellingPrice > 0) {
+                const discountPercent = Math.round(((originalPrice - sellingPrice) / originalPrice) * 100);
+                discountBadge.textContent = `🔥 ${discountPercent}% OFF`;
+                discountBadge.style.display = 'inline-block';
+            } else {
+                discountBadge.style.display = 'none';
+            }
+
+            if (sellingPrice > 0 && costPrice > 0) {
+                const profit = sellingPrice - costPrice;
+                if (profit > 0) {
+                    profitInfo.textContent = `💰 Profit: Rs. ${profit.toLocaleString()}`;
+                    profitInfo.style.display = 'inline-block';
+                    profitInfo.style.color = '#28a745';
+                } else {
+                    profitInfo.textContent = `⚠️ Loss: Rs. ${Math.abs(profit).toLocaleString()}`;
+                    profitInfo.style.color = '#dc3545';
+                    profitInfo.style.display = 'inline-block';
+                }
+            } else {
+                profitInfo.style.display = 'none';
+            }
+
+            if (sellingPrice > 0 || originalPrice > 0 || costPrice > 0) {
+                pricingHint.style.display = 'none';
+            } else {
+                pricingHint.style.display = 'inline-block';
+            }
+        }
+
+        function resetPricingInfo() {
+            document.getElementById('discount-badge').style.display = 'none';
+            document.getElementById('profit-info').style.display = 'none';
+            document.getElementById('pricing-hint').style.display = 'inline-block';
+        }
+
+        // ========== IMAGE HANDLING ==========
+        window.handleMainImageUpload = function(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                mainImageFile = e.target.result;
+                const previewDiv = document.getElementById('main-image-preview');
+                const previewImg = document.getElementById('main-image-preview-img');
+                const noMsg = document.getElementById('no-main-image-msg');
+
+                previewImg.src = e.target.result;
+                previewDiv.style.display = 'block';
+                noMsg.style.display = 'none';
+            };
+            reader.readAsDataURL(file);
+        };
+
+        window.addMainImageUrl = function() {
+            const urlInput = document.getElementById('main-image-url');
+            const url = urlInput.value.trim();
+
+            if (!url) {
+                alert('Please enter an image URL');
+                return;
+            }
+
+            if (!url.match(/\.(jpeg|jpg|gif|png|webp)$/i) && !url.match(/^https?:\/\//i)) {
+                alert('Please enter a valid image URL');
+                return;
+            }
+
+            mainImageFile = url;
+            const previewDiv = document.getElementById('main-image-preview');
+            const previewImg = document.getElementById('main-image-preview-img');
+            const noMsg = document.getElementById('no-main-image-msg');
+
+            previewImg.src = url;
+            previewDiv.style.display = 'block';
+            noMsg.style.display = 'none';
+            urlInput.value = '';
+        };
+
+        window.removeMainImage = function() {
+            if (confirm('Remove this main image?')) {
+                mainImageFile = null;
+                const previewDiv = document.getElementById('main-image-preview');
+                const noMsg = document.getElementById('no-main-image-msg');
+                const previewImg = document.getElementById('main-image-preview-img');
+
+                previewImg.src = '';
+                previewDiv.style.display = 'none';
+                noMsg.style.display = 'block';
+                document.getElementById('main-image-upload').value = '';
+                document.getElementById('main-image-url').value = '';
+            }
+        };
+
+        window.handleFileSelect = function(event) {
+            const files = event.target.files;
+            if (files.length === 0) return;
+
+            const statusDiv = document.getElementById('upload-status');
+            statusDiv.innerHTML = '<span style="color: blue;">Processing ' + files.length + ' image(s)...</span>';
+
+            Array.from(files).forEach((file, index) => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.style.cssText = 'width: 100px; height: 100px; object-fit: cover; border-radius: 8px; border: 2px solid #FFB6C1; cursor: pointer;';
+                    img.title = 'Click to remove';
+                    img.onclick = function() { removeImageByIndex(index); };
+                    document.getElementById('image-preview').appendChild(img);
+
+                    uploadedImageUrls.push(e.target.result);
+                    updateImagePreview();
+                };
+                reader.readAsDataURL(file);
+            });
+
+            statusDiv.innerHTML = '<span style="color: orange;">⚠️ For live hosting, upload to ImgBB/Cloudinary and paste URLs</span>';
+        };
+
+        window.addImageUrl = function() {
+            const urlInput = document.getElementById('product-image-urls');
+            const url = urlInput.value.trim();
+
+            if (!url) {
+                alert('Please enter an image URL');
+                return;
+            }
+
+            if (!url.match(/\.(jpeg|jpg|gif|png|webp)$/i)) {
+                alert('Please enter a valid image URL (jpg, png, gif, webp)');
+                return;
+            }
+
+            uploadedImageUrls.push(url);
+            updateImagePreview();
+            urlInput.value = '';
+        };
+
+        window.removeImageByIndex = function(index) {
+            if (confirm('Remove this image?')) {
+                uploadedImageUrls.splice(index, 1);
+                updateImagePreview();
+            }
+        };
+
+        function updateImagePreview() {
+            const previewDiv = document.getElementById('image-preview');
+            const noImagesMsg = document.getElementById('no-images-msg');
+
+            previewDiv.innerHTML = '';
+
+            if (uploadedImageUrls.length === 0) {
+                noImagesMsg.style.display = 'block';
+            } else {
+                noImagesMsg.style.display = 'none';
+                uploadedImageUrls.forEach((url, index) => {
+                    const img = document.createElement('img');
+                    img.src = url;
+                    img.style.cssText = 'width: 100px; height: 100px; object-fit: cover; border-radius: 8px; border: 2px solid #FFB6C1; cursor: pointer;';
+                    img.title = 'Click to remove';
+                    img.onclick = function() { removeImageByIndex(index); };
+
+                    if (index === 0) {
+                        img.style.borderColor = 'var(--dark-pink)';
+                        img.style.borderWidth = '3px';
+                        img.title = 'Main Image (click to remove)';
+                    }
+
+                    previewDiv.appendChild(img);
+                });
+            }
+        }
+
+        window.openUploadGuide = function() {
+            window.open('https://imgbb.com/', '_blank');
+        };
+
+        // ========== PRODUCT FORM SUBMIT ==========
+        document.getElementById('product-form')?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const id = document.getElementById('product-id').value;
+
+            let images = [...uploadedImageUrls];
+
+            if (mainImageFile) {
+                images.unshift(mainImageFile);
+                images = images.filter((url, index) => images.indexOf(url) === index);
+            }
+
+            if (images.length === 0) {
+                alert('Please upload at least one product image');
+                return;
+            }
+
+            const markazCode = document.getElementById('product-markaz-code').value.trim().toUpperCase();
+
+            if (!markazCode) {
+                alert('⚠️ Markaz Product Code is required!\n\nPlease enter the Markaz product code (e.g., MZ1459200006TEBGMR)');
+                return;
+            }
+
+            if (!/^[A-Z0-9]+$/.test(markazCode)) {
+                alert('⚠️ Invalid Markaz Code!\n\nMarkaz code can only contain letters and numbers (e.g., MZ1459200006TEBGMR)');
+                return;
+            }
+
+            const costPrice = Number(document.getElementById('product-cost-price').value) || 0;
+            const sellingPrice = Number(document.getElementById('product-selling-price').value);
+            const originalPrice = Number(document.getElementById('product-original-price').value) || 0;
+
+            const currentAdmin = auth.currentUser;
+
+            const productData = {
+                name: document.getElementById('product-name').value,
+                costPrice: costPrice,
+                sellingPrice: sellingPrice,
+                originalPrice: originalPrice,
+                price: sellingPrice,
+                category: document.getElementById('product-new-category').value || document.getElementById('product-category').value,
+                description: document.getElementById('product-description').value,
+                variants: document.getElementById('product-sizes').value.split(',').map(s => s.trim()).filter(s => s),
+                images: images,
+                markazCode: markazCode,
+                markazAvailability: 'not-checked',
+                updatedAt: new Date().toISOString(),
+                lastEditedBy: currentAdmin ? currentAdmin.email : 'unknown',
+                lastEditedByUserId: currentAdmin ? currentAdmin.uid : 'unknown',
+                lastEditedAt: new Date().toISOString()
+            };
+
+            if (!id) {
+                productData.addedBy = currentAdmin ? currentAdmin.email : 'unknown';
+                productData.addedByUserId = currentAdmin ? currentAdmin.uid : 'unknown';
+            }
+
+            try {
+                if (id) {
+                    await updateProduct(id, productData);
+                } else {
+                    await createProduct(productData);
+
+                    const newCat = document.getElementById('product-new-category').value;
+                    if (newCat && !categories.find(c => c.name === newCat)) {
+                        await createCategory(newCat);
+                    }
+                }
+
+                closeProductModal();
+                uploadedImageUrls = [];
+                mainImageFile = null;
+                await loadPageData();
+            } catch (error) {
+                console.error('Error saving product:', error);
+                alert('Error saving product: ' + error.message);
+            }
+        });
+
+        // ========== PRICING EVENT LISTENERS ==========
+        document.addEventListener('DOMContentLoaded', () => {
+            ['product-cost-price', 'product-selling-price', 'product-original-price'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) {
+                    el.addEventListener('input', updatePricingInfo);
+                }
+            });
+        });
+
+        // ========== MARKAZ AVAILABILITY ==========
+        window.checkSingleProductAvailability = async (productId) => {
+            const product = products.find(p => p.id === productId);
+            if (!product || !product.markazCode) {
+                alert('❌ This product has no Markaz code!\n\nPlease add a Markaz product code first.');
+                return;
+            }
+
+            try {
+                const statusBadge = event.target;
+                const originalText = statusBadge.innerHTML;
+                statusBadge.innerHTML = '🔄 Checking...';
+
+                const isAvailable = await checkMarkazProduct(product.markazCode);
+
+                await updateDoc(doc(db, 'products', productId), {
+                    markazAvailability: isAvailable ? 'available' : 'unavailable',
+                    markazLastChecked: new Date().toISOString()
+                });
+
+                await loadPageData();
+
+                if (!isAvailable) {
+                    const userChoice = confirm(
+                        '⚠️ This product is NOT AVAILABLE on Markaz!\n\n' +
+                        'Product: ' + product.name + '\n' +
+                        'Code: ' + product.markazCode + '\n\n' +
+                        'Would you like to open Markaz to verify manually?'
+                    );
+                    if (userChoice) {
+                        window.open(`https://www.markaz.app/shop/search?q=${product.markazCode}`, '_blank');
+                    }
+                }
+            } catch (error) {
+                console.error('Error checking availability:', error);
+                alert('❌ Error checking availability. Please try again.\n\nYou can manually verify on Markaz.');
+                const product = products.find(p => p.id === productId);
+                if (product) {
+                    window.open(`https://www.markaz.app/shop/search?q=${product.markazCode}`, '_blank');
+                }
+            }
+        };
+
+        window.checkAllProductsAvailability = async () => {
+            const productsWithMarkaz = products.filter(p => p.markazCode);
+
+            if (productsWithMarkaz.length === 0) {
+                alert('ℹ️ No products with Markaz codes found!\n\nPlease add Markaz product codes to your products first.');
+                return;
+            }
+
+            const confirmCheck = confirm(`🔍 Check availability for ${productsWithMarkaz.length} products?\n\nThis will check each product on Markaz and update their status.`);
+            if (!confirmCheck) return;
+
+            let checked = 0;
+            let available = 0;
+            let unavailable = 0;
+            let errors = 0;
+
+            for (const product of productsWithMarkaz) {
+                try {
+                    const isAvailable = await checkMarkazProduct(product.markazCode);
+
+                    await updateDoc(doc(db, 'products', product.id), {
+                        markazAvailability: isAvailable ? 'available' : 'unavailable',
+                        markazLastChecked: new Date().toISOString()
+                    });
+
+                    checked++;
+                    if (isAvailable) {
+                        available++;
+                    } else {
+                        unavailable++;
+                    }
+                } catch (error) {
+                    console.error('Error checking product:', product.name, error);
+                    errors++;
+                }
+
+                await loadPageData();
+            }
+
+            alert(`✅ Availability Check Complete!\n\n` +
+                  `📊 Total Checked: ${checked}\n` +
+                  `✅ Available: ${available}\n` +
+                  `❌ Unavailable: ${unavailable}\n` +
+                  `${errors > 0 ? `⚠️ Errors: ${errors}` : ''}`);
+        };
+
+        window.openMarkazAppOrWeb = function(productCode) {
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            const isAndroid = /Android/i.test(navigator.userAgent);
+            const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+            if (isMobile) {
+                const androidAppUrl = `intent://product/${productCode}#Intent;scheme=markaz;package=com.markaz.app;end`;
+                const iosAppUrl = `markaz://product/${productCode}`;
+                const webUrl = `https://www.markaz.app/shop/search?q=${productCode}`;
+
+                if (isAndroid) {
+                    try {
+                        window.location.href = androidAppUrl;
+                        setTimeout(() => {
+                            window.location.href = webUrl;
+                        }, 2500);
+                    } catch (e) {
+                        window.location.href = webUrl;
+                    }
+                } else if (isIOS) {
+                    try {
+                        window.location.href = iosAppUrl;
+                        setTimeout(() => {
+                            window.location.href = webUrl;
+                        }, 2500);
+                    } catch (e) {
+                        window.location.href = webUrl;
+                    }
+                } else {
+                    window.location.href = webUrl;
+                }
+            } else {
+                const webUrl = `https://www.markaz.app/shop/search?q=${productCode}`;
+                window.open(webUrl, '_blank');
+            }
+        };
+
+        async function checkMarkazProduct(productCode) {
+            console.log('=== Checking Markaz Product:', productCode, '===');
+
+            try {
+                const possibleUrls = [
+                    `https://www.markaz.app/shop/product/${productCode}`,
+                    `https://www.markaz.app/shop/search?q=${productCode}`,
+                    `https://markaz.app/product/${productCode}`,
+                    `https://app.markaz.com/product/${productCode}`
+                ];
+
+                for (const url of possibleUrls) {
+                    console.log('Trying URL:', url);
+                    const result = await tryMarkazUrl(url, productCode);
+                    if (result !== null) {
+                        console.log('✅ Found result for', productCode, ':', result ? 'AVAILABLE' : 'UNAVAILABLE');
+                        return result;
+                    }
+                }
+
+                const numericMatch = productCode.match(/\d+/);
+                if (numericMatch) {
+                    const numericId = numericMatch[0];
+                    console.log('Trying numeric ID:', numericId);
+                    const numericUrl = `https://www.markaz.app/shop/product/${numericId}`;
+                    const result = await tryMarkazUrl(numericUrl, productCode);
+                    if (result !== null) {
+                        console.log('✅ Found result for numeric ID:', result ? 'AVAILABLE' : 'UNAVAILABLE');
+                        return result;
+                    }
+                }
+
+                console.log('❌ All checks failed, assuming UNAVAILABLE');
+                return false;
+            } catch (error) {
+                console.error('Error checking Markaz product:', error);
+                return false;
+            }
+        }
+
+        async function tryMarkazUrl(url, productCode) {
+            const corsProxies = [
+                'https://api.allorigins.win/raw?url=',
+                'https://corsproxy.io/?',
+                'https://api.codetabs.com/v1/proxy?quest='
+            ];
+
+            for (const proxy of corsProxies) {
+                try {
+                    const fullUrl = proxy + encodeURIComponent(url);
+                    const response = await fetch(fullUrl, {
+                        method: 'GET',
+                        headers: {
+                            'Accept': 'text/html,application/xhtml+xml'
+                        },
+                        timeout: 10000
+                    });
+
+                    if (!response.ok) {
+                        continue;
+                    }
+
+                    const html = await response.text();
+                    const htmlLower = html.toLowerCase();
+
+                    const notFoundIndicators = [
+                        'page not found',
+                        'product not found',
+                        'product doesn\'t exist',
+                        'product does not exist',
+                        'invalid product',
+                        'no products found',
+                        'couldn\'t find what you\'re looking for',
+                        'search returned no results'
+                    ];
+
+                    for (const indicator of notFoundIndicators) {
+                        if (htmlLower.includes(indicator)) {
+                            return false;
+                        }
+                    }
+
+                    const outOfStockIndicators = [
+                        'out of stock',
+                        'sold out',
+                        'discontinued',
+                        'no longer available',
+                        'currently unavailable',
+                        'temporarily out of stock',
+                        'this product is out of stock'
+                    ];
+
+                    for (const indicator of outOfStockIndicators) {
+                        if (htmlLower.includes(indicator)) {
+                            return false;
+                        }
+                    }
+
+                    const availableIndicators = [
+                        'add to cart',
+                        'add to bag',
+                        'buy now',
+                        'in stock',
+                        'available',
+                        'add to wishlist',
+                        'product details',
+                        'price',
+                        'original price',
+                        'sale price',
+                        'discount',
+                        'markaz',
+                        'share product',
+                        'resell',
+                        'earn profit'
+                    ];
+
+                    let positiveCount = 0;
+                    for (const indicator of availableIndicators) {
+                        if (htmlLower.includes(indicator)) {
+                            positiveCount++;
+                        }
+                    }
+
+                    if (positiveCount >= 2) {
+                        return true;
+                    }
+
+                    const productPageIndicators = [
+                        'product',
+                        'shop',
+                        'markaz',
+                        'price',
+                        'rs.',
+                        'pkr',
+                        'rupees'
+                    ];
+
+                    let productPageCount = 0;
+                    for (const indicator of productPageIndicators) {
+                        if (htmlLower.includes(indicator)) {
+                            productPageCount++;
+                        }
+                    }
+
+                    if (productPageCount >= 3 && html.length > 2000) {
+                        return true;
+                    }
+
+                    if (html.length > 5000) {
+                        return true;
+                    }
+                } catch (error) {
+                    console.warn('Proxy failed:', proxy.substring(0, 30), error.message);
+                }
+            }
+
+            return null;
+        }
+
+        // ========== SHARE PRODUCT ==========
+        window.shareProduct = function(id, name, imageUrl, sellingPrice, originalPrice) {
+            const discount = originalPrice > sellingPrice ? Math.round(((originalPrice - sellingPrice) / originalPrice) * 100) : 0;
+            const storeUrl = window.location.origin + '/product.html?id=' + id;
+
+            const shareText = `🌸 *${name}*\n\n` +
+                `💰 Price: Rs. ${sellingPrice.toLocaleString()}` +
+                (discount > 0 ? ` (🔥 ${discount}% OFF!)` : '') +
+                `\n\nOrder now from Hunny Collection PK!\n${storeUrl}`;
+
+            if (navigator.share) {
+                navigator.share({
+                    title: name,
+                    text: shareText,
+                    url: storeUrl
+                }).catch(() => {
+                    copyShareText(shareText);
+                });
+            } else {
+                copyShareText(shareText);
+            }
+        };
+
+        function copyShareText(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert('✅ Product share text copied to clipboard!');
+            }).catch(() => {
+                prompt('Copy this share text:', text);
+            });
+        }
+
+        // ========== CATEGORY MANAGEMENT ==========
+        window.addCategory = async () => {
+            const name = prompt('Enter new category name:');
+            if (!name || !name.trim()) return;
+
+            try {
+                await createCategory(name.trim());
+                categories = await getAllCategories();
+                populateProductCategoryDropdown();
+                populateCategoryFilter();
+                alert('Category added successfully!');
+            } catch (error) {
+                console.error('Error adding category:', error);
+                alert('Error adding category: ' + error.message);
+            }
+        };
+
+        // ========== MAKE FUNCTIONS GLOBAL ==========
+        window.toggleMobileSidebar = toggleMobileSidebar;
+        window.closeMobileSidebar = closeMobileSidebar;
+        window.logout = logout;
+    </script>
+</body>
+</html>

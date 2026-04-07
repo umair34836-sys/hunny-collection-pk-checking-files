@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title">Product Details - Hunny Digital Shop</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Favicon & App Icons -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <style>
+        .product-detail-section {
+            padding: 60px 0;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: calc(100vh - 200px);
+        }
+        .product-detail-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: start;
+        }
+        .product-images {
+            position: sticky;
+            top: 20px;
+        }
+        .product-main-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+        .product-details {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+        .digital-badge {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 25px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+        .product-title {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--text-dark);
+            margin-bottom: 15px;
+        }
+        .product-price {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #667eea;
+            margin: 20px 0;
+        }
+        .product-description {
+            color: var(--text-light);
+            line-height: 1.8;
+            margin: 20px 0;
+        }
+        .features-list {
+            background: var(--soft-pink);
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+        }
+        .features-list h4 {
+            color: var(--text-dark);
+            margin-bottom: 15px;
+        }
+        .features-list ul {
+            list-style: none;
+            padding: 0;
+        }
+        .features-list li {
+            padding: 8px 0;
+            color: var(--text-dark);
+        }
+        .features-list li:before {
+            content: "✓ ";
+            color: #28a745;
+            font-weight: bold;
+        }
+        .delivery-info {
+            background: #d1ecf1;
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 4px solid #0c5460;
+            margin: 20px 0;
+        }
+        .delivery-info h4 {
+            color: #0c5460;
+            margin-bottom: 10px;
+        }
+        .delivery-info p {
+            color: #0c5460;
+            margin: 5px 0;
+        }
+        .btn-add-to-cart {
+            width: 100%;
+            padding: 18px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            margin: 10px 0;
+        }
+        .btn-add-to-cart:hover {
+            transform: translateY(-2px);
+        }
+        .btn-buy-now {
+            width: 100%;
+            padding: 18px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .btn-buy-now:hover {
+            transform: translateY(-2px);
+        }
+        @media (max-width: 768px) {
+            .product-detail-grid {
+                grid-template-columns: 1fr;
+            }
+            .product-main-image {
+                height: 300px;
+            }
+        }
+    </style>
+    <!-- Favicon & App Icons -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/jpeg" href="/assets/logo.jpeg" sizes="32x32">
+    <link rel="icon" type="image/jpeg" href="/assets/logo.jpeg" sizes="16x16">
+    <link rel="icon" type="image/png" href="/assets/logo.jpeg">
+    <link rel="shortcut icon" type="image/jpeg" href="/assets/logo.jpeg">
+    <link rel="apple-touch-icon" href="/assets/logo.jpeg">
+    <link rel="apple-touch-icon-precomposed" href="/assets/logo.jpeg">
+    <meta name="msapplication-TileImage" content="/assets/logo.jpeg">
+    <meta name="msapplication-TileColor" content="#FF69B4">
+    <meta name="theme-color" content="#FF69B4">
+
+    </head>
+<body>
+    <header class="header">
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo">
+                    <img src="assets/logo.jpeg" alt="Hunny Collection PK Logo" class="logo-image">
+                    <span class="logo-text">🌸 Hunny Collection PK</span>
+                </a>
+                <div class="hamburger" onclick="toggleMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="shop.html">Fashion Shop</a></li>
+                    <li><a href="digital-shop.html">💻 Digital Shop</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="cart.html">🛒 Cart <span id="cart-count">0</span></a></li>
+                    <li><a href="account.html" id="auth-link">Login</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="product-detail-section">
+        <div class="container">
+            <div id="product-detail">
+                <div class="loading">Loading product...</div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>🌸 Hunny Collection PK</h4>
+                    <p>Your premium destination for digital products.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="digital-shop.html">Digital Shop</a></li>
+                        <li><a href="my-downloads.html">My Downloads</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Payment Methods</h4>
+                    <ul>
+                        <li>📲 Easypaisa</li>
+                        <li>📲 JazzCash</li>
+                        <li>💳 SadaPay</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Hunny Collection PK. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script type="module" src="firebase-config.js"></script>
+    <script type="module">
+        import { db } from './firebase-config.js';
+        import { doc, getDoc } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+        const params = new URLSearchParams(window.location.search);
+        const productId = params.get('id');
+        let currentProduct = null;
+
+        if (productId) {
+            loadProduct(productId);
+        } else {
+            document.getElementById('product-detail').innerHTML = '<p style="text-align: center; padding: 60px 20px;">Product not found</p>';
+        }
+
+        async function loadProduct(productId) {
+            try {
+                const productDoc = await getDoc(doc(db, 'digital-products', productId));
+                
+                if (!productDoc.exists()) {
+                    document.getElementById('product-detail').innerHTML = '<p style="text-align: center; padding: 60px 20px;">Product not found</p>';
+                    return;
+                }
+
+                currentProduct = { id: productDoc.id, ...productDoc.data() };
+                document.getElementById('page-title').textContent = `${currentProduct.name} - Hunny Digital Shop`;
+                
+                renderProduct(currentProduct);
+            } catch (error) {
+                console.error('Error loading product:', error);
+                document.getElementById('product-detail').innerHTML = '<p>Error loading product</p>';
+            }
+        }
+
+        function renderProduct(product) {
+            const imageUrl = product.images && product.images.length > 0
+                ? product.images[0]
+                : 'https://via.placeholder.com/500x400/667eea/ffffff?text=Digital+Product';
+
+            const deliveryInfo = product.deliveryMethod || 'Email';
+            const downloadLimit = product.downloadLimit || 'Unlimited';
+            const expiryDays = product.expiryDays || 'Lifetime';
+            
+            // Calculate prices with discount
+            const sellingPrice = product.sellingPrice || product.price || 0;
+            const originalPrice = product.originalPrice || 0;
+            const discountPercent = originalPrice > sellingPrice ? Math.round(((originalPrice - sellingPrice) / originalPrice) * 100) : 0;
+
+            document.getElementById('product-detail').innerHTML = `
+                <div class="product-detail-grid">
+                    <div class="product-images">
+                        <img src="${imageUrl}" alt="${product.name}" class="product-main-image">
+                        ${discountPercent > 0 ? `<span class="product-detail-discount-badge" style="position: absolute; top: 20px; left: 20px; background: linear-gradient(135deg, #FF6B6B 0%, #FF4757 100%); color: white; padding: 10px 20px; border-radius: 25px; font-weight: bold; font-size: 1.1rem; box-shadow: 0 4px 15px rgba(255, 107, 107, 0.5); z-index: 10;">🔥 ${discountPercent}% OFF</span>` : ''}
+                    </div>
+
+                    <div class="product-details">
+                        <span class="digital-badge">💻 DIGITAL PRODUCT</span>
+                        <h1 class="product-title">${product.name}</h1>
+                        <div class="product-detail-price-group" style="display: flex; align-items: center; gap: 15px; margin: 15px 0; flex-wrap: wrap;">
+                            <span class="product-detail-selling-price" style="font-size: 2rem; font-weight: bold; color: #FF69B4;">Rs. ${sellingPrice.toLocaleString()}</span>
+                            ${originalPrice > sellingPrice ? `<span class="product-detail-original-price" style="font-size: 1.3rem; color: #999; text-decoration: line-through; font-weight: 500;">Rs. ${originalPrice.toLocaleString()}</span>` : ''}
+                        </div>
+                        ${discountPercent > 0 ? `<p class="discount-savings" style="background: linear-gradient(135deg, #fff3f3 0%, #ffe4e1 100%); color: #FF6B6B; padding: 12px 18px; border-radius: 10px; font-weight: 600; font-size: 0.95rem; margin: 15px 0; border: 2px dashed #FFB6C1; display: inline-block;">You save Rs. ${(originalPrice - sellingPrice).toLocaleString()}!</p>` : ''}
+
+                        <div class="delivery-info">
+                            <h4>📦 Delivery Information</h4>
+                            <p><strong>Delivery Method:</strong> ${deliveryInfo}</p>
+                            <p><strong>Download Limit:</strong> ${downloadLimit}</p>
+                            <p><strong>Access Validity:</strong> ${expiryDays}</p>
+                            <p style="margin-top: 10px;"><strong>⏱️ Delivery Time:</strong> Within 24 hours after payment verification</p>
+                        </div>
+
+                        ${product.description ? `
+                            <div class="product-description">
+                                <h3 style="margin-bottom: 10px;">Description</h3>
+                                <p>${product.description}</p>
+                            </div>
+                        ` : ''}
+
+                        ${product.features && product.features.length > 0 ? `
+                            <div class="features-list">
+                                <h4>✨ Key Features</h4>
+                                <ul>
+                                    ${product.features.map(feature => `<li>${feature}</li>`).join('')}
+                                </ul>
+                            </div>
+                        ` : ''}
+
+                        <div style="margin-top: 30px;">
+                            <button onclick="addToCart()" class="btn-add-to-cart">
+                                🛒 Add to Cart
+                            </button>
+                            <button onclick="buyNow()" class="btn-buy-now">
+                                ⚡ Buy Now
+                            </button>
+                        </div>
+
+                        <div style="margin-top: 20px; padding-top: 20px; border-top: 2px solid var(--border-color);">
+                            <p style="color: var(--text-light); font-size: 0.9rem;">
+                                <strong>💡 Note:</strong> This is a digital product. No physical item will be shipped.
+                                You will receive download link/access code via email after payment verification.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        window.addToCart = function() {
+            if (!currentProduct) return;
+
+            // Check if user is logged in
+            const user = JSON.parse(localStorage.getItem('user') || 'null');
+            if (!user) {
+                alert('Please login to add items to cart');
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // Get digital cart
+            const cart = JSON.parse(localStorage.getItem('digitalCart') || '[]');
+            
+            // Check if product already in cart
+            const existingIndex = cart.findIndex(item => item.id === currentProduct.id);
+            
+            if (existingIndex > -1) {
+                alert('This product is already in your cart!');
+                return;
+            }
+
+            // Add to cart
+            cart.push({
+                id: currentProduct.id,
+                name: currentProduct.name,
+                price: currentProduct.price,
+                sellingPrice: currentProduct.sellingPrice || currentProduct.price,
+                originalPrice: currentProduct.originalPrice || 0,
+                costPrice: currentProduct.costPrice || 0,
+                category: currentProduct.category,
+                type: 'digital',
+                quantity: 1
+            });
+
+            localStorage.setItem('digitalCart', JSON.stringify(cart));
+            updateCartCount();
+            
+            alert('✅ Product added to cart!');
+        };
+
+        window.buyNow = function() {
+            addToCart();
+            setTimeout(() => {
+                window.location.href = 'digital-checkout.html';
+            }, 500);
+        };
+
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('digitalCart') || '[]');
+            const count = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+            const cartCountEl = document.getElementById('cart-count');
+            if (cartCountEl) {
+                cartCountEl.textContent = count;
+            }
+        }
+
+        updateCartCount();
+    </script>
+
+    <script>
+        function toggleMenu() {
+            const navMenu = document.querySelector('.nav-menu');
+            const hamburger = document.querySelector('.hamburger');
+            navMenu.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        }
+
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.querySelector('.nav-menu').classList.remove('active');
+                document.querySelector('.hamburger').classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>
