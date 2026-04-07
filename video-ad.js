@@ -3,16 +3,16 @@
 
 // List of all pages in the website
 export const PAGE_LIST = [
-    { value: param($m) '''' + '/' + [System.IO.Path]::GetFileNameWithoutExtension($m.Value.Trim('''')) + '''', label: '🏠 Home Page' },
-    { value: param($m) '''' + '/' + [System.IO.Path]::GetFileNameWithoutExtension($m.Value.Trim('''')) + '''', label: '🛍️ Shop Page' },
-    { value: param($m) '''' + '/' + [System.IO.Path]::GetFileNameWithoutExtension($m.Value.Trim('''')) + '''', label: '📦 Product Detail Page' },
-    { value: param($m) '''' + '/' + [System.IO.Path]::GetFileNameWithoutExtension($m.Value.Trim('''')) + '''', label: '🛒 Cart Page' },
-    { value: param($m) '''' + '/' + [System.IO.Path]::GetFileNameWithoutExtension($m.Value.Trim('''')) + '''', label: '💳 Checkout Page' },
-    { value: param($m) '''' + '/' + [System.IO.Path]::GetFileNameWithoutExtension($m.Value.Trim('''')) + '''', label: '👤 Account Page' },
-    { value: param($m) '''' + '/' + [System.IO.Path]::GetFileNameWithoutExtension($m.Value.Trim('''')) + '''', label: '📋 Orders Page' },
-    { value: param($m) '''' + '/' + [System.IO.Path]::GetFileNameWithoutExtension($m.Value.Trim('''')) + '''', label: '📞 Contact Page' },
-    { value: param($m) '''' + '/' + [System.IO.Path]::GetFileNameWithoutExtension($m.Value.Trim('''')) + '''', label: '🔑 Login Page' },
-    { value: param($m) '''' + '/' + [System.IO.Path]::GetFileNameWithoutExtension($m.Value.Trim('''')) + '''', label: '✍️ Signup Page' }
+    { value: 'index.html', label: '🏠 Home Page' },
+    { value: 'shop.html', label: '🛍️ Shop Page' },
+    { value: 'product.html', label: '📦 Product Detail Page' },
+    { value: 'cart.html', label: '🛒 Cart Page' },
+    { value: 'checkout.html', label: '💳 Checkout Page' },
+    { value: 'account.html', label: '👤 Account Page' },
+    { value: 'orders.html', label: '📋 Orders Page' },
+    { value: 'contact.html', label: '📞 Contact Page' },
+    { value: 'login.html', label: '🔑 Login Page' },
+    { value: 'signup.html', label: '✍️ Signup Page' }
 ];
 
 // Default video ad settings
@@ -29,7 +29,7 @@ const defaultVideoAdSettings = {
 
 // Get current page name
 export function getCurrentPage() {
-    return window.location.pathname.split(param($m) '''' + '/' + [System.IO.Path]::GetFileNameWithoutExtension($m.Value.Trim('''')) + '''';
+    return window.location.pathname.split('/').pop();
 }
 
 // Get settings for a specific page

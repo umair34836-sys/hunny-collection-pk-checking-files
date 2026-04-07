@@ -5,18 +5,18 @@ import { SEO_DATA, PAGE_NAMES } from './seo-config.js';
 
 // Map page names to HTML filenames
 const PAGE_FILES = {
-  index: param($m) '''' + '/' + [System.IO.Path]::GetFileNameWithoutExtension($m.Value.Trim('''')) + '''',
-  shop: param($m) '''' + '/' + [System.IO.Path]::GetFileNameWithoutExtension($m.Value.Trim('''')) + '''',
-  product: param($m) '''' + '/' + [System.IO.Path]::GetFileNameWithoutExtension($m.Value.Trim('''')) + '''',
-  cart: param($m) '''' + '/' + [System.IO.Path]::GetFileNameWithoutExtension($m.Value.Trim('''')) + '''',
-  checkout: param($m) '''' + '/' + [System.IO.Path]::GetFileNameWithoutExtension($m.Value.Trim('''')) + '''',
-  contact: param($m) '''' + '/' + [System.IO.Path]::GetFileNameWithoutExtension($m.Value.Trim('''')) + '''',
-  account: param($m) '''' + '/' + [System.IO.Path]::GetFileNameWithoutExtension($m.Value.Trim('''')) + '''',
-  login: param($m) '''' + '/' + [System.IO.Path]::GetFileNameWithoutExtension($m.Value.Trim('''')) + '''',
-  signup: param($m) '''' + '/' + [System.IO.Path]::GetFileNameWithoutExtension($m.Value.Trim('''')) + '''',
-  admin: param($m) '''' + '/' + [System.IO.Path]::GetFileNameWithoutExtension($m.Value.Trim('''')) + '''',
-  orders: param($m) '''' + '/' + [System.IO.Path]::GetFileNameWithoutExtension($m.Value.Trim('''')) + '''',
-  settings: param($m) '''' + '/' + [System.IO.Path]::GetFileNameWithoutExtension($m.Value.Trim('''')) + ''''
+  index: 'index.html',
+  shop: 'shop.html',
+  product: 'product.html',
+  cart: 'cart.html',
+  checkout: 'checkout.html',
+  contact: 'contact.html',
+  account: 'account.html',
+  login: 'login.html',
+  signup: 'signup.html',
+  admin: 'admin.html',
+  orders: 'orders.html',
+  settings: 'settings.html'
 };
 
 // Generate SEO meta tags HTML

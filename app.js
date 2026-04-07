@@ -20,10 +20,10 @@ function updateAuthLink(user) {
 
     if (user) {
         authLink.textContent = '👤 Account';
-        authLink.href = param($m) '''' + '/' + [System.IO.Path]::GetFileNameWithoutExtension($m.Value.Trim('''')) + '''';
+        authLink.href = 'account.html';
     } else {
         authLink.textContent = 'Login';
-        authLink.href = param($m) '''' + '/' + [System.IO.Path]::GetFileNameWithoutExtension($m.Value.Trim('''')) + '''';
+        authLink.href = 'login.html';
     }
 }
 
@@ -32,7 +32,7 @@ async function performLogout() {
     try {
         await signOut(auth);
         alert('Logged out successfully!');
-        window.location.href = '/.html';
+        window.location.href = 'index.html';
     } catch (error) {
         alert('Error logging out: ' + error.message);
     }

@@ -172,10 +172,10 @@ export function updateAuthLink(user) {
 
     if (user) {
         authLink.textContent = '👤 Account';
-        authLink.href = param($m) '''' + '/' + [System.IO.Path]::GetFileNameWithoutExtension($m.Value.Trim('''')) + '''';
+        authLink.href = 'account.html';
     } else {
         authLink.textContent = 'Login';
-        authLink.href = param($m) '''' + '/' + [System.IO.Path]::GetFileNameWithoutExtension($m.Value.Trim('''')) + '''';
+        authLink.href = 'login.html';
     }
 }
 
