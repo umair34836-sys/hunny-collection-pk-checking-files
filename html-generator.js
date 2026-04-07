@@ -1,4 +1,4 @@
-﻿// HTML Generator - Download updated HTML files with SEO
+// HTML Generator - Download updated HTML files with SEO
 // This file generates and downloads HTML files with updated meta tags
 
 import { SEO_DATA, PAGE_NAMES } from './seo-config.js';

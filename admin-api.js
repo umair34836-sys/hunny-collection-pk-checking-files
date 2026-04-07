@@ -1,4 +1,4 @@
-﻿// Admin API - All Firestore CRUD operations
+// Admin API - All Firestore CRUD operations
 import { db } from './firebase-config.js';
 import { 
     collection, 

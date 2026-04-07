@@ -1,4 +1,4 @@
-﻿// Floating WhatsApp Button Component
+// Floating WhatsApp Button Component
 function createWhatsAppButton() {
     // Check if button already exists
     if (document.getElementById('whatsapp-float')) {

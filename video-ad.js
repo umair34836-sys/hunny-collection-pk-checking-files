@@ -1,4 +1,4 @@
-﻿// Video Advertisement Manager - Works without Firebase
+// Video Advertisement Manager - Works without Firebase
 // Stores settings in localStorage for GitHub Pages compatibility
 
 // List of all pages in the website
@@ -29,7 +29,7 @@ const defaultVideoAdSettings = {
 
 // Get current page name
 export function getCurrentPage() {
-    return window.location.pathname.split('/').pop();
+    return window.location.pathname.split('/').pop() || 'index.html';
 }
 
 // Get settings for a specific page

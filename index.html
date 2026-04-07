@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -308,47 +308,24 @@
             background: var(--white);
         }
 
-        /* Categories - Compact - No Animations */
+        /* Categories - Compact */
         .categories {
             padding: 60px 0;
             background: linear-gradient(135deg, #FFF0F5 0%, #FFE4E9 100%);
             position: relative;
-            overflow: visible;
+            overflow: hidden;
         }
 
         .categories::before {
-            content: none;
-        }
-
-        /* Remove category card animations */
-        .category-card {
-            animation: none !important;
-            transition: all 0.2s ease !important;
-            overflow: hidden !important;
-        }
-
-        .category-card:hover {
-            animation: none !important;
-            transform: none !important;
-            box-shadow: var(--shadow-medium) !important;
-            border-color: var(--primary-pink) !important;
-        }
-
-        .category-card::before {
-            content: none !important;
-        }
-
-        .category-card:hover::before {
-            content: none !important;
-        }
-
-        /* Disable icon animations on hover */
-        .category-icon {
-            transition: transform 0.2s ease !important;
-        }
-
-        .category-card:hover .category-icon {
-            transform: none !important;
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(255, 105, 180, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: heroFloat 10s ease-in-out infinite;
         }
 
         /* Featured Products - Compact */
