@@ -131,7 +131,7 @@ export async function checkAdminAuth() {
 
             if (!user) {
                 console.log('No user logged in, redirecting to login');
-                window.location.href = '/login';
+                window.location.href = '/.html';
                 resolve(false);
                 return;
             }
@@ -141,7 +141,7 @@ export async function checkAdminAuth() {
                 const errorMsg = `NOT AUTHORIZED AS ADMIN\n\nYour email: ${user.email}\n\nPlease add this email to Firestore:\n1. Go to Firestore Database\n2. Create collection: admins\n3. Add document with field: email = ${user.email}`;
                 console.error(errorMsg);
                 alert(errorMsg);
-                window.location.href = '/login';
+                window.location.href = '/.html';
                 resolve(false);
                 return;
             }

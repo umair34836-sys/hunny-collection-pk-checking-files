@@ -32,7 +32,7 @@ async function performLogout() {
     try {
         await signOut(auth);
         alert('Logged out successfully!');
-        window.location.href = '/index';
+        window.location.href = '/.html';
     } catch (error) {
         alert('Error logging out: ' + error.message);
     }
@@ -216,7 +216,7 @@ function renderProducts(products) {
 export function addToCart(product, variant = {}, quantity = 1) {
     if (!currentUser) {
         alert('Please login to add items to cart');
-        window.location.href = '/index';
+        window.location.href = '/.html';
         return false;
     }
 
@@ -273,7 +273,7 @@ export function renderCartPage() {
     const cart = getCartItems();
 
     if (cart.length === 0) {
-        container.innerHTML = '<div class="empty-cart"><h2>Your cart is empty</h2><p class="loading">Add items to your cart to see them here</p><a href="/shop" class="btn-primary" style="display:inline-block;margin-top:20px;">Start Shopping</a></div>';
+        container.innerHTML = '<div class="empty-cart"><h2>Your cart is empty</h2><p class="loading">Add items to your cart to see them here</p><a href="shop.html" class="btn-primary" style="display:inline-block;margin-top:20px;">Start Shopping</a></div>';
         if (totalEl) totalEl.textContent = '0';
         if (totalFinalEl) totalFinalEl.textContent = '0';
         return;
@@ -334,7 +334,7 @@ export async function loadProduct(productId) {
                 <div class="loading">
                     <h2>Product not found</h2>
                     <p>The product you're looking for doesn't exist or has been removed.</p>
-                    <a href="/shop" class="btn-primary" style="display:inline-block;margin-top:20px;">Browse Shop</a>
+                    <a href="shop.html" class="btn-primary" style="display:inline-block;margin-top:20px;">Browse Shop</a>
                 </div>
             `;
             return;
@@ -581,7 +581,7 @@ window.addToCartClick = () => {
 window.buyNow = () => {
     window.addToCartClick();
     setTimeout(() => {
-        window.location.href = '/checkout';
+        window.location.href = '/.html';
     }, 500);
 };
 

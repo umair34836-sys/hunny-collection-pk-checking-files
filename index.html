@@ -308,24 +308,47 @@
             background: var(--white);
         }
 
-        /* Categories - Compact */
+        /* Categories - Compact - No Animations */
         .categories {
             padding: 60px 0;
             background: linear-gradient(135deg, #FFF0F5 0%, #FFE4E9 100%);
             position: relative;
-            overflow: hidden;
+            overflow: visible;
         }
 
         .categories::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -10%;
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(255, 105, 180, 0.1) 0%, transparent 70%);
-            border-radius: 50%;
-            animation: heroFloat 10s ease-in-out infinite;
+            content: none;
+        }
+
+        /* Remove category card animations */
+        .category-card {
+            animation: none !important;
+            transition: all 0.2s ease !important;
+            overflow: hidden !important;
+        }
+
+        .category-card:hover {
+            animation: none !important;
+            transform: none !important;
+            box-shadow: var(--shadow-medium) !important;
+            border-color: var(--primary-pink) !important;
+        }
+
+        .category-card::before {
+            content: none !important;
+        }
+
+        .category-card:hover::before {
+            content: none !important;
+        }
+
+        /* Disable icon animations on hover */
+        .category-icon {
+            transition: transform 0.2s ease !important;
+        }
+
+        .category-card:hover .category-icon {
+            transform: none !important;
         }
 
         /* Featured Products - Compact */
@@ -1225,7 +1248,7 @@
     <header class="header">
         <div class="container">
             <nav class="navbar">
-                <a href="/index" class="logo">
+                <a href="index.html" class="logo">
                     <img src="assets/logo.jpeg" alt="Hunny Collection PK Logo" class="logo-image">
                     <span class="logo-text">🌸 Hunny Collection PK</span>
                 </a>
@@ -1235,12 +1258,12 @@
                     <span></span>
                 </div>
                 <ul class="nav-menu">
-                    <li><a href="/index">Home</a></li>
-                    <li><a href="/shop">Fashion Shop</a></li>
-                    <li><a href="/digital-shop">💻 Digital Shop</a></li>
-                    <li><a href="/contact">Contact</a></li>
-                    <li><a href="/cart">🛒 Cart <span id="cart-count">0</span></a></li>
-                    <li><a href="/account" id="auth-link">Login</a></li>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="shop.html">Fashion Shop</a></li>
+                    <li><a href="digital-shop.html">💻 Digital Shop</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="cart.html">🛒 Cart <span id="cart-count">0</span></a></li>
+                    <li><a href="account.html" id="auth-link">Login</a></li>
                 </ul>
             </nav>
         </div>
@@ -1257,8 +1280,8 @@
                 <h1 class="hero-store-name">Hunny Collection PK</h1>
                 <p class="hero-tagline">Dresses • Kurtis • Jewelry • Bags & More</p>
                 <div class="hero-buttons">
-                    <a href="/shop" class="btn-primary">Shop Now</a>
-                    <a href="/digital-shop" class="btn-secondary">Digital Products</a>
+                    <a href="shop.html" class="btn-primary">Shop Now</a>
+                    <a href="digital-shop.html" class="btn-secondary">Digital Products</a>
                 </div>
             </div>
         </div>
@@ -1299,11 +1322,11 @@
                 <div class="footer-col">
                     <h4>Quick Links</h4>
                     <ul>
-                        <li><a href="/index">🏠 Home</a></li>
-                        <li><a href="/shop">👗 Fashion Shop</a></li>
-                        <li><a href="/digital-shop">💻 Digital Shop</a></li>
-                        <li><a href="/my-downloads">📥 My Downloads</a></li>
-                        <li><a href="/contact">📞 Contact</a></li>
+                        <li><a href="index.html">🏠 Home</a></li>
+                        <li><a href="shop.html">👗 Fashion Shop</a></li>
+                        <li><a href="digital-shop.html">💻 Digital Shop</a></li>
+                        <li><a href="my-downloads.html">📥 My Downloads</a></li>
+                        <li><a href="contact.html">📞 Contact</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
