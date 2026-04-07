@@ -1,4 +1,4 @@
-// Site Settings Loader
+﻿// Site Settings Loader
 // This script loads settings from Firestore and applies them to all pages
 
 import { db } from './firebase-config.js';

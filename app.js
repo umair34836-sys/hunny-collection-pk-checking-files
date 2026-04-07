@@ -1,4 +1,4 @@
-// Main Application JavaScript
+﻿// Main Application JavaScript
 import { db, auth } from './firebase-config.js';
 import { collection, getDocs, getDoc, doc, query, orderBy, limit, addDoc, setDoc } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 import { onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
@@ -20,10 +20,10 @@ function updateAuthLink(user) {
 
     if (user) {
         authLink.textContent = '👤 Account';
-        authLink.href = 'account.html';
+        authLink.href = param($m) '''' + '/' + [System.IO.Path]::GetFileNameWithoutExtension($m.Value.Trim('''')) + '''';
     } else {
         authLink.textContent = 'Login';
-        authLink.href = 'login.html';
+        authLink.href = param($m) '''' + '/' + [System.IO.Path]::GetFileNameWithoutExtension($m.Value.Trim('''')) + '''';
     }
 }
 
@@ -32,7 +32,7 @@ async function performLogout() {
     try {
         await signOut(auth);
         alert('Logged out successfully!');
-        window.location.href = 'index.html';
+        window.location.href = '/index';
     } catch (error) {
         alert('Error logging out: ' + error.message);
     }
@@ -90,7 +90,7 @@ export async function loadCategories() {
         }
 
         container.innerHTML = categories.map(cat => `
-            <a href="shop.html?category=${encodeURIComponent(cat.name)}" class="category-card">
+            <a href="/shop?category=${encodeURIComponent(cat.name)}" class="category-card">
                 <div class="category-icon">🌸</div>
                 <div class="category-name">${cat.name}</div>
             </a>
@@ -129,7 +129,7 @@ export async function loadFeaturedProducts(containerId = 'products-container') {
             const discountPercent = originalPrice > sellingPrice ? Math.round(((originalPrice - sellingPrice) / originalPrice) * 100) : 0;
 
             return `
-                <a href="product.html?id=${product.id}" class="product-card">
+                <a href="/product?id=${product.id}" class="product-card">
                     <div style="position: relative;">
                         <img src="${product.images?.[0] || 'https://via.placeholder.com/300x300/FFB6C1/333?text=No+Image'}"
                              alt="${product.name}" class="product-image">
@@ -193,7 +193,7 @@ function renderProducts(products) {
         const discountPercent = originalPrice > sellingPrice ? Math.round(((originalPrice - sellingPrice) / originalPrice) * 100) : 0;
         
         return `
-            <a href="product.html?id=${product.id}" class="product-card">
+            <a href="/product?id=${product.id}" class="product-card">
                 <div style="position: relative;">
                     <img src="${product.images?.[0] || 'https://via.placeholder.com/300x300/FFB6C1/333?text=No+Image'}"
                          alt="${product.name}" class="product-image">
@@ -216,7 +216,7 @@ function renderProducts(products) {
 export function addToCart(product, variant = {}, quantity = 1) {
     if (!currentUser) {
         alert('Please login to add items to cart');
-        window.location.href = 'login.html';
+        window.location.href = '/index';
         return false;
     }
 
@@ -273,7 +273,7 @@ export function renderCartPage() {
     const cart = getCartItems();
 
     if (cart.length === 0) {
-        container.innerHTML = '<div class="empty-cart"><h2>Your cart is empty</h2><p class="loading">Add items to your cart to see them here</p><a href="shop.html" class="btn-primary" style="display:inline-block;margin-top:20px;">Start Shopping</a></div>';
+        container.innerHTML = '<div class="empty-cart"><h2>Your cart is empty</h2><p class="loading">Add items to your cart to see them here</p><a href="/shop" class="btn-primary" style="display:inline-block;margin-top:20px;">Start Shopping</a></div>';
         if (totalEl) totalEl.textContent = '0';
         if (totalFinalEl) totalFinalEl.textContent = '0';
         return;
@@ -334,7 +334,7 @@ export async function loadProduct(productId) {
                 <div class="loading">
                     <h2>Product not found</h2>
                     <p>The product you're looking for doesn't exist or has been removed.</p>
-                    <a href="shop.html" class="btn-primary" style="display:inline-block;margin-top:20px;">Browse Shop</a>
+                    <a href="/shop" class="btn-primary" style="display:inline-block;margin-top:20px;">Browse Shop</a>
                 </div>
             `;
             return;
@@ -581,7 +581,7 @@ window.addToCartClick = () => {
 window.buyNow = () => {
     window.addToCartClick();
     setTimeout(() => {
-        window.location.href = 'checkout.html';
+        window.location.href = '/checkout';
     }, 500);
 };
 

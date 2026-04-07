@@ -1,4 +1,4 @@
-// Admin Common Utilities - Shared functions across all admin pages
+﻿// Admin Common Utilities - Shared functions across all admin pages
 import { auth, db } from './firebase-config.js';
 import { onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
 import { collection, query, where, getDocs, doc, getDoc, setDoc, deleteDoc } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
@@ -131,7 +131,7 @@ export async function checkAdminAuth() {
 
             if (!user) {
                 console.log('No user logged in, redirecting to login');
-                window.location.href = 'login.html';
+                window.location.href = '/login';
                 resolve(false);
                 return;
             }
@@ -141,7 +141,7 @@ export async function checkAdminAuth() {
                 const errorMsg = `NOT AUTHORIZED AS ADMIN\n\nYour email: ${user.email}\n\nPlease add this email to Firestore:\n1. Go to Firestore Database\n2. Create collection: admins\n3. Add document with field: email = ${user.email}`;
                 console.error(errorMsg);
                 alert(errorMsg);
-                window.location.href = 'login.html';
+                window.location.href = '/login';
                 resolve(false);
                 return;
             }
@@ -157,7 +157,7 @@ export async function logout() {
     try {
         await signOut(auth);
         alert('Logged out successfully!');
-        window.location.href = 'index.html';
+        window.location.href = '/';
     } catch (error) {
         alert('Error logging out: ' + error.message);
     }
@@ -172,10 +172,10 @@ export function updateAuthLink(user) {
 
     if (user) {
         authLink.textContent = '👤 Account';
-        authLink.href = 'account.html';
+        authLink.href = param($m) '''' + '/' + [System.IO.Path]::GetFileNameWithoutExtension($m.Value.Trim('''')) + '''';
     } else {
         authLink.textContent = 'Login';
-        authLink.href = 'login.html';
+        authLink.href = param($m) '''' + '/' + [System.IO.Path]::GetFileNameWithoutExtension($m.Value.Trim('''')) + '''';
     }
 }
 

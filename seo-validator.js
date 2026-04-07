@@ -1,4 +1,4 @@
-// SEO Validator - Check SEO health and find errors
+﻿// SEO Validator - Check SEO health and find errors
 // This file validates SEO configuration and reports issues
 
 import { SEO_DATA, PAGE_NAMES } from './seo-config.js';

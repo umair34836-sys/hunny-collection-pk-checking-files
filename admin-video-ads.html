@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -242,10 +242,10 @@
     <header class="header">
         <div class="container">
             <nav class="navbar">
-                <a href="index.html" class="logo">🌸 Hunny Collection PK</a>
+                <a href="/index" class="logo">🌸 Hunny Collection PK</a>
                 <ul class="nav-menu">
-                    <li><a href="admin.html">Admin</a></li>
-                    <li><a href="index.html">Back to Store</a></li>
+                    <li><a href="/admin">Admin</a></li>
+                    <li><a href="/index">Back to Store</a></li>
                 </ul>
             </nav>
         </div>
@@ -254,25 +254,25 @@
     <div class="admin-layout">
         <aside class="admin-sidebar">
             <h3>🌸 Admin Panel</h3>
-            <a href="admin.html">Dashboard</a>
+            <a href="/admin">Dashboard</a>
             <a href="admin.html#products">Products</a>
             <a href="admin.html#orders">Orders</a>
-            <a href="admin-orders-history.html">📊 Orders History</a>
-            <a href="admin-reviews.html">⭐ Reviews</a>
-            <a href="admin-categories.html">Categories</a>
+            <a href="/admin-orders-history">📊 Orders History</a>
+            <a href="/admin-reviews">⭐ Reviews</a>
+            <a href="/admin-categories">Categories</a>
             <a href="admin.html#digital-products">💻 Digital Products</a>
             <a href="admin.html#digital-categories">📂 Digital Categories</a>
-            <a href="admin-digital-orders.html">📥 Digital Orders</a>
-            <a href="admin-video-ads.html" class="active">📺 Video Ads</a>
-            <a href="profit-calculator.html">💰 Profit Calculator</a>
-            <a href="settings.html">⚙️ Site Settings</a>
+            <a href="/admin-digital-orders">📥 Digital Orders</a>
+            <a href="/admin-video-ads" class="active">📺 Video Ads</a>
+            <a href="/profit-calculator">💰 Profit Calculator</a>
+            <a href="/settings">⚙️ Site Settings</a>
             <a href="#" onclick="logout()">Logout</a>
         </aside>
 
         <main class="admin-content">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; flex-wrap: wrap; gap: 15px;">
                 <h2 style="color: var(--dark-pink);">📺 Video Ads Management</h2>
-                <a href="settings.html" class="btn-primary" style="text-decoration: none; display: inline-block;">⚙️ Configure Ads in Settings</a>
+                <a href="/settings" class="btn-primary" style="text-decoration: none; display: inline-block;">⚙️ Configure Ads in Settings</a>
             </div>
 
             <div class="admin-card">
@@ -281,7 +281,7 @@
                     Configure different video/image ads for each page of your website.
                     Each page can have its own ad settings including media type, file, position, and more.
                     <br>
-                    Go to <a href="settings.html" style="color: var(--dark-pink); font-weight: 600;">⚙️ Site Settings</a> to set up ads for each page.
+                    Go to <a href="/settings" style="color: var(--dark-pink); font-weight: 600;">⚙️ Site Settings</a> to set up ads for each page.
                 </p>
 
                 <div class="table-responsive">
@@ -303,7 +303,7 @@
                 <div style="margin-top: 30px; padding: 20px; background: var(--soft-pink); border-radius: 10px;">
                     <h4 style="color: var(--dark-pink); margin-bottom: 15px;">📋 Instructions for Setting Up Ads:</h4>
                     <ol style="line-height: 2; margin-left: 20px;">
-                        <li>Click the <strong>Configure</strong> button next to any page, or go to <a href="settings.html" style="color: var(--dark-pink); font-weight: 600;">Site Settings</a></li>
+                        <li>Click the <strong>Configure</strong> button next to any page, or go to <a href="/settings" style="color: var(--dark-pink); font-weight: 600;">Site Settings</a></li>
                         <li>Navigate to the <strong>Video Ad</strong> section</li>
                         <li>Select the page you want to configure from the dropdown</li>
                         <li>Toggle <strong>Enabled</strong> to activate the ad</li>
@@ -379,7 +379,7 @@
                         <td>${fileName}</td>
                         <td>${positionText}</td>
                         <td>
-                            <a href="settings.html" class="btn-sm" style="background: var(--primary-pink); color: white; text-decoration: none; border-radius: 5px; display: inline-block;">✏️ Configure</a>
+                            <a href="/settings" class="btn-sm" style="background: var(--primary-pink); color: white; text-decoration: none; border-radius: 5px; display: inline-block;">✏️ Configure</a>
                         </td>
                     </tr>
                 `;

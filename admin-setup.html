@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -56,7 +56,7 @@
         </button>
         
         <p style="text-align: center; margin-top: 20px; color: #999; font-size: 0.9rem;">
-            After setup, you can access <a href="admin.html">admin.html</a>
+            After setup, you can access <a href="/admin">admin.html</a>
         </p>
     </div>
 
@@ -100,7 +100,7 @@
                 
                 if (adminDoc.exists()) {
                     showStatus('✅ Admin account already exists! You can use admin.html now.', 'success');
-                    showStatus('<a href="admin.html" style="color: #667eea; font-weight: bold;">Go to Admin Panel →</a>', 'success');
+                    showStatus('<a href="/admin" style="color: #667eea; font-weight: bold;">Go to Admin Panel →</a>', 'success');
                     return;
                 }
 
@@ -123,7 +123,7 @@
                     Email: <code>${user.email}</code>
                 `, 'success');
                 
-                showStatus('<a href="admin.html" style="color: #667eea; font-weight: bold;">🚀 Go to Admin Panel →</a>', 'success');
+                showStatus('<a href="/admin" style="color: #667eea; font-weight: bold;">🚀 Go to Admin Panel →</a>', 'success');
 
             } catch (error) {
                 console.error('Setup error:', error);
@@ -151,7 +151,7 @@
                 showStatus(`
                     ⚠️ Not logged in!<br><br>
                     <strong>Steps:</strong><br>
-                    1. Go to <a href="admin.html" style="color: #667eea;">admin.html</a><br>
+                    1. Go to <a href="/admin" style="color: #667eea;">admin.html</a><br>
                     2. Login with your account<br>
                     3. Come back to this page<br>
                     4. Click "Setup My Admin Account"
