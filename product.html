@@ -61,187 +61,150 @@
     
     <link rel="stylesheet" href="style.css">
     <style>
-        .product-detail-section { 
-            padding: 80px 0; 
-            background: linear-gradient(to bottom, #FFF5F8, #FFFFFF);
-        }
+        .product-detail-section { padding: 60px 0; }
         .product-detail-grid {
             display: grid;
-            grid-template-columns: 1.2fr 1fr;
-            gap: 60px;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
             align-items: start;
         }
-        .product-images { 
-            position: sticky; 
-            top: 100px;
-            background: var(--white);
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: var(--shadow-medium);
-        }
-
+        .product-images { position: sticky; top: 20px; }
+        
         /* Image Gallery */
         .product-image-wrapper {
             position: relative;
             width: 100%;
-            border-radius: 15px;
-            overflow: hidden;
         }
         .product-main-image {
             width: 100%;
-            height: 600px;
+            height: 500px;
             object-fit: cover;
             border-radius: 15px;
-            box-shadow: var(--shadow-product);
-            transition: transform var(--transition-smooth);
-        }
-        .product-main-image:hover {
-            transform: scale(1.02);
+            box-shadow: 0 4px 20px rgba(255, 182, 193, 0.3);
         }
         .gallery-nav {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            background: rgba(255, 255, 255, 0.95);
-            border: 2px solid var(--border-color);
-            width: 50px;
-            height: 50px;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             cursor: pointer;
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all var(--transition-fast);
+            transition: all 0.3s ease;
             z-index: 10;
-            color: var(--dark-pink);
-            box-shadow: var(--shadow-soft);
         }
         .gallery-nav:hover {
-            background: var(--gradient-primary);
-            color: var(--white);
-            border-color: transparent;
-            transform: translateY(-50%) scale(1.1);
-            box-shadow: var(--shadow-hover);
+            background: var(--dark-pink);
+            color: white;
         }
-        .gallery-prev { left: 15px; }
-        .gallery-next { right: 15px; }
-
+        .gallery-prev { left: 10px; }
+        .gallery-next { right: 10px; }
+        
         .product-thumbnails {
             display: flex;
-            gap: 12px;
-            margin-top: 20px;
+            gap: 10px;
+            margin-top: 15px;
             overflow-x: auto;
             padding: 10px 0;
         }
         .product-thumbnail {
-            width: 90px;
-            height: 90px;
+            width: 80px;
+            height: 80px;
             object-fit: cover;
-            border-radius: 12px;
-            border: 3px solid transparent;
+            border-radius: 8px;
+            border: 2px solid transparent;
             cursor: pointer;
-            transition: all var(--transition-fast);
+            transition: all 0.3s ease;
             flex-shrink: 0;
-            background: #f0f0f0;
-            box-shadow: var(--shadow-soft);
+            background: #f0f0f0; /* Placeholder background while loading */
         }
         .product-thumbnail:hover,
         .product-thumbnail.active {
-            border-color: var(--primary-pink);
-            transform: scale(1.08);
-            box-shadow: var(--shadow-medium);
+            border-color: var(--dark-pink);
+            transform: scale(1.05);
+        }
+        /* Lazy loading animation */
+        .product-thumbnail[data-full-src]:not([src]) {
+            animation: skeleton-pulse 1.5s ease-in-out infinite;
+        }
+        @keyframes skeleton-pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
         }
         .image-counter {
             text-align: center;
             color: var(--text-light);
             font-size: 0.9rem;
-            margin-top: 15px;
-            font-weight: 500;
+            margin-top: 10px;
         }
         .product-details {
             background: var(--white);
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: var(--shadow-medium);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(255, 182, 193, 0.2);
         }
         .badge {
-            background: var(--gradient-primary);
-            color: var(--white);
-            padding: 8px 20px;
-            border-radius: 25px;
-            font-size: 0.85rem;
+            background: var(--primary-pink);
+            color: var(--text-dark);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
             display: inline-block;
-            margin-bottom: 20px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            box-shadow: 0 4px 15px rgba(255, 105, 180, 0.3);
+            margin-bottom: 15px;
         }
         .price {
-            font-size: 2.5rem;
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            font-weight: 800;
-            margin: 20px 0;
+            font-size: 2rem;
+            color: var(--dark-pink);
+            font-weight: bold;
+            margin: 15px 0;
         }
         .description {
-            color: var(--text-dark);
-            margin: 25px 0;
+            color: var(--text-light);
+            margin: 20px 0;
             line-height: 1.8;
-            font-size: 1.05rem;
         }
-        .variant-group, .quantity-group { margin: 25px 0; }
+        .variant-group, .quantity-group { margin: 20px 0; }
         .size-options {
             display: flex;
-            gap: 12px;
+            gap: 10px;
             flex-wrap: wrap;
-            margin-top: 12px;
+            margin-top: 10px;
         }
         .size-btn {
-            padding: 12px 24px;
+            padding: 10px 20px;
             border: 2px solid var(--border-color);
             background: var(--white);
-            border-radius: 10px;
+            border-radius: 8px;
             cursor: pointer;
-            transition: all var(--transition-fast);
-            font-weight: 600;
+            transition: all 0.3s ease;
         }
         .size-btn:hover, .size-btn.selected {
-            border-color: var(--primary-pink);
-            background: var(--gradient-primary);
+            border-color: var(--dark-pink);
+            background: var(--dark-pink);
             color: var(--white);
-            box-shadow: 0 4px 15px rgba(255, 105, 180, 0.3);
-            transform: translateY(-2px);
         }
         .quantity-input {
-            padding: 12px;
+            padding: 10px;
             border: 2px solid var(--border-color);
-            border-radius: 10px;
-            width: 90px;
+            border-radius: 8px;
+            width: 80px;
             font-size: 1rem;
-            font-weight: 600;
-            transition: all var(--transition-fast);
-        }
-        .quantity-input:focus {
-            outline: none;
-            border-color: var(--primary-pink);
-            box-shadow: 0 0 0 3px rgba(255, 105, 180, 0.1);
         }
         .btn-large {
             width: 100%;
-            margin: 12px 0;
-            padding: 18px;
-            font-size: 1.15rem;
-            font-weight: 700;
+            margin: 10px 0;
+            padding: 15px;
+            font-size: 1.1rem;
         }
         @media (max-width: 768px) {
-            .product-detail-grid { grid-template-columns: 1fr; gap: 30px; }
-            .product-images { position: static; padding: 20px; }
-            .product-main-image { height: 400px; }
-            .product-details { padding: 25px; }
+            .product-detail-grid { grid-template-columns: 1fr; }
+            .product-images { position: static; }
         }
         
         /* ========== PRODUCT REVIEWS STYLES ========== */
@@ -661,15 +624,15 @@
     <header class="header">
         <div class="container">
             <nav class="navbar">
-                <a href="index.html" class="logo">
-                    <img src="assets/logo.jpeg" alt="Hunny Collection PK Logo" class="logo-image">
-                    <span class="logo-text">🌸 Hunny Collection PK</span>
-                </a>
                 <div class="hamburger" onclick="toggleMenu()">
                     <span></span>
                     <span></span>
                     <span></span>
                 </div>
+                <a href="index.html" class="logo">
+                    <img src="assets/logo.jpeg" alt="Hunny Collection PK Logo" class="logo-image">
+                    <span class="logo-text">🌸 Hunny Collection PK</span>
+                </a>
                 <ul class="nav-menu">
                     <li><a href="index.html">Home</a></li>
                     <li><a href="shop.html">Shop</a></li>
@@ -681,20 +644,17 @@
         </div>
     </header>
 
-    <!-- Hero Section - Store Name Focus -->
-    <section class="page-hero" style="background-image: url('assets/banner.jpeg'); background-size: cover; background-position: center; position: relative;">
-        <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.45);"></div>
-        <div class="container" style="position: relative; z-index: 1;">
-            <div class="page-hero-content">
-                <div class="page-hero-logo-wrapper">
-                    <img src="assets/logo.jpeg" alt="Product" class="page-hero-logo">
-                </div>
-                <span class="page-hero-badge">✨ Product Details</span>
-                <h1 class="page-hero-title">Product Details</h1>
-                <p class="page-hero-tagline">Premium quality product</p>
-            </div>
+    <section class="page-hero" style="background-image: url('assets/banner.jpeg');">
+        <div class="container page-hero-content">
+            <img src="assets/logo.jpeg" alt="Hunny Collection PK Logo" class="page-hero-logo">
+            <div class="page-hero-badge">✨ Product Details</div>
+            <h1 class="page-hero-title">Product Details</h1>
+            <p class="page-hero-tagline">Premium quality product</p>
         </div>
     </section>
+
+    <section class="product-detail-section">
+        <div class="container">
             <div id="product-detail">
                 <div class="loading">Loading product...</div>
             </div>

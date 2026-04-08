@@ -40,75 +40,39 @@
     <link rel="stylesheet" href="style.css">
     <style>
         .contact-section {
-            padding: 80px 0;
-            background: linear-gradient(to bottom, #FFF5F8, #FFFFFF);
-            min-height: calc(100vh - 200px);
+            padding: 60px 0;
         }
         .contact-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 35px;
-            margin-top: 50px;
+            gap: 30px;
+            margin-top: 40px;
         }
         .contact-card {
             background: var(--white);
-            padding: 50px 35px;
-            border-radius: 20px;
+            padding: 40px;
+            border-radius: var(--radius-lg);
             text-align: center;
-            box-shadow: var(--shadow-medium);
+            box-shadow: var(--shadow-soft);
             transition: all var(--transition-bounce);
-            border: 2px solid transparent;
+            border: 2px solid var(--border-color);
         }
         .contact-card:hover {
-            transform: translateY(-10px) scale(1.02);
+            transform: translateY(-10px);
             box-shadow: var(--shadow-hover);
             border-color: var(--primary-pink);
         }
         .contact-icon {
-            font-size: 4rem;
-            margin-bottom: 25px;
-            display: inline-block;
-            animation: float 3s ease-in-out infinite;
+            font-size: 3rem;
+            margin-bottom: 20px;
         }
         .contact-card h3 {
             color: var(--dark-pink);
-            margin-bottom: 18px;
-            font-size: 1.5rem;
-            font-weight: 700;
+            margin-bottom: 15px;
         }
         .contact-card p {
-            color: var(--text-dark);
-            font-size: 1.15rem;
-            font-weight: 500;
-        }
-        .contact-card a {
-            color: var(--primary-pink);
-            text-decoration: none;
-            font-weight: 600;
-            transition: all var(--transition-fast);
-        }
-        .contact-card a:hover {
-            color: var(--dark-pink);
-        }
-        .contact-hero {
-            text-align: center;
-            padding: 60px 30px;
-            background: var(--gradient-card);
-            border-radius: 25px;
-            margin-bottom: 50px;
-            box-shadow: var(--shadow-medium);
-            border: 2px solid var(--border-color);
-        }
-        .contact-hero h1 {
-            color: var(--dark-pink);
-            margin-bottom: 20px;
-            font-size: 3rem;
-            font-weight: 800;
-        }
-        .contact-hero p {
-            font-size: 1.3rem;
             color: var(--text-light);
-            font-weight: 500;
+            font-size: 1.1rem;
         }
     </style>
     <!-- Favicon & App Icons -->
@@ -128,15 +92,15 @@
     <header class="header">
         <div class="container">
             <nav class="navbar">
-                <a href="index.html" class="logo">
-                    <img src="assets/logo.jpeg" alt="Hunny Collection PK Logo" class="logo-image">
-                    <span class="logo-text">🌸 Hunny Collection PK</span>
-                </a>
                 <div class="hamburger" onclick="toggleMenu()">
                     <span></span>
                     <span></span>
                     <span></span>
                 </div>
+                <a href="index.html" class="logo">
+                    <img src="assets/logo.jpeg" alt="Hunny Collection PK Logo" class="logo-image">
+                    <span class="logo-text">🌸 Hunny Collection PK</span>
+                </a>
                 <ul class="nav-menu">
                     <li><a href="index.html">Home</a></li>
                     <li><a href="shop.html">Shop</a></li>
@@ -148,50 +112,39 @@
         </div>
     </header>
 
-    <!-- Hero Section - Store Name Focus -->
-    <section class="page-hero" style="background-image: url('assets/banner2.jpeg'); background-size: cover; background-position: center; position: relative;">
-        <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.45);"></div>
-        <div class="container" style="position: relative; z-index: 1;">
-            <div class="page-hero-content">
-                <div class="page-hero-logo-wrapper">
-                    <img src="assets/logo.jpeg" alt="Contact" class="page-hero-logo">
-                </div>
-                <span class="page-hero-badge">📞 Contact Us</span>
-                <h1 class="page-hero-title">Contact Us</h1>
-                <p class="page-hero-tagline">Get in touch with us</p>
-            </div>
+    <section class="page-hero" style="background-image: url('assets/banner2.jpeg');">
+        <div class="container page-hero-content">
+            <img src="assets/logo.jpeg" alt="Hunny Collection PK Logo" class="page-hero-logo">
+            <div class="page-hero-badge">📞 Contact Us</div>
+            <h1 class="page-hero-title">Contact Us</h1>
+            <p class="page-hero-tagline">Get in touch with us</p>
         </div>
     </section>
-            <div class="contact-hero">
-                <h1 style="color: var(--dark-pink); margin-bottom: 20px;">Get In Touch</h1>
-                <p style="font-size: 1.3rem; color: var(--text-light);">
-                    We'd love to hear from you! Reach out to us for any queries.
-                </p>
-            </div>
 
+    <section class="contact-section">
+        <div class="container">
             <div class="contact-grid">
-                <div class="contact-card">
-                    <div class="contact-icon">📱</div>
+                <a href="https://wa.me/923018858303" target="_blank" class="contact-card" style="text-decoration: none; color: inherit;">
+                    <div class="contact-icon" style="animation: float 3s ease-in-out infinite;">📱</div>
                     <h3>WhatsApp</h3>
-                    <p><a href="https://wa.me/923018858303" target="_blank">+92 301 8858303</a></p>
-                    <p style="font-size: 0.9rem; color: var(--text-light); margin-top: 10px;">Click to chat now</p>
-                </div>
+                    <p>+92 301 8858303</p>
+                    <small style="color: var(--primary-pink);">Click to chat →</small>
+                </a>
 
-                <div class="contact-card">
-                    <div class="contact-icon">📧</div>
+                <a href="mailto:MrCopper804@gmail.com" class="contact-card" style="text-decoration: none; color: inherit;">
+                    <div class="contact-icon" style="animation: float 3s ease-in-out infinite 0.5s;">📧</div>
                     <h3>Email</h3>
-                    <p><a href="mailto:MrCopper804@gmail.com">MrCopper804@gmail.com</a></p>
-                    <p style="font-size: 0.9rem; color: var(--text-light); margin-top: 10px;">We reply within 24 hours</p>
-                </div>
+                    <p>MrCopper804@gmail.com</p>
+                    <small style="color: var(--primary-pink);">Click to email →</small>
+                </a>
 
                 <div class="contact-card">
-                    <div class="contact-icon">📍</div>
+                    <div class="contact-icon" style="animation: float 3s ease-in-out infinite 1s;">📍</div>
                     <h3>Location</h3>
                     <p>Pakistan</p>
-                    <p style="font-size: 0.9rem; color: var(--text-light); margin-top: 10px;">Serving customers nationwide</p>
+                    <small style="color: var(--text-light);">Serving nationwide</small>
                 </div>
             </div>
-        </div>
         </div>
     </section>
 

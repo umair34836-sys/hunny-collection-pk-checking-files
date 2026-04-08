@@ -28,129 +28,72 @@
     
     <link rel="stylesheet" href="style.css">
     <style>
-        .cart-section { 
-            padding: 80px 0;
-            background: linear-gradient(to bottom, #FFF5F8, #FFFFFF);
-        }
+        .cart-section { padding: 60px 0; }
         .cart-grid {
             display: grid;
             grid-template-columns: 2fr 1fr;
-            gap: 40px;
-            align-items: start;
+            gap: 30px;
         }
         .cart-item {
             display: grid;
-            grid-template-columns: 120px 1fr auto;
-            gap: 25px;
+            grid-template-columns: 100px 1fr auto;
+            gap: 20px;
             background: var(--white);
-            padding: 25px;
-            border-radius: 16px;
+            padding: 20px;
+            border-radius: 15px;
             margin-bottom: 20px;
-            box-shadow: var(--shadow-soft);
-            transition: all var(--transition-fast);
-            border: 2px solid transparent;
-        }
-        .cart-item:hover {
-            box-shadow: var(--shadow-medium);
-            border-color: var(--primary-pink);
-            transform: translateY(-3px);
+            box-shadow: 0 2px 10px rgba(255, 182, 193, 0.2);
         }
         .cart-item-image {
-            width: 120px;
-            height: 120px;
+            width: 100px;
+            height: 100px;
             object-fit: cover;
-            border-radius: 12px;
-            box-shadow: var(--shadow-soft);
+            border-radius: 8px;
         }
-        .cart-item-details h4 { 
-            margin-bottom: 8px; 
-            font-size: 1.15rem;
-            font-weight: 600;
-            color: var(--text-dark);
-        }
-        .cart-item-category { 
-            color: var(--text-light); 
-            font-size: 0.9rem;
-            margin-bottom: 12px;
-        }
+        .cart-item-details h4 { margin-bottom: 5px; }
+        .cart-item-category { color: var(--text-light); font-size: 0.9rem; }
         .cart-item-actions {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
         }
         .btn-sm {
-            padding: 8px 16px;
-            border: 2px solid var(--border-color);
+            padding: 5px 12px;
+            border: 1px solid var(--border-color);
             background: var(--white);
-            border-radius: 10px;
+            border-radius: 5px;
             cursor: pointer;
-            min-height: 40px;
-            min-width: 40px;
+            min-height: 36px;
+            min-width: 36px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            font-weight: 600;
-            transition: all var(--transition-fast);
         }
-        .btn-sm:hover { 
-            background: var(--gradient-primary); 
-            color: var(--white); 
-            border-color: transparent;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(255, 105, 180, 0.3);
-        }
-        .btn-danger { 
-            background: #dc3545; 
-            color: var(--white); 
-            border: none;
-        }
-        .btn-danger:hover {
-            background: #c82333;
-            transform: translateY(-2px);
-        }
+        .btn-sm:hover { background: var(--dark-pink); color: var(--white); }
+        .btn-danger { background: #dc3545; color: var(--white); border: none; }
         .cart-summary {
             background: var(--white);
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: var(--shadow-medium);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(255, 182, 193, 0.2);
             height: fit-content;
-            position: sticky;
-            top: 100px;
-            border: 2px solid var(--border-color);
-        }
-        .cart-summary h3 {
-            margin-bottom: 25px;
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--dark-pink);
-            padding-bottom: 15px;
-            border-bottom: 2px solid var(--border-color);
         }
         .summary-row {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 18px;
-            font-size: 1.05rem;
+            margin-bottom: 15px;
         }
         .summary-total {
-            font-size: 1.8rem;
-            font-weight: 800;
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            border-top: 3px solid var(--border-color);
-            padding-top: 20px;
-            margin-top: 20px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--dark-pink);
+            border-top: 2px solid var(--border-color);
+            padding-top: 15px;
+            margin-top: 15px;
         }
         .empty-cart {
             text-align: center;
-            padding: 80px 20px;
-        }
-        .empty-cart-icon {
-            font-size: 5rem;
-            margin-bottom: 20px;
-            opacity: 0.5;
+            padding: 60px 20px;
         }
         
         /* Enhanced Mobile Optimization */
@@ -244,15 +187,15 @@
     <header class="header">
         <div class="container">
             <nav class="navbar">
-                <a href="index.html" class="logo">
-                    <img src="assets/logo.jpeg" alt="Hunny Collection PK Logo" class="logo-image">
-                    <span class="logo-text">🌸 Hunny Collection PK</span>
-                </a>
                 <div class="hamburger" onclick="toggleMenu()">
                     <span></span>
                     <span></span>
                     <span></span>
                 </div>
+                <a href="index.html" class="logo">
+                    <img src="assets/logo.jpeg" alt="Hunny Collection PK Logo" class="logo-image">
+                    <span class="logo-text">🌸 Hunny Collection PK</span>
+                </a>
                 <ul class="nav-menu">
                     <li><a href="index.html">Home</a></li>
                     <li><a href="shop.html">Shop</a></li>
@@ -264,23 +207,19 @@
         </div>
     </header>
 
-    <!-- Hero Section - Store Name Focus -->
-    <section class="page-hero" style="background-image: url('assets/banner4.jpeg'); background-size: cover; background-position: center; position: relative;">
-        <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.45);"></div>
-        <div class="container" style="position: relative; z-index: 1;">
-            <div class="page-hero-content">
-                <div class="page-hero-logo-wrapper">
-                    <img src="assets/logo.jpeg" alt="Cart" class="page-hero-logo">
-                </div>
-                <span class="page-hero-badge">🛒 Shopping Cart</span>
-                <h1 class="page-hero-title">Shopping Cart</h1>
-                <p class="page-hero-tagline">Review your items</p>
-            </div>
+    <section class="page-hero" style="background-image: url('assets/banner4.jpeg');">
+        <div class="container page-hero-content">
+            <img src="assets/logo.jpeg" alt="Hunny Collection PK Logo" class="page-hero-logo">
+            <div class="page-hero-badge">🛒 Shopping Cart</div>
+            <h1 class="page-hero-title">Shopping Cart</h1>
+            <p class="page-hero-tagline">Review your items</p>
         </div>
     </section>
-    
+
     <section class="cart-section">
         <div class="container">
+            
+            <div class="cart-grid">
                 <div id="cart-items">
                     <div class="loading">Loading cart...</div>
                 </div>

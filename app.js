@@ -106,8 +106,8 @@ export async function loadCategories() {
 }
 
 // Load featured products
-export async function loadFeaturedProducts(containerId = 'products-container') {
-    const container = document.getElementById(containerId);
+export async function loadFeaturedProducts() {
+    const container = document.getElementById('products-container');
     if (!container) return;
 
     try {
@@ -127,7 +127,7 @@ export async function loadFeaturedProducts(containerId = 'products-container') {
             const sellingPrice = product.sellingPrice || product.price || 0;
             const originalPrice = product.originalPrice || 0;
             const discountPercent = originalPrice > sellingPrice ? Math.round(((originalPrice - sellingPrice) / originalPrice) * 100) : 0;
-
+            
             return `
                 <a href="product.html?id=${product.id}" class="product-card">
                     <div style="position: relative;">

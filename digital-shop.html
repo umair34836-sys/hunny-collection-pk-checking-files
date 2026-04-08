@@ -6,24 +6,13 @@
     <title>Digital Shop - Hunny Collection PK | Courses, Accounts, Software</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        .digital-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 60px 20px;
-            text-align: center;
-        }
-        .digital-header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-        }
-        .digital-header p {
-            font-size: 1.2rem;
-            opacity: 0.9;
-        }
         .digital-filters {
             background: white;
             padding: 30px 0;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: var(--shadow-soft);
+            position: sticky;
+            top: 70px;
+            z-index: 100;
         }
         .filters-grid {
             display: grid;
@@ -40,8 +29,14 @@
             width: 100%;
             padding: 12px;
             border: 2px solid var(--border-color);
-            border-radius: 8px;
+            border-radius: var(--radius-md);
             font-size: 1rem;
+            transition: all var(--transition-fast);
+        }
+        .filter-group select:hover,
+        .filter-group select:focus {
+            border-color: #667eea;
+            outline: none;
         }
         .digital-products {
             padding: 60px 0;
@@ -53,21 +48,28 @@
         }
         .digital-product-card {
             background: white;
-            border-radius: 15px;
+            border-radius: var(--radius-lg);
             overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
+            box-shadow: var(--shadow-soft);
+            transition: all var(--transition-bounce);
             cursor: pointer;
             position: relative;
+            border: 2px solid transparent;
         }
         .digital-product-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: var(--shadow-hover);
+            border-color: #667eea;
         }
         .product-image {
             width: 100%;
             height: 200px;
             object-fit: cover;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: transform var(--transition-smooth);
+        }
+        .digital-product-card:hover .product-image {
+            transform: scale(1.08);
         }
         .product-info {
             padding: 20px;
@@ -111,28 +113,27 @@
         }
         .features {
             padding: 40px 0;
-            background: var(--soft-pink);
-        }
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
+            background: var(--gradient-soft);
         }
         .feature-card {
             background: white;
             padding: 30px;
-            border-radius: 15px;
+            border-radius: var(--radius-lg);
             text-align: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            box-shadow: var(--shadow-soft);
+            transition: all var(--transition-smooth);
+            border: 2px solid var(--border-color);
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-medium);
+            border-color: #667eea;
         }
         .feature-icon {
             font-size: 3rem;
             margin-bottom: 15px;
         }
         @media (max-width: 768px) {
-            .digital-header h1 {
-                font-size: 2rem;
-            }
             .filters-grid {
                 grid-template-columns: 1fr;
             }
@@ -148,23 +149,6 @@
             }
             .product-title {
                 font-size: 0.9rem;
-            }
-            .digital-product-discount-badge {
-                font-size: 0.65rem;
-                padding: 3px 8px;
-                top: 6px;
-                right: 6px;
-            }
-            .digital-price-group {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 4px;
-            }
-            .digital-selling-price {
-                font-size: 1rem;
-            }
-            .digital-original-price {
-                font-size: 0.8rem;
             }
         }
     </style>
@@ -185,15 +169,15 @@
     <header class="header">
         <div class="container">
             <nav class="navbar">
-                <a href="index.html" class="logo">
-                    <img src="assets/logo.jpeg" alt="Hunny Collection PK Logo" class="logo-image">
-                    <span class="logo-text">🌸 Hunny Collection PK</span>
-                </a>
                 <div class="hamburger" onclick="toggleMenu()">
                     <span></span>
                     <span></span>
                     <span></span>
                 </div>
+                <a href="index.html" class="logo">
+                    <img src="assets/logo.jpeg" alt="Hunny Collection PK Logo" class="logo-image">
+                    <span class="logo-text">🌸 Hunny Collection PK</span>
+                </a>
                 <ul class="nav-menu">
                     <li><a href="index.html">Home</a></li>
                     <li><a href="shop.html">Fashion Shop</a></li>
@@ -206,10 +190,12 @@
         </div>
     </header>
 
-    <section class="digital-header" style="background-image: url('assets/banner1.jpeg'); background-size: cover; background-position: center; position: relative;">
-        <div class="container" style="position: relative; z-index: 1;">
-            <h1 style="color: var(--dark-pink); font-size: 3.5rem; margin-bottom: 15px; font-weight: 800;">💻 Digital Shop</h1>
-            <p style="color: var(--text-dark); font-size: 1.4rem; font-weight: 500;">Premium Digital Products - Courses, Accounts, Software & More!</p>
+    <section class="page-hero" style="background-image: url('assets/banner1.jpeg');">
+        <div class="container page-hero-content">
+            <img src="assets/logo.jpeg" alt="Hunny Collection PK Logo" class="page-hero-logo">
+            <div class="page-hero-badge" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">💻 Digital Shop</div>
+            <h1 class="page-hero-title">Digital Shop</h1>
+            <p class="page-hero-tagline">Premium Digital Products - Courses, Accounts, Software & More!</p>
         </div>
     </section>
 

@@ -29,64 +29,38 @@
 
     <link rel="stylesheet" href="style.css">
     <style>
-        .shop-header {
-            padding: 80px 0;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
         .filters {
-            padding: 40px 0;
+            padding: 30px 0;
             background: var(--white);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            box-shadow: var(--shadow-soft);
             position: sticky;
             top: 70px;
             z-index: 100;
         }
-
-        /* Disable sticky filters on mobile */
-        @media (max-width: 767px) {
-            .filters {
-                position: static;
-                padding: 25px 0;
-            }
-        }
-
         .filters-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
         }
-
         .filter-group label {
             display: block;
-            margin-bottom: 10px;
-            font-weight: 700;
+            margin-bottom: 8px;
+            font-weight: 600;
             color: var(--text-dark);
-            font-size: 0.95rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
         }
-
         .filter-group select {
             width: 100%;
-            padding: 14px 18px;
+            padding: 12px;
             border: 2px solid var(--border-color);
-            border-radius: 12px;
-            font-size: 1rem;
-            background: var(--white);
+            border-radius: var(--radius-md);
             transition: all var(--transition-fast);
-            cursor: pointer;
-            font-weight: 500;
+            background: var(--white);
         }
-
         .filter-group select:focus {
-            outline: none;
             border-color: var(--primary-pink);
             box-shadow: 0 0 0 3px rgba(255, 105, 180, 0.1);
+            outline: none;
         }
-
         .filter-group select:hover {
             border-color: var(--primary-pink);
         }
@@ -321,15 +295,15 @@
     <header class="header">
         <div class="container">
             <nav class="navbar">
-                <a href="index.html" class="logo">
-                    <img src="assets/logo.jpeg" alt="Hunny Collection PK Logo" class="logo-image">
-                    <span class="logo-text">🌸 Hunny Collection PK</span>
-                </a>
                 <div class="hamburger" onclick="toggleMenu()">
                     <span></span>
                     <span></span>
                     <span></span>
                 </div>
+                <a href="index.html" class="logo">
+                    <img src="assets/logo.jpeg" alt="Hunny Collection PK Logo" class="logo-image">
+                    <span class="logo-text">🌸 Hunny Collection PK</span>
+                </a>
                 <ul class="nav-menu">
                     <li><a href="index.html">Home</a></li>
                     <li><a href="shop.html">Shop</a></li>
@@ -341,129 +315,14 @@
         </div>
     </header>
 
-    <!-- Hero Section - Store Name Focus -->
-    <section class="page-hero" style="background-image: url('assets/banner1.jpeg'); background-size: cover; background-position: center; position: relative;">
-        <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.45);"></div>
-        <div class="container" style="position: relative; z-index: 1;">
-            <div class="page-hero-content">
-                <div class="page-hero-logo-wrapper">
-                    <img src="assets/logo.jpeg" alt="Shop" class="page-hero-logo">
-                </div>
-                <span class="page-hero-badge">🛍️ Fashion Shop</span>
-                <h1 class="page-hero-title">Shop All Products</h1>
-                <p class="page-hero-tagline">Browse our complete collection</p>
-            </div>
+    <section class="page-hero" style="background-image: url('assets/banner1.jpeg');">
+        <div class="container page-hero-content">
+            <img src="assets/logo.jpeg" alt="Hunny Collection PK Logo" class="page-hero-logo">
+            <div class="page-hero-badge">🛍️ Fashion Shop</div>
+            <h1 class="page-hero-title">Shop All Products</h1>
+            <p class="page-hero-tagline">Browse our complete collection</p>
         </div>
     </section>
-
-    <style>
-        .page-hero {
-            padding: 60px 0;
-            min-height: 60vh;
-            display: flex;
-            align-items: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .page-hero-content {
-            text-align: center;
-            position: relative;
-            z-index: 2;
-        }
-
-        .page-hero-logo-wrapper {
-            margin-bottom: 20px;
-            animation: fadeInDown 0.8s ease backwards;
-        }
-
-        .page-hero-logo {
-            width: 100px;
-            height: 100px;
-            object-fit: contain;
-            border-radius: 50%;
-            border: 4px solid rgba(255, 255, 255, 0.8);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
-            transition: transform 0.3s ease;
-        }
-
-        .page-hero-logo:hover {
-            transform: scale(1.1) rotate(5deg);
-        }
-
-        .page-hero-badge {
-            display: inline-block;
-            background: rgba(255, 255, 255, 0.95);
-            color: var(--dark-pink);
-            padding: 10px 25px;
-            border-radius: 50px;
-            font-size: 0.9rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
-            animation: fadeInDown 0.8s ease 0.2s backwards;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-        }
-
-        .page-hero-title {
-            font-size: 3.5rem;
-            margin-bottom: 15px;
-            color: var(--dark-pink);
-            font-weight: 800;
-            line-height: 1.1;
-            text-shadow: 2px 4px 8px rgba(255, 255, 255, 0.8);
-            animation: fadeInUp 0.8s ease 0.4s backwards;
-        }
-
-        .page-hero-tagline {
-            font-size: 1.3rem;
-            color: var(--text-dark);
-            font-weight: 500;
-            text-shadow: 1px 2px 4px rgba(255, 255, 255, 0.6);
-            animation: fadeInUp 0.8s ease 0.6s backwards;
-        }
-
-        @media (max-width: 767px) {
-            .page-hero {
-                min-height: 50vh;
-                padding: 40px 0;
-            }
-
-            .page-hero-logo {
-                width: 80px;
-                height: 80px;
-            }
-
-            .page-hero-title {
-                font-size: 2.5rem;
-            }
-
-            .page-hero-tagline {
-                font-size: 1.1rem;
-            }
-        }
-
-        @media (max-width: 479px) {
-            .page-hero {
-                min-height: 45vh;
-                padding: 35px 0;
-            }
-
-            .page-hero-logo {
-                width: 70px;
-                height: 70px;
-            }
-
-            .page-hero-title {
-                font-size: 2rem;
-            }
-
-            .page-hero-tagline {
-                font-size: 0.95rem;
-            }
-        }
-    </style>
 
     <section class="filters">
         <div class="container">
