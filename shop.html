@@ -65,6 +65,25 @@
             border-color: var(--primary-pink);
         }
 
+        /* Mobile - Remove sticky filters */
+        @media (max-width: 768px) {
+            .filters {
+                position: static;
+                padding: 20px 0;
+            }
+            .filters-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+            .product-image {
+                height: 250px;
+            }
+        }
+
         /* Mobile Optimized Product Cards */
         .product-card {
             position: relative;

@@ -106,17 +106,18 @@ body {
 }
 
 .navbar {
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
+    display: flex;
+    justify-content: space-between;
     align-items: center;
     padding: 15px 0;
 }
 
 .hamburger {
-    justify-self: start;
+    order: 2;
 }
 
 .logo {
+    order: 1;
     font-size: 1.8rem;
     font-weight: bold;
     color: var(--dark-pink);
@@ -125,7 +126,6 @@ body {
     align-items: center;
     gap: 10px;
     transition: all var(--transition-smooth);
-    justify-self: center;
 }
 
 .logo:hover {
@@ -133,6 +133,7 @@ body {
 }
 
 .nav-menu {
+    order: 3;
     justify-self: end;
 }
 
@@ -681,27 +682,27 @@ body {
 @media (max-width: 768px) {
     /* Header & Navigation */
     .navbar {
-        grid-template-columns: auto 1fr auto;
+        flex-wrap: wrap;
         padding: 10px 0;
     }
 
-    .hamburger {
-        justify-self: start;
-    }
-
     .logo {
+        order: 1;
         font-size: 1.2rem;
         gap: 8px;
-        justify-self: center;
+    }
+
+    .hamburger {
+        order: 2;
+    }
+
+    .nav-menu {
+        order: 3;
     }
 
     .logo-image {
         width: 40px;
         height: 40px;
-    }
-
-    .nav-menu {
-        justify-self: end;
     }
 
     /* Hamburger Menu */
