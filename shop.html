@@ -33,8 +33,7 @@
             padding: 30px 0;
             background: var(--white);
             box-shadow: var(--shadow-soft);
-            position: sticky;
-            top: 70px;
+            position: static;
             z-index: 100;
         }
         .filters-grid {
@@ -65,10 +64,9 @@
             border-color: var(--primary-pink);
         }
 
-        /* Mobile - Remove sticky filters */
+        /* Mobile Responsive */
         @media (max-width: 768px) {
             .filters {
-                position: static;
                 padding: 20px 0;
             }
             .filters-grid {
